@@ -76,7 +76,9 @@ namespace EmployManager.ViewModels
 			{
 				if(string.IsNullOrEmpty(CurrentDivaseId))
                 Preferences.Set(nameof(CurrentDivaseId), CurrentDivaseId.Replace(" ", ""));
-				AuthorizationStep = !AuthorizationStep;
+                await AppShell.Current.GoToAsync($"//{nameof(MainPage)}");
+
+                AuthorizationStep = !AuthorizationStep;
             }
 			else
 			{

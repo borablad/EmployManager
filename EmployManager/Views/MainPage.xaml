@@ -101,7 +101,7 @@
                     </Grid>
 
                 </Frame>
-                <Frame Grid.Column="1" Padding="5" HorizontalOptions="StartAndExpand">
+                <Frame Grid.Column="1" Padding="5" >
                      <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
 
                 </Frame>
@@ -110,11 +110,12 @@
               <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand">
             <StackLayout  Padding="15" Spacing="15" HorizontalOptions="CenterAndExpand" >
                 <HorizontalStackLayout Spacing="15">
-                    <Frame HeightRequest="200" WidthRequest="250">
+                  
+                        <Frame HeightRequest="240" WidthRequest="260">
                         <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
 
                                 </Frame>
                             </Frame>
@@ -123,11 +124,11 @@
 
                         </StackLayout>
                     </Frame>
-                        <Frame HeightRequest="200" WidthRequest="250">
+                          <Frame HeightRequest="240" WidthRequest="260">
                         <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
 
                                 </Frame>
                             </Frame>
@@ -136,11 +137,11 @@
 
                         </StackLayout>
                     </Frame>
-                    <Frame HeightRequest="200" WidthRequest="250">
+                          <Frame HeightRequest="240" WidthRequest="260">
                         <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
 
                                 </Frame>
                             </Frame>
@@ -149,66 +150,11 @@
 
                         </StackLayout>
                     </Frame>
-                    <Frame HeightRequest="200" WidthRequest="250">
+                          <Frame HeightRequest="240" WidthRequest="260">
                         <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                </HorizontalStackLayout>
-
-                <HorizontalStackLayout Spacing="15">
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                        <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
 
                                 </Frame>
                             </Frame>
@@ -218,114 +164,8 @@
                         </StackLayout>
                     </Frame>
                 </HorizontalStackLayout>
-                <HorizontalStackLayout Spacing="15">
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
 
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-<Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                </HorizontalStackLayout>
-                <HorizontalStackLayout Spacing="15">
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-<Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                    <Frame HeightRequest="200" WidthRequest="250">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                </HorizontalStackLayout>
+         
             </StackLayout>
 
 
