@@ -3,13 +3,14 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EmployManager.Views;
+using EmployManager.Services;
 
 namespace EmployManager.ViewModels
 {
 	public partial class LoginViewModel:BaseViewModel
 	{
 		[ObservableProperty]
-		string code = "", currentDivaseId;
+		string code = "", currentDivaseId,login,password;
 
         [ObservableProperty]
         bool circle1, circle2, circle3, circle4,authorizationStep;
@@ -19,6 +20,8 @@ namespace EmployManager.ViewModels
 			CurrentDivaseId = Preferences.Get(nameof(CurrentDivaseId),"");
 			authorizationStep = string.IsNullOrEmpty(CurrentDivaseId);
 
+			SetUserData();
+			AutoLogin();
 
             UpdateCircles();
 
@@ -72,6 +75,9 @@ namespace EmployManager.ViewModels
 		[RelayCommand]
 		public async Task Authorizatin()
 		{
+
+
+
 			if (AuthorizationStep)
 			{
 				if(string.IsNullOrEmpty(CurrentDivaseId))
@@ -90,6 +96,48 @@ namespace EmployManager.ViewModels
 			}
 		}
 
+
+		private async void DoLogin()
+		{
+			if (IsNoEmpty(Login) || IsNoEmpty(Password))
+			{
+                await DialogService.ShowError("Заполните все обязательные поля");
+				return;
+			}
+			 Token = await Rest.Login(Login, Password);
+			 DateLogin= DateTime.Now.AddSeconds(TokenAliveSecond);
+			 SaveUserData();
+             await AppShell.Current.GoToAsync($"//{nameof(MainPage)}");
+        }
+
+        private async void AutoLogin()
+        {
+            if (!IsTokenAlive() || IsUserDataEmpty())
+                return;
+            await AppShell.Current.GoToAsync($"//{nameof(MainPage)}");
+        }
+
+
+        private void SaveUserData()
+		{
+			Preferences.Set(nameof(Login), Login);
+			Preferences.Set(nameof(Password), Password);
+		}
+
+		private void SetUserData()
+		{
+			Login = Preferences.Get(nameof(Login), "");
+			Password = Preferences.Get(nameof(Password), "");
+		}
+
+		private bool IsUserDataEmpty()=>
+			string.IsNullOrWhiteSpace(Preferences.Get(nameof(Login), "")) 
+			|| string.IsNullOrWhiteSpace(Preferences.Get(nameof(Password), "")) ? true : false;
+		
+
+		
+
+		
     }
 }
 

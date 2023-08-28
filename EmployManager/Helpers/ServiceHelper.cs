@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Vendor.Helpers;
+namespace EmployManager.Helpers;
 
 public static class ServiceHelper
 {

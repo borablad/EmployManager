@@ -8,8 +8,11 @@ public partial class BaseViewModel : ObservableObject
 {
     // текуший логин
     public static string CurrentLogin { get => Preferences.Get(nameof(CurrentLogin), ""); set => Preferences.Set(nameof(CurrentLogin), value); }
+    public static string Token { get => Preferences.Get(nameof(Token), ""); set => Preferences.Set(nameof(Token), value); }
+    public DateTime DateLogin { get => DateTime.Parse(Preferences.Get(nameof(DateLogin), DateTime.MinValue.ToString())); set => Preferences.Set(nameof(DateLogin), value.ToString()); }
 
-   
+    public const int TokenAliveSecond = 3600 * 12;
+
     [ObservableProperty]
     protected bool isBusy;
 
@@ -52,7 +55,12 @@ public partial class BaseViewModel : ObservableObject
     //Регулярное выражение на проверку почты
     public bool IsValidEmail(string email) => 
         Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+    public bool IsNoEmpty(string obj)=>
+        string.IsNullOrWhiteSpace(obj) ? false : true;
 
+    public bool IsTokenAlive() =>
+        DateLogin < DateTime.Now;
+    
     // Выход    
     public async Task LogoutTapped()
     {
