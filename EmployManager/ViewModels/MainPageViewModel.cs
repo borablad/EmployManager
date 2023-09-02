@@ -1,11 +1,23 @@
 ﻿using System;
+using CommunityToolkit.Mvvm.Input;
+
 namespace EmployManager.ViewModels
 {
-	public class MainPageViewModel
+	public partial   class MainPageViewModel : BaseViewModel
 	{
 		public MainPageViewModel()
 		{
+
 		}
-	}
+
+		[RelayCommand]
+		public void GoToEmployDetail()
+		{
+
+		}
+
+        [RelayCommand]
+		
+    }
 }
 
