@@ -4,8 +4,11 @@
              xmlns:fa="clr-namespace:FontAwesome"
              xmlns:model="clr-namespace:EmployManager.Models"
              x:Class="EmployManager.Views.MainPage"
-             Shell.NavBarIsVisible="False">
-
+             Shell.NavBarIsVisible="False"
+              xmlns:vm="clr-namespace:EmployManager.ViewModels">
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="DeportTemplate" x:DataType="model:Departanent">
@@ -13,7 +16,7 @@
                     <Frame BackgroundColor="{AppThemeBinding Light={StaticResource BoraCastomColorLight},Dark={StaticResource BoraElementColorDark}}"  HorizontalOptions="Center" Margin="5" Padding="10">
                         <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.Users}" FontFamily="FAS" FontSize="Subtitle" />
                     </Frame>
-                    <Label Grid.Column="1" Text="{Binding }" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" />
+                    <Label Grid.Column="1" Text="{Binding Title }" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" />
 
                 </Grid>
             </DataTemplate>
@@ -36,7 +39,7 @@
                 <ScrollView Grid.Row="1" Margin="0,15">
                     <StackLayout Spacing="10">
 
-                        <StackLayout BindableLayout.ItemsSource="{Binding }" BindableLayout.ItemTemplate="{StaticResource DeportTemplate}"
+                        <StackLayout BindableLayout.ItemsSource="{Binding Departanents}" BindableLayout.ItemTemplate="{StaticResource DeportTemplate}"
                         
 
 
