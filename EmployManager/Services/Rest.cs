@@ -1,8 +1,10 @@
-﻿using EmployManager.ViewModels;
+﻿using EmployManager.Models;
+using EmployManager.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +56,33 @@ namespace EmployManager.Services
                 throw new Exception($"{ex.Message}");
             }
 
+
+        }
+
+
+        public static async Task<Organization> GetOrganization()
+        {
+            var client = GetClient();
+            
+
+            try
+            {
+                var response = await client.GetAsync($"{Host}api/auth/login");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json_content = await response.Content.ReadAsStringAsync();
+                    var organization = JsonConvert.DeserializeObject<Organization>(json_content);
+                    return organization;
+                }
+                else
+                    throw new Exception(await response.Content.ReadAsStringAsync());
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
 
         }
     }

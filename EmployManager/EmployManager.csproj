@@ -82,6 +82,19 @@
 	  <BundleResource Include="Resources\Fonts\FontAwesome6FreeSolid900.otf" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Update="Resources\TextResources\AppResources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AppResources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\TextResources\AppResources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <SubType></SubType>
 	  </MauiXaml>
