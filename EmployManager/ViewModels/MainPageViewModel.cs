@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace EmployManager.ViewModels
 {
-	public class MainPageViewModel
+	public partial   class MainPageViewModel : BaseViewModel
 	{
 		public ObservableCollection<Departanent> Departanents { get; set; }=new ObservableCollection<Departanent>();
 
