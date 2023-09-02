@@ -39,7 +39,7 @@
                 <ScrollView Grid.Row="1" Margin="0,15">
                     <StackLayout Spacing="10">
 
-                        <StackLayout BindableLayout.ItemsSource="{Binding Departanents}" BindableLayout.ItemTemplate="{StaticResource DeportTemplate}"
+                        <StackLayout BindableLayout.ItemsSource="{Binding Departanents}" BindableLayout.ItemTemplate="{StaticResource DeportTemplate}" />
                         
 
 
