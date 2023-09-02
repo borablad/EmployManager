@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fa="clr-namespace:FontAwesome"
+             x:Class="EmployManager.Views.SetingsPage"
+             Title="Настройки">
+    <Grid  RowDefinitions="55,*">
+
+            <!-- Кастомный навбар -->
+            <Frame CornerRadius="0" Padding="20,15">
+                <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
+                    <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BackCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Настройки" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Subtitle" />
+
+                    <Grid Grid.Column="2" RowDefinitions="Auto,Auto"  VerticalOptions="Center" >
+                        <Label Grid.Row="0" Text="{x:Static fa:FontAwesomeIcons.ArrowRightFromBracket}" VerticalTextAlignment="Center" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="Default" />
+                        <Label Grid.Row="1" VerticalTextAlignment="Center" Text="Выйти" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Micro" />
+                        
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ExitCommand}" />
+                        </Grid.GestureRecognizers>
+                  
+                    </Grid>
+
+                </Grid>
+            </Frame>
+        <ScrollView Padding="20" Grid.Row="1">
+        <Grid ColumnDefinitions=".5*,*,.5*" Padding="0,20">
+            <Frame Grid.Column="1" Grid.Row="1" >
+
+
+            </Frame>
+
+        </Grid>
+    </ScrollView>
+
+    </Grid>
+    
+</ContentPage>

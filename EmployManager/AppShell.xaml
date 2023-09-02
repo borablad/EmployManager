@@ -6,6 +6,24 @@
     xmlns:local="clr-namespace:EmployManager.Views"
     Shell.FlyoutBehavior="Disabled">
 
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Dark={StaticResource HeaderBarBackgroundColorDark},Light={StaticResource HeaderBarBackgroundColorLight}}" />
+                <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" />
+                <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"  />
+                <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Dark={StaticResource Gray300},Light={StaticResource Gray500}}"  />
+                <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Dark={StaticResource Gray300},Light={StaticResource Gray500}}"  />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Dark={StaticResource HeaderBarBackgroundColorDark},Light={StaticResource HeaderBarBackgroundColorLight}}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark={StaticResource Gray300},Light={StaticResource Gray500}}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"/>
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:SplashPage}"

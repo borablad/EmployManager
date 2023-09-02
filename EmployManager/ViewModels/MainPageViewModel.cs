@@ -1,6 +1,8 @@
 ﻿//using ARKit;
+using CommunityToolkit.Mvvm.Input;
 using EmployManager.Models;
 using EmployManager.Services;
+using EmployManager.Views;
 using System;
 using System.Collections.ObjectModel;
 
@@ -33,9 +35,20 @@ namespace EmployManager.ViewModels
 
 
 			return organization;
-		}  
+		}
 
-
-	}
+		[RelayCommand]
+		public async void GoToSettings()
+		{
+			await AppShell.Current.GoToAsync($"{nameof(SetingsPage)}");
+		}
+        [RelayCommand]
+        public async void LogOut()
+        {
+			Token = string.Empty;
+			DateLogin = DateTime.MinValue;
+            await AppShell.Current.GoToAsync($"//{nameof(LoginPage)}");
+        }
+    }
 }
 
