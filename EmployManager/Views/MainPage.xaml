@@ -97,7 +97,7 @@
             <StackLayout  Padding="15" Spacing="15" HorizontalOptions="CenterAndExpand" >
                 <HorizontalStackLayout Spacing="15">
                   
-                        <Frame HeightRequest="240" WidthRequest="260">
+                   <Frame HeightRequest="240" WidthRequest="260">
                         <StackLayout>
                             <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Frame CornerRadius="10">
@@ -109,6 +109,10 @@
                             <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
 
                         </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToEmployDetail}" />
+
+                            </Frame.GestureRecognizers>
                     </Frame>
                           <Frame HeightRequest="240" WidthRequest="260">
                         <StackLayout>

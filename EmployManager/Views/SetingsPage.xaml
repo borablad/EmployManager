@@ -2,42 +2,74 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fa="clr-namespace:FontAwesome"
+             xmlns:vm="clr-namespace:EmployManager.ViewModels"
              x:Class="EmployManager.Views.SetingsPage"
-             Title="Настройки">
+             Title="Настройки"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.BindingContext>
+        <vm:SetitingsViewModel/>
+    </ContentPage.BindingContext>
+
+
     <Grid  RowDefinitions="55,*">
 
-            <!-- Кастомный навбар -->
-            <Frame CornerRadius="0" Padding="20,15">
-                <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
-                    <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BackCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Настройки" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Subtitle" />
+        <!-- Кастомный навбар -->
+        <Frame CornerRadius="0" Padding="20,15">
+            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
+                <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BackCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Настройки" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Subtitle" />
 
-                    <Grid Grid.Column="2" RowDefinitions="Auto,Auto"  VerticalOptions="Center" >
-                        <Label Grid.Row="0" Text="{x:Static fa:FontAwesomeIcons.ArrowRightFromBracket}" VerticalTextAlignment="Center" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="Default" />
-                        <Label Grid.Row="1" VerticalTextAlignment="Center" Text="Выйти" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Micro" />
-                        
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ExitCommand}" />
-                        </Grid.GestureRecognizers>
-                  
-                    </Grid>
+                <Grid Grid.Column="2" RowDefinitions="Auto,Auto"  VerticalOptions="Center" >
+                    <Label Grid.Row="0" Text="{x:Static fa:FontAwesomeIcons.ArrowRightFromBracket}" VerticalTextAlignment="Center" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="Default" />
+                    <Label Grid.Row="1" VerticalTextAlignment="Center" Text="Выйти" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Micro" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LogOutCommand}" />
+                    </Grid.GestureRecognizers>
 
                 </Grid>
-            </Frame>
+
+            </Grid>
+        </Frame>
         <ScrollView Padding="20" Grid.Row="1">
-        <Grid ColumnDefinitions=".5*,*,.5*" Padding="0,20">
-            <Frame Grid.Column="1" Grid.Row="1" >
+            <Grid ColumnDefinitions=".5*,*,.5*" Padding="0,20">
 
+                <StackLayout Grid.Column="1" Spacing="15" >
+                    <Label Text="Имя устройства" FontSize="Micro" TranslationY="5" FontAttributes="Bold" />
+                        <Frame Padding="0" >
+                   
+                        <Entry Text="" Keyboard="Chat" Placeholder="Введите Ф.И.О."
+                       />
+                    </Frame>
+                    <Label Text="Параметры БД" FontSize="Micro" TranslationY="5" FontAttributes="Bold" />
+                    <Frame Padding="0" CornerRadius="8">
 
-            </Frame>
+                        <StackLayout  Grid.Row="1" Spacing="15"  Padding="20">
+                            <Label Text="Протокол"  FontSize="Micro"  />
+                            <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark}, Light={StaticResource BackgroundColorLight}}" Padding="0">
+                                <Entry Text="" Grid.Row="1" Placeholder="https://" BackgroundColor="Transparent" />
+                            </Frame>
+                            <Label Text="Адрес"  FontSize="Micro"  />
+                            <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark}, Light={StaticResource BackgroundColorLight}}" Padding="0">
+                                <Entry Text="" Grid.Row="1" Placeholder="taf.kz" BackgroundColor="Transparent" />
+                            </Frame>
+                            <Label Text="Порт"  FontSize="Micro"  />
+                            <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark}, Light={StaticResource BackgroundColorLight}}" Padding="0">
+                                <Entry Text="" Grid.Row="1" Placeholder="443" BackgroundColor="Transparent" />
+                            </Frame>
+                        </StackLayout>
 
-        </Grid>
-    </ScrollView>
+                    </Frame>
+
+                </StackLayout>
+
+            </Grid>
+        </ScrollView>
 
     </Grid>
-    
+
 </ContentPage>

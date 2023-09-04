@@ -42,6 +42,13 @@ namespace EmployManager.ViewModels
 		{
 			await AppShell.Current.GoToAsync($"{nameof(SetingsPage)}");
 		}
+
+        [RelayCommand]
+        public async void GoToEmployDetail()
+        {
+            await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}");
+        }
+
         [RelayCommand]
         public async void LogOut()
         {
