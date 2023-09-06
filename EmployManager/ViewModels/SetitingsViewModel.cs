@@ -21,7 +21,7 @@ namespace EmployManager.ViewModels
         {
             Token = string.Empty;
             DateLogin = DateTime.MinValue;
-            await AppShell.Current.GoToAsync($"..//{nameof(LoginPage)}");
+            await AppShell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
     }
 }

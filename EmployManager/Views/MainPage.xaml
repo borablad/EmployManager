@@ -110,7 +110,7 @@
 
                         </StackLayout>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding GoToEmployDetail}" />
+                                <TapGestureRecognizer Command="{Binding GoToEmployDetailCommand}" />
 
                             </Frame.GestureRecognizers>
                     </Frame>

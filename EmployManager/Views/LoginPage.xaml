@@ -19,63 +19,75 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-       
-          
 
-            <StackLayout VerticalOptions="CenterAndExpand" Margin="0,0,0,-40">
-                <Frame Margin="30,0" Padding="5" VerticalOptions="CenterAndExpand" CornerRadius="22">
 
-                    <StackLayout >
 
-                        <Grid >
-                            
-                         
-                                <!--<Entry MaxLength="30" x:Name="LoginEntry" HorizontalTextAlignment="Start"   FontSize="Default" Text="{Binding Login}"  VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand"   HorizontalTextAlignment="Start" Placeholder="{x:Static res:AppResources.NameUserLabel}"  >
+        <StackLayout VerticalOptions="CenterAndExpand" Spacing="20" >
+
+            <Grid Margin="15,40">
+                <Label Text="{x:Static fa:FontAwesomeIcons.Users}" TranslationY="-8" FontSize="35"
+                        FontFamily="FAS" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="{x:Static fa:FontAwesomeIcons.Tv}" TextColor="{StaticResource Primary}" TranslationY="0"  FontSize="95"
+                        FontFamily="FAS" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+            </Grid>
+
+
+            <Frame Margin="50,0" MaximumWidthRequest="950" MinimumWidthRequest="250" HorizontalOptions="FillAndExpand" Padding="20" VerticalOptions="CenterAndExpand" CornerRadius="22">
+
+                <StackLayout Spacing="15" >
+
+                    <Grid >
+
+
+                        <!--<Entry MaxLength="30" x:Name="LoginEntry" HorizontalTextAlignment="Start"   FontSize="Default" Text="{Binding Login}"  VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand"   HorizontalTextAlignment="Start" Placeholder="{x:Static res:AppResources.NameUserLabel}"  >
 
                                 </Entry>-->
 
-                        <Entry  Margin="20,0,0,0" HorizontalTextAlignment="Start" Text="{Binding Login}" FontSize="Default" Placeholder="{x:Static  res:AppResources.NameUserLabel}"  />
+                        <Entry   HorizontalTextAlignment="Start" Text="{Binding Login}" FontSize="Default" Placeholder="{x:Static  res:AppResources.NameUserLabel}"  />
 
 
                     </Grid>
 
 
 
-                        <BoxView HeightRequest="1" Margin="10,0" Opacity=".3"/>
-                        <Grid>
-                            <Entry x:Name="PassEntry" Margin="20,0,0,0" HorizontalTextAlignment="Start" Text="{Binding Password}" FontSize="Default" Placeholder="{x:Static  res:AppResources.PasswordLabel}" IsPassword="True"  />
-                            <Label Text="{x:Static fa:FontAwesomeIcons.Eye}" Margin="15,0" FontSize="Subtitle"
+                    <BoxView HeightRequest="1" Margin="10,0" Opacity=".3"/>
+                    <Grid Padding="0">
+              
+                        <Entry x:Name="PassEntry"  HorizontalTextAlignment="Start" Text="{Binding Password}" FontSize="Default" Placeholder="{x:Static  res:AppResources.PasswordLabel}" IsPassword="True"  />
+
+                        <Label Text="{x:Static fa:FontAwesomeIcons.Eye}" Margin="15,0" FontSize="Subtitle"
                         FontFamily="FAS" HorizontalOptions="End" VerticalOptions="Center">
 
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label"
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
                                      Binding="{Binding Source={x:Reference PassEntry},Path=IsPassword}"
                                      Value="False">
-                                        <Setter Property="Text" Value="{x:Static fa:FontAwesomeIcons.EyeSlash}"/>
+                                    <Setter Property="Text" Value="{x:Static fa:FontAwesomeIcons.EyeSlash}"/>
 
-                                    </DataTrigger>
+                                </DataTrigger>
 
-                                </Label.Triggers>
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="SwichPassVisible"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                            </Label.Triggers>
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SwichPassVisible"/>
+                            </Label.GestureRecognizers>
+                        </Label>
 
-                        </Grid>
-                    </StackLayout>
-                </Frame>
+                    </Grid>
+                </StackLayout>
+            </Frame>
 
 
 
-                <Button  HorizontalOptions="Center" Text="{x:Static res:AppResources.ENTERLabel}" TextTransform="Uppercase" FontAttributes="Bold" Command="{Binding DoLoginCommand}"
+            <Button  HorizontalOptions="Center" Text="{x:Static res:AppResources.ENTERLabel}" TextTransform="Uppercase" FontAttributes="Bold" Command="{Binding DoLoginCommand}"
                     Padding="60,15" Margin="0,30" BackgroundColor="{StaticResource GreenButton}">
 
-                </Button>
-        
-            </StackLayout>
+            </Button>
+
+        </StackLayout>
 
 
-            
-     
+
+
     </ContentPage.Content>
 </ContentPage>
