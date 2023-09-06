@@ -21,27 +21,57 @@
 
                 </Grid>
             </DataTemplate>
+
+            <DataTemplate x:Key="EmployTemplate" x:DataType="model:Member">
+                <Frame HeightRequest="240" WidthRequest="260" Padding="0">
+                            <StackLayout>
+                                <Frame  BackgroundColor="{StaticResource Primary}" Margin="15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Frame CornerRadius="10" Padding="0" HeightRequest="90" WidthRequest="90">
+                                         <Grid>
+                                            <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="{Binding IsPhotoURL}" />
+                                            <Image Source="{Binding PhotoUrl}" Aspect="AspectFill" IsVisible="{Binding UnIsPhotoURL}" />
+                                        </Grid>
+                                    </Frame>
+                                </Frame>
+                                <StackLayout>
+                                    <Label Grid.Row="1" Text="{Binding Name}" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                                    <Label Grid.Row="1" Text="{Binding Role}" VerticalTextAlignment="End" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" ></Label>
+                                </StackLayout>
+
+                            </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=GoToEmployDetailCommand}" />
+
+                            </Frame.GestureRecognizers>
+                        </Frame>
+            </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <Grid ColumnDefinitions="auto,*" >
-        <Frame >
-            <Grid RowDefinitions="auto,*,auto">
-                <Grid RowDefinitions="Auto,*" Margin="90,0">
-                    <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+        <Frame WidthRequest="400" Padding="0" >
+            <Grid RowDefinitions="auto,*,auto" Padding="15">
+                <Grid RowDefinitions="Auto,*,auto" Margin="20,0">
                     <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Frame CornerRadius="10">
-                            <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+                        <Frame CornerRadius="10" Padding="0" HeightRequest="60" WidthRequest="60">
+                            <Grid>
+                                <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="{Binding Organization.IsPhotoURL}" />
+                                <Image Source="{Binding Organization.PhotoUrl}" Aspect="AspectFill" IsVisible="{Binding Organization.UnIsPhotoURL}" />
+                            </Grid>
+
 
                         </Frame>
                     </Frame>
+                    <Label Grid.Row="1" Text="{Binding Organization.Title}" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Row="2" Text="{Binding Organization.Description}"  FontAttributes="None" FontSize="Default" Margin="0,-5,0,10" Opacity="0.7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+
                 </Grid>
                 <BoxView HeightRequest="1" Opacity="0.3" VerticalOptions="End"/>
                 <ScrollView Grid.Row="1" Margin="0,15">
                     <StackLayout Spacing="10">
 
                         <StackLayout BindableLayout.ItemsSource="{Binding Departanents}" BindableLayout.ItemTemplate="{StaticResource DeportTemplate}" />
-                        
+
 
 
 
@@ -76,91 +106,42 @@
             </Grid>
         </Frame>
 
-      <Grid RowDefinitions="auto,*" Grid.Column="1" >
+        <Grid RowDefinitions="auto,*" Grid.Column="1" >
             <HorizontalStackLayout Spacing="15" Margin="25" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" >
                 <Frame  Padding="5"  MaximumWidthRequest="500" MinimumWidthRequest="500">
                     <Grid >
                         <Entry Placeholder="     "  VerticalTextAlignment="Center"  FontAttributes="Bold" FontSize="Default" />
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.MagnifyingGlass}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
+                        <Label Text="{x:Static fa:FontAwesomeIcons.MagnifyingGlass}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
 
 
                     </Grid>
 
                 </Frame>
                 <Frame Grid.Column="1" Padding="5" >
-                     <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
+                    <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
 
                 </Frame>
             </HorizontalStackLayout>
 
-              <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand">
-            <StackLayout  Padding="15" Spacing="15" HorizontalOptions="CenterAndExpand" >
-                <HorizontalStackLayout Spacing="15">
-                  
-                   <Frame HeightRequest="240" WidthRequest="260">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+            <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand">
+                <StackLayout  Padding="15" Spacing="15" HorizontalOptions="CenterAndExpand" >
+                    <HorizontalStackLayout Spacing="15">
 
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                        <CollectionView ItemTemplate="{StaticResource EmployTemplate}" ItemsSource="{Binding CurrentDepartament.Members}">
+                            <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="15" VerticalItemSpacing="15"   />
+                </CollectionView.ItemsLayout>
 
-                        </StackLayout>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding GoToEmployDetailCommand}" />
+                        </CollectionView>
 
-                            </Frame.GestureRecognizers>
-                    </Frame>
-                          <Frame HeightRequest="240" WidthRequest="260">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                          <Frame HeightRequest="240" WidthRequest="260">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                          <Frame HeightRequest="240" WidthRequest="260">
-                        <StackLayout>
-                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,5,15,15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Frame CornerRadius="10">
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="45" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
-
-                                </Frame>
-                            </Frame>
-                            <Label Grid.Row="1" Text="Deedf Fdfhjsh" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                            <Label Grid.Row="1" Text="Мэнэджер среднего звена" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-
-                        </StackLayout>
-                    </Frame>
-                </HorizontalStackLayout>
-
-         
-            </StackLayout>
+                    </HorizontalStackLayout>
 
 
-        </ScrollView>
-      </Grid>
+                </StackLayout>
+
+
+            </ScrollView>
+        </Grid>
 
     </Grid>
 

@@ -12,7 +12,7 @@ namespace EmployManager.Services
 {
     public class Rest 
     {
-        static string Host = @"http://192.168.31.207:5224/";
+        static string Host = @"http://192.168.31.191:5224/";
         /// <summary>
         ///  private static  string Host= @"http://192.168.31.205:5224/";
         /// </summary>
@@ -40,7 +40,7 @@ namespace EmployManager.Services
 
             try
             {
-                var response = await client.PostAsync($"{Host}api/auth/login", content);
+                var response = await client.PostAsync($"{Host}Login", content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -67,7 +67,7 @@ namespace EmployManager.Services
 
             try
             {
-                var response = await client.GetAsync($"{Host}api/auth/login");
+                var response = await client.GetAsync($"{Host}api/Organization");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -85,5 +85,32 @@ namespace EmployManager.Services
             }
 
         }
+
+
+        public static async Task<bool> DeleteDep(string dep_id)
+        {
+            var client = GetClient();
+
+
+            try
+            {
+                var response = await client.DeleteAsync($"{Host}{dep_id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                  
+                    return true;
+                }
+                else
+                    throw new Exception(await response.Content.ReadAsStringAsync());
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+
+        }
+
     }
 }

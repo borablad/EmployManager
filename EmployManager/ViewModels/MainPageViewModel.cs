@@ -14,6 +14,10 @@ namespace EmployManager.ViewModels
 
 		public Organization Organization { get; set; }
 
+
+		public Departanent CurrentDepartament { get; set; }
+
+
 		public MainPageViewModel()
 		{
 		}
@@ -21,7 +25,7 @@ namespace EmployManager.ViewModels
 
 		internal async void OnAppering()
 		{
-			Organization = await  GetOrganization();
+			Organization =  await GetOrganization();
 
            Organization.Departanents.ForEach(d => Departanents.Add(d));
         }
@@ -35,6 +39,13 @@ namespace EmployManager.ViewModels
 
 
 			return organization;
+		}
+
+		[RelayCommand]
+		public async void ChangeDepartament( Departanent departanent)
+		{
+			CurrentDepartament = departanent;
+			
 		}
 
 		[RelayCommand]

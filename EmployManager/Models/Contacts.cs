@@ -8,8 +8,8 @@ namespace EmployManager.Models
 {
     public class Contacts
     {
+    
         public string Title { get; set; } = "";
         public string Body { get; set; } = "";
-
     }
 }

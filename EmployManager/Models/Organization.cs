@@ -13,6 +13,11 @@ namespace EmployManager.Models
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
         public string PhotoUrl { get; set; } = "";
+
         public List<Departanent> Departanents { get; set; } = new List<Departanent>();
+
+
+        public bool IsPhotoURL { get => string.IsNullOrEmpty(PhotoUrl); }
+        public bool UnIsPhotoURL { get => !string.IsNullOrEmpty(PhotoUrl); }
     }
 }
