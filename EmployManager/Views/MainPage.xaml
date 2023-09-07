@@ -125,16 +125,11 @@
 
             <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand">
                 <StackLayout  Padding="15" Spacing="15" HorizontalOptions="CenterAndExpand" >
-                    <HorizontalStackLayout Spacing="15">
-
-                        <CollectionView ItemTemplate="{StaticResource EmployTemplate}" ItemsSource="{Binding CurrentDepartament.Members}">
-                            <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="15" VerticalItemSpacing="15"   />
-                </CollectionView.ItemsLayout>
-
-                        </CollectionView>
-
-                    </HorizontalStackLayout>
+                    <CollectionView ItemsSource="{Binding  CurrentDepartament.Members}" ItemTemplate="{StaticResource EmployTemplate}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="4" HorizontalItemSpacing="15" VerticalItemSpacing="15"   />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
 
 
                 </StackLayout>
