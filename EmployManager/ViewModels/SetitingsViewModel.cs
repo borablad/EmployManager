@@ -19,6 +19,7 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         public async void LogOut()
         {
+            CurrentLogin = string.Empty;
             Token = string.Empty;
             DateLogin = DateTime.MinValue;
             await AppShell.Current.GoToAsync($"//{nameof(LoginPage)}");

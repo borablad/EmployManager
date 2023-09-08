@@ -35,7 +35,7 @@
                                 </Frame>
                                 <StackLayout>
                                     <Label Grid.Row="1" Text="{Binding Username}" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                                    <Label Grid.Row="1" Text="{Binding Role}" VerticalTextAlignment="End" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" ></Label>
+                            <Label Grid.Row="1" Text="{Binding RoleName}" VerticalTextAlignment="End" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" ></Label>
                                 </StackLayout>
 
                             </StackLayout>
@@ -55,15 +55,15 @@
                     <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
                         <Frame CornerRadius="10" Padding="0" HeightRequest="60" WidthRequest="60">
                             <Grid>
-                                <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="{Binding Organization.IsPhotoURL}" />
-                                <Image Source="{Binding Organization.PhotoUrl}" Aspect="AspectFill" IsVisible="{Binding Organization.UnIsPhotoURL}" />
+                                <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="{Binding CurrentUser.IsPhotoURL}" />
+                                <Image Source="{Binding CurrentUser.PhotoUrl}" Aspect="AspectFill" IsVisible="{Binding CurrentUser.UnIsPhotoURL}" />
                             </Grid>
 
 
                         </Frame>
                     </Frame>
-                    <Label Grid.Row="1" Text="{Binding Organization.Title}" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-                    <Label Grid.Row="2" Text="{Binding Organization.Description}"  FontAttributes="None" FontSize="Default" Margin="0,-5,0,10" Opacity="0.7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Row="1" Text="{Binding CurrentUser.FullName}" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Row="2" Text="{Binding CurrentUser.RoleName}"  FontAttributes="None" FontSize="Default" Margin="0,-5,0,10" Opacity="0.7" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
 
                 </Grid>
                 <BoxView HeightRequest="1" Opacity="0.3" VerticalOptions="End"/>
@@ -136,6 +136,9 @@
 
 
             </ScrollView>
+
+            <!--<Button Text="+" Grid.Row="1" HorizontalOptions="FillAndExpand" Command="{Binding CreateMemberCommand}"/>-->
+
         </Grid>
 
     </Grid>

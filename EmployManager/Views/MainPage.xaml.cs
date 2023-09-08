@@ -1,13 +1,24 @@
-﻿namespace EmployManager.Views;
+﻿using EmployManager.ViewModels;
+
+namespace EmployManager.Views;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+	private MainPageViewModel vm;
 
 	public MainPage()
 	{
 		InitializeComponent();
+		vm= new MainPageViewModel();
+		BindingContext = vm;	
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+		vm.OnAppering();
+		
+    }
 
 }
 

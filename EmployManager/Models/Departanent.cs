@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using Realms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,13 +9,23 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EmployManager.Models
 {
-    public class Departanent
+    public class Departanent:RealmObject
     {
-        public string Id { get; set; }
-        public string CreaterId { get; set; } 
-        public string Title { get; set; } 
-        public string Description { get; set; } 
-        public string PhotoUrl { get; set; } 
-        public List<Member> Members { get; set; } 
+        [PrimaryKey,MapTo("_id")]
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
+        [MapTo("creater_id"),Required]
+        public string CreaterId { get; set; }
+
+        [MapTo("organization_id"),Required]
+        public string OrganizationId { get; set;}
+
+        [MapTo("title")]
+        public string Title { get; set; }
+        [MapTo("description")]
+        public string Description { get; set; }
+        [MapTo("photo_url")]
+        public string PhotoUrl { get; set; }
+        [MapTo("members")]
+        public IList<Member> Members { get;  } 
     }
 }

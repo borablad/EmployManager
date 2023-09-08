@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using Realms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,14 +9,19 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EmployManager.Models
 {
-    public class Organization
+    public class Organization:RealmObject
     {
-        public string Id { get; set; }
+        [MapTo("_id"),PrimaryKey]
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
+
+        [MapTo("title")]
         public string Title { get; set; } = "";
+        [MapTo("description")]
         public string Description { get; set; } = "";
+        [MapTo("photo_url")]
         public string PhotoUrl { get; set; } = "";
 
-        public List<Departanent> Departanents { get; set; } = new List<Departanent>();
+        
 
 
         public bool IsPhotoURL { get => string.IsNullOrEmpty(PhotoUrl); }
