@@ -45,6 +45,9 @@ namespace EmployManager.Models
         [MapTo("role_name")]
         public string RoleName { get; set; }
 
+        [Ignored]//добавить
+        public string OrganizationId { get; set; }
+
         [Ignored]
         public MembersRole Role
         {

@@ -16,7 +16,7 @@ namespace EmployManager.Models
         [MapTo("creater_id"),Required]
         public string CreaterId { get; set; }
 
-        [MapTo("organization_id"),Required]
+        [MapTo("organization_id"),Required]//delete под вопросом
         public string OrganizationId { get; set;}
 
         [MapTo("title")]

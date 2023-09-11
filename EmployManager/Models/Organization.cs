@@ -21,6 +21,8 @@ namespace EmployManager.Models
         [MapTo("photo_url")]
         public string PhotoUrl { get; set; } = "";
 
+        [Ignored]//удалить под вопросом
+        private List<Departanent> Departaments { get; set; }
         
 
 

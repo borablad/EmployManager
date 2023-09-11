@@ -11,6 +11,7 @@ public partial class BaseViewModel : ObservableObject
 
     public static string CurrentDepartamentId { get => Preferences.Get(nameof(CurrentDepartamentId), ""); set => Preferences.Set(nameof(CurrentDepartamentId), value); }
 
+    public static string CurrentOrganizationId { get => Preferences.Get(nameof(CurrentOrganizationId), ""); set => Preferences.Set(nameof(CurrentOrganizationId), value); }
 
 
 

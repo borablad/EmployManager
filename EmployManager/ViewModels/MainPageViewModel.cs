@@ -25,6 +25,9 @@ namespace EmployManager.ViewModels
         [ObservableProperty]
          IQueryable<Member> members;
 
+        [ObservableProperty]
+         IQueryable<Organization> organizations;
+
 		[ObservableProperty]
 		private  Member currentUser;
 
@@ -48,7 +51,7 @@ namespace EmployManager.ViewModels
         public ObservableCollection<Departanent> TestDep{ get; set; }   =new ObservableCollection<Departanent>();
 
 		private Realm realm;
-
+        private string organizationID;
 		public MainPageViewModel()
 		{
 			
@@ -60,12 +63,16 @@ namespace EmployManager.ViewModels
 		{
             SortHiPrice = Preferences.Get($"{nameof(SortHiPrice)}{CurrentDepartamentId}", false);
             realm =  RealmService.GetMainThreadRealm();
-           /* await GetAllDepartaments();
-            CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
-			CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament():null;
-			CurrentDepartamentId=CurrentDepartament?.Id;
-			LoadAllMembers();
-*/
+            await GetAllOrganizations();//после текущего юзера
+
+            /* 
+             CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
+              await GetAllOrganizations();
+            await f();
+             CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament():null;
+             CurrentDepartamentId=CurrentDepartament?.Id;
+             LoadAllMembers();
+ */
 
             loadDefaultOrganizations();
             LoadDefaultDep();
@@ -120,12 +127,25 @@ namespace EmployManager.ViewModels
         {
             return realm.All<Departanent>().ToList()[0];    
         }
-	
+
+        [RelayCommand]
+        public async Task SelectOrganization(Organization organization)
+        {
+
+            organizationID = organization.Id;
+            CurrentOrganizationId= organization.Id;
+            GetAllDepartaments();
+            LoadAllMembers();
+            await Task.CompletedTask;
+        }
+
 
 		[RelayCommand]
-		public async void ChangeDepartament( Departanent departanent)
+		public async void SelectDepartament( Departanent departanent)
 		{
-			CurrentDepartament = departanent;
+            organizationID=string.Empty;
+
+            CurrentDepartament = departanent;
 			CurrentDepartamentId = departanent.Id;
             LoadAllMembers();  
 			//Members = departanent.Members.ToList();
@@ -245,10 +265,24 @@ namespace EmployManager.ViewModels
                 return sBuilder.ToString();
             }
         }
-
+       
+        /// <returns></returns>
         private async Task GetAllDepartaments()
-            {
-                 Departanents= realm.All<Departanent>();
+        {
+            Departanents = realm.All<Departanent>().Where(x => x.OrganizationId ==CurrentOrganizationId);
+        }
+        private async Task GetAllOrganizations()
+        {
+            if (CurrentUser is null)
+                return;
+            if(CurrentUser.Role is not MembersRole.Admin) {
+                var deps = realm.All<Departanent>().Where(x => x.Members.Any(y => y.Id == CurrentUser.Id));
+                var organizationIds = deps.Select(y => y.OrganizationId).ToList();
+                Organizations = realm.All<Organization>().Where(x => organizationIds.Contains(x.Id));
+                return;
+            }
+               
+            Organizations = realm.All<Organization>();
         }
 
 
@@ -295,16 +329,32 @@ namespace EmployManager.ViewModels
 
                     _sort = "SORT(salary DESC)";
                     break;
+                case SortMember.NameAbc:
+                    _sort = "SORT(last_name ASC)";
+                    break;
+                case SortMember.NameZxy:
+                    _sort = "SORT(last_name DESC)";
+                    break;
                 
             }
 
-            if (!IsNoEmpty(SearchText))
+            if (!IsNoEmpty(SearchText) && IsNoEmpty(organizationID))
             {
-                filter = $"DepartamentId == '{CurrentDepartamentId}' AND Username != '{CurrentLogin}'";
+                filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'";
+            }
+            else if (IsNoEmpty(organizationID))
+            {
+                filter = $"organization_id == {CurrentOrganizationId} AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
+
+            }
+
+            else if (!IsNoEmpty(SearchText))
+            {
+                filter = $"departament_id == '{CurrentDepartamentId}' AND user_name != '{CurrentLogin}'";
             }
             else
             {
-               filter= $"DepartamentId == {CurrentDepartamentId} AND Username != '{CurrentLogin}' AND (Username CONTAINS[c] '{SearchText}' OR FirstName CONTAINS[c] '{SearchText}' OR LastName CONTAINS[c] '{SearchText}' OR ANY(Contacts, Title CONTAINS[c] '{SearchText}' OR Body CONTAINS[c] '{SearchText}'))";
+               filter= $"departament_id == {CurrentDepartamentId} AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
 
             }
 

@@ -161,7 +161,7 @@ namespace EmployManager.Services
                 queryName = "allDepartaments";
             }else if (subType == SubscriptionType.Mine)
             {
-                query = realm.All<Models.Departanent>().Where(x=>x.OrganizationId==CurrentOrganizationId);
+                query = realm.All<Models.Departanent>() ;
                 queryName = "mineDepartaments";
             }
             else

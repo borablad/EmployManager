@@ -10,6 +10,9 @@ using CommunityToolkit.Mvvm.Input;
 using static EmployManager.Models.Enums;
 using System.Security.Cryptography;
 using System.Text;
+using AuthenticationServices;
+using System.Collections.ObjectModel;
+
 
 public partial class EmployDetailViewModel : BaseViewModel
 {
@@ -20,12 +23,18 @@ public partial class EmployDetailViewModel : BaseViewModel
     [ObservableProperty]
     private bool isUpdate=true;
     [ObservableProperty]
-    private string firstName, lastName, password, photoUrl, login;
+    private string firstName, lastName, password, photoUrl, login, roleName;
     
-    private List<Contact> contacts;
+ 
 
     [ObservableProperty]
-    private MembersRole memberRole;
+    private MembersRole memberRole=MembersRole.User;
+
+
+    [ObservableProperty]
+    ObservableCollection<EmployManager.Models.Contacts> contactsVisual;
+
+    private Member CurrentUser;
 
     private Realm realm;
     public EmployDetailViewModel()
@@ -38,23 +47,30 @@ public partial class EmployDetailViewModel : BaseViewModel
     {
         if (realm is null)
             realm = RealmService.GetMainThreadRealm();
-
+        
         if (IsNoEmpty(MemberId))
         {
-            UpdateMember = realm.All<Member>().Where(x=>x.Id==MemberId).FirstOrDefault();
+            UpdateMember = realm.All<Member>().Where(x => x.Id == MemberId).FirstOrDefault();
+
             MemberId = "";
-            if(UpdateMember is null)
+            if (UpdateMember is null)
             {
                 UpdateMember = new Member();
 
                 IsUpdate = false;
+                return;
             }
+            UpdateMember?.Contacts.ToList().ForEach(x => ContactsVisual.Add(x));
 
         }
+        else
+            IsUpdate = false;
     }
     [RelayCommand]
     private async Task SelectRole(string parametr)
     {
+        if (CurrentUser.Role == MembersRole.Manager && parametr == nameof(MembersRole.Admin))
+            return;
         MemberRole = parametr switch
         {
             nameof(MembersRole.Admin) => MembersRole.Admin,
@@ -64,26 +80,30 @@ public partial class EmployDetailViewModel : BaseViewModel
          
     }
 
-    [RelayCommand]
-    private async Task AddContact(EmployManager.Models.Contacts contact)
-    {
-        if (contact is null) 
-            return;
-        UpdateMember.Contacts.Add(new EmployManager.Models.Contacts {Body=contact.Body,Title=contact.Title });
-    }
 
     [RelayCommand]
+    public async Task AddNewContact()
+    {
+        ContactsVisual.Add(new EmployManager.Models.Contacts());
+
+    }
+
+  
+
     private async Task UpdateMembers()
     {
         if (UpdateMember is null)
             return;
 
 
+        var currentDep = realm.All<Departanent>().FirstOrDefault(x => x.Id == CurrentDepartamentId);
+        var result = ContactsVisual.Where(x => IsNoEmpty(x.Body) && IsNoEmpty(x.Title)).ToList();
+       // var result = UpdateMember.Contacts.Where(x => memberscontacts.Any(y => x.Id != y.Id)).ToList();
         await realm.WriteAsync(() =>
         {
-            realm.Add(UpdateMember);
+            if (result.Count > 0)
+                result.ForEach(x => UpdateMember.Contacts.Add(x));
 
-            var currentDep = realm.All<Departanent>().FirstOrDefault(x => x.Id == CurrentDepartamentId);
             currentDep.Members.Add(UpdateMember);
             realm.Add(currentDep);
         });
@@ -95,6 +115,11 @@ public partial class EmployDetailViewModel : BaseViewModel
     [RelayCommand]
     private async Task CreateMember()
     {
+        if(IsUpdate)
+        {
+            UpdateMembers();
+            return;
+        }
         if (!IsNoEmpty(Login) || !IsNoEmpty(Password))
         {
             await DialogService.ShowAlertAsync("Ошибка", "Заполните все обязательные поля!");
@@ -107,13 +132,17 @@ public partial class EmployDetailViewModel : BaseViewModel
         UpdateMember.PhotoUrl = PhotoUrl;
         UpdateMember.Role = MemberRole;
         UpdateMember.DepartamentId = CurrentDepartamentId;
+        UpdateMember.OrganizationId = CurrentOrganizationId;
+        UpdateMember.RoleName = RoleName;
 
-
+        var currentDep = realm.All<Departanent>().FirstOrDefault(x => x.Id == CurrentDepartamentId);
+        var result = ContactsVisual.Where(x => IsNoEmpty(x.Body) && IsNoEmpty(x.Title)).ToList();
+        //var result = UpdateMember.Contacts.Where(x => memberscontacts.Any(y => x.Id != y.Id)).ToList();
         await realm.WriteAsync(() =>
         {
-            realm.Add(UpdateMember);
+            if(result.Count > 0)
+                result.ForEach(x => UpdateMember.Contacts.Add(x));
 
-            var currentDep = realm.All<Departanent>().FirstOrDefault(x => x.Id == CurrentDepartamentId);
             currentDep.Members.Add(UpdateMember);
             realm.Add(currentDep);
         });
