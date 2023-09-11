@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
-using Windows.AI.MachineLearning;
+
 using static EmployManager.Models.Enums;
 
 namespace EmployManager.ViewModels
