@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using static EmployManager.Models.Enums;
 using System.Security.Cryptography;
 using System.Text;
-using AuthenticationServices;
+
 using System.Collections.ObjectModel;
 
 
@@ -23,7 +23,7 @@ public partial class EmployDetailViewModel : BaseViewModel
     [ObservableProperty]
     private bool isUpdate=true;
     [ObservableProperty]
-    private string firstName, lastName, password, photoUrl, login, roleName;
+    private string firstName, lastName, password, photoUrl, login, roleName, midleName;
     
  
 
@@ -127,6 +127,7 @@ public partial class EmployDetailViewModel : BaseViewModel
         }
         UpdateMember.FirstName = FirstName;
         UpdateMember.LastName = LastName;
+        UpdateMember.MidleName = MidleName;
         UpdateMember.Username = Login;
         UpdateMember.Password = CreateHashPassword(Password);
         UpdateMember.PhotoUrl = PhotoUrl;

@@ -48,6 +48,9 @@ namespace EmployManager.Models
         [Ignored]//добавить
         public string OrganizationId { get; set; }
 
+        [Ignored]//добавить
+        public string MidleName { get; set; }
+
         [Ignored]
         public MembersRole Role
         {
