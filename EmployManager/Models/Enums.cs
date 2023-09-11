@@ -14,5 +14,11 @@ namespace EmployManager.Models
             Manager,
             Admin
         }
+
+        public enum SortMember
+        {
+            MemberSalaryMin,
+            MemberSalaryMax,
+        }
     }
 }

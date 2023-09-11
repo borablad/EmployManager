@@ -1,33 +1,46 @@
-﻿//using ARKit;
+﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EmployManager.Models;
 using EmployManager.Services;
 using EmployManager.Views;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Realms;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using Windows.AI.MachineLearning;
+using static EmployManager.Models.Enums;
 
 namespace EmployManager.ViewModels
 {
 	public partial   class MainPageViewModel : BaseViewModel
 	{
-		public ObservableCollection<Departanent> Departanents { get; set; }=new ObservableCollection<Departanent>();
-		public ObservableCollection<Member> Members { get; set; }=new ObservableCollection<Member>();
+        [ObservableProperty]
+        IQueryable departanents;
+
+        [ObservableProperty]
+         IQueryable<Member> members;
 
 		[ObservableProperty]
 		private  Member currentUser;
 
+
+        [ObservableProperty]
+        string searchText;
+
         public static string MemberId { get => Preferences.Get(nameof(MemberId), ""); set => Preferences.Set(nameof(MemberId), value); }
 
-      //  public Organization Organization { get; set; }
+    
 
+        [ObservableProperty]
+        private bool sortLowPrice, sortHiPrice;
 
-
-		public Departanent CurrentDepartament { get; set; }
+        [ObservableProperty]
+        Departanent currentDepartament;
 
 		private Realm realm;
 
@@ -40,14 +53,25 @@ namespace EmployManager.ViewModels
 
 		internal async void OnAppering()
 		{
-			realm =  RealmService.GetMainThreadRealm();
-            (await GetAllDepartaments()).ForEach(x=>Departanents.Add(x));
+            SortHiPrice = Preferences.Get($"{nameof(SortHiPrice)}{CurrentDepartamentId}", false);
+            realm =  RealmService.GetMainThreadRealm();
+            await GetAllDepartaments();
             CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
-			CurrentDepartament= Departanents.Count > 0 ? Departanents[0]:null;
+			CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament():null;
 			CurrentDepartamentId=CurrentDepartament?.Id;
 			LoadAllMembers();
         }
 
+
+        private int GetCount()
+        {
+            return realm.All<Departanent>().Count();
+        }
+
+        private Departanent ReturnFirstDepartament()
+        {
+            return realm.All<Departanent>().ToList()[0];    
+        }
 	
 
 		[RelayCommand]
@@ -55,8 +79,9 @@ namespace EmployManager.ViewModels
 		{
 			CurrentDepartament = departanent;
 			CurrentDepartamentId = departanent.Id;
+            LoadAllMembers();  
 			//Members = departanent.Members.ToList();
-			departanent.Members.ToList().ForEach(x=>Members.Add(x));
+			//departanent.Members.ToList().ForEach(x=>Members.Add(x));
 		}
 
 		[RelayCommand]
@@ -86,16 +111,20 @@ namespace EmployManager.ViewModels
             await AppShell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
 
-         public void OnSearchTextChanged(string value)
+         public async void OnSearchtextChanged(string value)
         {
-			if (string.IsNullOrWhiteSpace(value))
+            await LoadAllMembers();
+			/*if (string.IsNullOrWhiteSpace(value))
 			{
 				LoadAllMembers();
                 return;
             }
-			Members.Clear();
-			CurrentDepartament.Members.Where(x => x.Username.Contains(value)|| x.Contacts.Where(y => y.Title.Contains(value) || y.Body.Contains(value)).ToList().Count > 0).ToList().ForEach(x => Members.Add(x));
-	
+
+
+            Members = realm.All<Member>().Where(x => x.DepartamentId==CurrentDepartamentId &&  x.Username != CurrentLogin && x.Username.Contains(value) ||x.FirstName.Contains(value)||x.LastName.Contains(value) || x.Contacts.Where(y => y.Title.Contains(value) || y.Body.Contains(value)).ToList().Count > 0);*/
+            //Members.Clear();
+            //CurrentDepartament.Members.Where(x => x.Username.Contains(value)|| x.Contacts.Where(y => y.Title.Contains(value) || y.Body.Contains(value)).ToList().Count > 0).ToList().ForEach(x => Members.Add(x));
+
 
 
         }
@@ -112,25 +141,28 @@ namespace EmployManager.ViewModels
                 await DialogService.ShowAlertAsync("Ошибка", "Заполните все обязательные поля!");
                 return;
             }
+            var Contact = new Models.Contacts { Title = "123", Body = "test" };
             UpdateMember.FirstName = "!";
             UpdateMember.LastName = "123";
             UpdateMember.Username = Login;
             UpdateMember.Password = CreateHashPassword(Password);
+            UpdateMember.Contacts.Add(Contact);
      
             UpdateMember.Role = Enums.MembersRole.Manager;
             UpdateMember.DepartamentId = CurrentDepartamentId;
             var currentDep = realm.All<Departanent>().FirstOrDefault(x => x.Id == CurrentDepartamentId);
+            currentDep.Members.Add(UpdateMember);
             await realm.WriteAsync(() =>
             {
-                realm.Add(UpdateMember);
+               /* realm.Add(UpdateMember);*/
 
                
-                currentDep.Members.Add(UpdateMember);
+              
                 realm.Add(currentDep);
             });
 
-            var i = CurrentDepartament.Members;
-            currentDep.Members.ToList().ForEach(x=>Members.Add(x));
+         /*   var i = CurrentDepartament.Members;
+            currentDep.Members.ToList().ForEach(x=>Members.Add(x));*/
         }
         private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -164,28 +196,85 @@ namespace EmployManager.ViewModels
             }
         }
 
-            private async Task<List<Departanent>> GetAllDepartaments()
+        private async Task GetAllDepartaments()
+            {
+                 Departanents= realm.All<Departanent>();
+        }
+
+
+
+
+        [RelayCommand]
+        private async Task SortChanged(SortMember sort)
         {
-            return realm.All<Departanent>().ToList();
+            switch (sort)
+            {
+                case SortMember.MemberSalaryMin:
+               
+                    SortHiPrice = false;
+                    SortLowPrice = true;
+                    break;
+                case SortMember.MemberSalaryMax:
+                    SortHiPrice = true;
+                    SortLowPrice = false;
+                    break;
+               
+            }
 
+         
+            Preferences.Set($"{nameof(SortLowPrice)}{CurrentDepartamentId}", SortLowPrice);
+           // Preferences.Set($"{nameof(SortHiPrice)}{CurrentShopID}", SortHiPrice);
+            await LoadAllMembers();
         }
 
-		private void LoadAllMembers()
-		{
-            CurrentDepartament?.Members.ToList().ForEach(x => Members.Add(x));
-        }
-
-        private async Task<Organization> GetOrganization()
+        private async Task LoadAllMembers()
         {
-            var organization = new Organization();
+           /// var members = realm.All<Member>().Filter(rqlQuery).ToList();
+            var filter = "";
+            var _sort = "";
 
-            organization = await Rest.GetOrganization();
 
 
+            switch (sort)
+            {
+                case SortMember.MemberSalaryMin:
 
-            return organization;
+                    _sort = "SORT(salary ASC)";
+                    break;
+                case SortMember.MemberSalaryMax:
+
+                    _sort = "SORT(salary DESC)";
+                    break;
+                
+            }
+
+            if (!IsNoEmpty(SearchText))
+            {
+                filter = $"DepartamentId == '{CurrentDepartamentId}' AND Username != '{CurrentLogin}'";
+            }
+            else
+            {
+               filter= $"DepartamentId == {CurrentDepartamentId} AND Username != '{CurrentLogin}' AND (Username CONTAINS[c] '{SearchText}' OR FirstName CONTAINS[c] '{SearchText}' OR LastName CONTAINS[c] '{SearchText}' OR ANY(Contacts, Title CONTAINS[c] '{SearchText}' OR Body CONTAINS[c] '{SearchText}'))";
+
+            }
+
+
+            Members = realm.All<Member>().Filter($"{filter} {_sort}");
+            await Task.CompletedTask;
         }
 
+
+        private SortMember sort
+        {
+            get
+            {
+                if (SortHiPrice)
+                    return SortMember.MemberSalaryMax;
+               
+
+                return SortMember.MemberSalaryMin;
+            }
+        }
     }
 }
 

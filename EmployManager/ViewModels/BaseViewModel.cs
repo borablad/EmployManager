@@ -61,8 +61,8 @@ public partial class BaseViewModel : ObservableObject
     //Регулярное выражение на проверку почты
     public bool IsValidEmail(string email) => 
         Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-    public bool IsNoEmpty(string obj)=>
-        string.IsNullOrWhiteSpace(obj) ? false : true;
+    public bool IsNoEmpty(params string[] obj) =>
+        !obj.Any(string.IsNullOrWhiteSpace);
 
 /*    public bool IsTokenAlive() =>
         DateLogin < DateTime.Now;

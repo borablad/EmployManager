@@ -28,6 +28,9 @@ namespace EmployManager.Models
         [MapTo("photo_url")]
         public string PhotoUrl { get; set; } = "";
 
+        [MapTo("salary")]
+        public double Salary { get; set; }
+
         [MapTo("first_name")]
         public string FirstName { get; set; }
 
