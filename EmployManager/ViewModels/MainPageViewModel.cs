@@ -42,6 +42,11 @@ namespace EmployManager.ViewModels
         [ObservableProperty]
         Departanent currentDepartament;
 
+
+
+        public ObservableCollection<Organization> TestOrganizations { get; set; }   =new ObservableCollection<Organization>();
+        public ObservableCollection<Departanent> TestDep{ get; set; }   =new ObservableCollection<Departanent>();
+
 		private Realm realm;
 
 		public MainPageViewModel()
@@ -55,11 +60,54 @@ namespace EmployManager.ViewModels
 		{
             SortHiPrice = Preferences.Get($"{nameof(SortHiPrice)}{CurrentDepartamentId}", false);
             realm =  RealmService.GetMainThreadRealm();
-            await GetAllDepartaments();
+           /* await GetAllDepartaments();
             CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
 			CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament():null;
 			CurrentDepartamentId=CurrentDepartament?.Id;
 			LoadAllMembers();
+*/
+
+            loadDefaultOrganizations();
+            LoadDefaultDep();
+        }
+
+        private void loadDefaultOrganizations()
+        {
+          
+
+            // Генерируем и добавляем 5 рандомных объектов Organization в список
+            for (int i = 0; i < 5; i++)
+            {
+                Organization org = new Organization
+                {
+                    Title = "Organization " + (i + 1),
+                    Description = "Description for Organization " + (i + 1),
+                    PhotoUrl = "https://example.com/photo" + (i + 1) + ".jpg"
+                };
+
+                TestOrganizations.Add(org);
+            }
+        }
+        private void LoadDefaultDep()
+        {
+
+            for (int i = 0; i < 5; i++)
+            {
+             
+                Departanent department = new Departanent
+                {
+                    CreaterId = "CreatorId " + (i + 1),
+                    OrganizationId = "OrganizationId " + (i + 1),
+                    Title = "Department " + (i + 1),
+                    Description = "Description for Department " + (i + 1),
+                    PhotoUrl = "https://example.com/photo" + (i + 1) + ".jpg",
+                
+
+                };
+
+                TestDep.Add(department);
+            }
+
         }
 
 
