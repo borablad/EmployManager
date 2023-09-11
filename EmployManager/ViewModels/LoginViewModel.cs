@@ -25,6 +25,7 @@ namespace EmployManager.ViewModels
             RealmInit();
 
 			GetUserData();
+      
 			AutoLogin();
 
            // UpdateCircles();
@@ -107,7 +108,7 @@ namespace EmployManager.ViewModels
 
         private async void AutoLogin()
         {
-			if ( IsUserDataEmpty() && IsNoEmpty(CurrentLogin))
+			if ( IsUserDataEmpty() && !IsNoEmpty(CurrentLogin))
                 return;
 			
             await DoLogin();
@@ -128,7 +129,7 @@ namespace EmployManager.ViewModels
 
 		private bool IsUserDataEmpty()=>
 			string.IsNullOrWhiteSpace(Login) 
-			&& string.IsNullOrWhiteSpace(Password) ? true : false;
+			||string.IsNullOrWhiteSpace(Password) ? true : false;
 
 
 

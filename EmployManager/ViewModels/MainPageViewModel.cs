@@ -151,11 +151,13 @@ namespace EmployManager.ViewModels
             UpdateMember.Role = Enums.MembersRole.Manager;
             UpdateMember.DepartamentId = CurrentDepartamentId;
             var currentDep = realm.All<Departanent>().FirstOrDefault(x => x.Id == CurrentDepartamentId);
-            currentDep.Members.Add(UpdateMember);
+           
             await realm.WriteAsync(() =>
             {
-               /* realm.Add(UpdateMember);*/
-
+                currentDep.Members.Add(UpdateMember);
+             /*   realm.Add(Contact);
+               realm.Add(UpdateMember);
+*/
                
               
                 realm.Add(currentDep);
