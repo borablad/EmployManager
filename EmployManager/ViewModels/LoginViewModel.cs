@@ -22,22 +22,26 @@ namespace EmployManager.ViewModels
 
         public LoginViewModel()
 		{
-            RealmInit();
-
-			GetUserData();
-      
-			AutoLogin();
+        
 
            // UpdateCircles();
 
         }
+        internal async void OnAppering()
+        {
+            realm = RealmService.GetMainThreadRealm();
+
+            GetUserData();
+
+            AutoLogin();
+        }
 
 
-        public async Task RealmInit()
+        /*public async Task RealmInit()
         {
             try
             {
-                await RealmService.LoginAsync();
+               
                 realm = RealmService.GetMainThreadRealm();
             }
             catch (Exception ex)
@@ -46,7 +50,7 @@ namespace EmployManager.ViewModels
                 //todo
             }
             await Task.CompletedTask;
-        }
+        }*/
 
 	
 		[RelayCommand]
@@ -81,6 +85,7 @@ namespace EmployManager.ViewModels
 
                 CurrentLogin = member.Username;
                 SaveUserData();
+               // await (Application.Current.MainPage as NavigationPage).PushAsync(new MainPage());
                 await AppShell.Current.GoToAsync($"//{nameof(MainPage)}");
             }
             catch(Exception ex)

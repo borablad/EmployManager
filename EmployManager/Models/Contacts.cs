@@ -18,4 +18,6 @@ namespace EmployManager.Models
         [MapTo("body")]
         public string Body { get; set; } = "";
     }
+
+
 }

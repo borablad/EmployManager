@@ -44,12 +44,12 @@ namespace EmployManager.Models
         public string DepartamentId { get; set; }
         [MapTo("role_name")]
         public string RoleName { get; set; }
-
+        
         [Ignored]//добавить
         public string OrganizationId { get; set; }
 
-        [Ignored]//добавить
-        public string MidleName { get; set; }
+        [Ignored]//добавить //отчество
+        public string MiddleName { get; set; }
 
         [Ignored]
         public MembersRole Role
@@ -62,7 +62,8 @@ namespace EmployManager.Models
         public string FullName { get { return $"{FirstName} {LastName}"; } }
 
         [Ignored]
-        public string RoleEnumString { get
+        public string RoleEnumString { 
+            get
             { 
                 return Role switch 
                 {
@@ -72,6 +73,9 @@ namespace EmployManager.Models
                 }; 
             } 
         }
+
+      
+        
 
         [Ignored]
         public bool IsPhotoURL { get => string.IsNullOrEmpty(PhotoUrl); }

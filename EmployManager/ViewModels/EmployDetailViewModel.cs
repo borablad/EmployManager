@@ -127,7 +127,7 @@ public partial class EmployDetailViewModel : BaseViewModel
         }
         UpdateMember.FirstName = FirstName;
         UpdateMember.LastName = LastName;
-        UpdateMember.MidleName = MidleName;
+        UpdateMember.MiddleName = MidleName;
         UpdateMember.Username = Login;
         UpdateMember.Password = CreateHashPassword(Password);
         UpdateMember.PhotoUrl = PhotoUrl;

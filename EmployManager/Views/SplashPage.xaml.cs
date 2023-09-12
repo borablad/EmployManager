@@ -12,4 +12,9 @@ public partial class SplashPage : ContentPage
         vm = new SplashViewModel();
         BindingContext = vm;
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        vm.OnAppering();
+    }
 }

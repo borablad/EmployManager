@@ -1,9 +1,11 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EmployManager.Helpers;
 using EmployManager.Models;
 using EmployManager.Services;
 using EmployManager.Views;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Realms;
@@ -197,8 +199,65 @@ namespace EmployManager.ViewModels
 
         }
 
-
         [RelayCommand]
+        private async Task ImportExcel()
+        {
+
+
+            var tempMembers = GenerateRandomUsers(6);
+        
+            var file_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "out.xlsx");
+
+            var result = ExcelExportHelper.ImportMembersToExcel(members: tempMembers, filePath: file_path);
+           
+
+            if (result)
+                await DialogService.ShowError("успех");
+            await Task.CompletedTask;
+        }
+
+        public static List<Member> GenerateRandomUsers(int count)
+        {
+            List<Member> randomUsers = new List<Member>();
+            Random random = new Random();
+
+            for (int i = 0; i < count; i++)
+            {
+                Member user = new Member
+                {
+                    Username = $"User{i + 1}",
+                    Password = "123",
+                    Role = GenerateRandomRole(),
+                    Salary = random.NextDouble() * 10000,
+                    FirstName = $"FirstName{i + 1}",
+                    LastName = $"LastName{i + 1}",
+                     // Здесь вы можете добавить случайную генерацию контактов
+                    DepartamentId = $"Department{i + 1}",
+                    RoleName = $"Role{i + 1}",
+                    OrganizationId = $"Organization{i + 1}",
+                    MiddleName = $"MiddleName{i + 1}",
+                    PhotoUrl = $"https://example.com/user{i + 1}.jpg"
+                };
+
+                randomUsers.Add(user);
+            }
+
+            return randomUsers;
+        }
+
+ 
+
+        public static MembersRole GenerateRandomRole()
+        {
+            // Генерация случайной роли из перечисления MembersRole
+            Array values = Enum.GetValues(typeof(MembersRole));
+            Random random = new Random();
+            return (MembersRole)values.GetValue(random.Next(values.Length));
+        }
+    
+
+
+    [RelayCommand]
         private async Task CreateMember()
         {
             var UpdateMember = new Member();
@@ -265,7 +324,7 @@ namespace EmployManager.ViewModels
                 return sBuilder.ToString();
             }
         }
-       
+
         /// <returns></returns>
         private async Task GetAllDepartaments()
         {

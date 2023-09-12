@@ -21,12 +21,12 @@ public partial class LoginPage : ContentPage
     }
 
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
-
         base.OnAppearing();
-       // await vm.OnAppearing();
+        vm.OnAppering();
         Shell.SetTabBarIsVisible(this, false);
     }
+  
 
 }

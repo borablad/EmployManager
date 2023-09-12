@@ -1,4 +1,5 @@
 ﻿using System;
+using EmployManager.Services;
 using EmployManager.Views;
 
 namespace EmployManager.ViewModels
@@ -11,6 +12,18 @@ namespace EmployManager.ViewModels
 
         public SplashViewModel()
 		{
+           
+        }
+        internal async void OnAppering()
+        {
+            await Task.Delay(200);
+            try
+            {
+                await RealmService.LoginAsync();
+            }catch (Exception ex)
+            {
+                var i = ex;
+            }
             ChekAuthoriztion();
         }
 
