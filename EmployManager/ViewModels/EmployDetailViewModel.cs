@@ -13,6 +13,7 @@ using System.Text;
 
 using System.Collections.ObjectModel;
 
+namespace EmployManager.ViewModels;
 
 public partial class EmployDetailViewModel : BaseViewModel
 {

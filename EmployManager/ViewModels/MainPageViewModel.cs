@@ -260,6 +260,9 @@ namespace EmployManager.ViewModels
     [RelayCommand]
         private async Task CreateMember()
         {
+            await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}");
+            return;
+
             var UpdateMember = new Member();
             var Login = GenerateRandomString(22);
             var Password = "123";

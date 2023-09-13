@@ -69,12 +69,12 @@
                 <BoxView HeightRequest="1" Opacity="0.3" VerticalOptions="End"/>
 
                 <HorizontalStackLayout Grid.Row="1">
-                    <Frame>
-                        <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Header" Margin="10" />
+                    <Frame Padding="10" Margin="0" BorderColor="Transparent" HasShadow="False">
+                        <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Header"  />
 
                     </Frame>
 
-                    <Grid ColumnDefinitions="auto,*" Margin="10">
+                    <Grid ColumnDefinitions="auto,*" HorizontalOptions="CenterAndExpand" Margin="10">
                         <Frame  HorizontalOptions="Center" Margin="5" Padding="10">
                             <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.Users}" FontFamily="FAS" FontSize="Subtitle" />
                         </Frame>
@@ -154,7 +154,7 @@
 
             </ScrollView>
 
-            <!--<Button Text="+" Grid.Row="1" HorizontalOptions="FillAndExpand" Command="{Binding CreateMemberCommand}"/>-->
+            <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" HeightRequest="50" CornerRadius="25" WidthRequest="50" FontFamily="FAS" Grid.Row="1" Margin="60" HorizontalOptions="End" VerticalOptions="End" Command="{Binding CreateMemberCommand}"/>
 
         </Grid>
 

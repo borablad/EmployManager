@@ -2,8 +2,33 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EmployManager.Views.EmployDetailPage"
+             xmlns:vm="clr-namespace:EmployManager.ViewModels"
+             xmlns:model="clr-namespace:EmployManager.Models"
              xmlns:fa="clr-namespace:FontAwesome"
              Title="EmployDetailPage">
+    <ContentPage.BindingContext>
+        <vm:EmployDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ContactTemplate" x:DataType="model:Contacts">
+                <Frame Padding="15" >
+                                <StackLayout Spacing="15" VerticalOptions="Center">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Title" Text="{Binding Title}"  />
+                                    </Frame>
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Body" Text="{Binding Body}"/>
+                                    </Frame>
+
+                                </StackLayout>
+                            </Frame>
+            </DataTemplate>
+
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
     <Grid  RowDefinitions="55,*">
 
         <!-- Кастомный навбар -->
@@ -22,7 +47,7 @@
         <Grid Grid.Row="1" ColumnDefinitions=".5*,*,.5*">
             <Grid Grid.Column="1">
                 <ScrollView >
-                    <StackLayout Spacing="15" Margin="0,25,0,5">
+                    <StackLayout  Spacing="15" Margin="0,25,0,5">
                         <Frame Padding="15">
                             <Grid ColumnDefinitions="*,Auto" >
                                 <StackLayout  Spacing="15" VerticalOptions="CenterAndExpand">
@@ -44,46 +69,17 @@
 
                         </Frame>
 
-                        <StackLayout Spacing="15">
+                        <StackLayout Spacing="15" BindableLayout.ItemsSource="{Binding ContactsVisual}" BindableLayout.ItemTemplate="{StaticResource ContactTemplate}">
 
-                            <Frame Padding="15" >
-                                <StackLayout Spacing="15" VerticalOptions="Center">
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Title"  />
-                                    </Frame>
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Body" />
-                                    </Frame>
-
-                                </StackLayout>
-                            </Frame>
-                            <Frame Padding="15" >
-                                <StackLayout Spacing="15" VerticalOptions="Center">
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Title"  />
-                                    </Frame>
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Body" />
-                                    </Frame>
-
-                                </StackLayout>
-                            </Frame>
-                            <Frame Padding="15" >
-                                <StackLayout Spacing="15" VerticalOptions="Center">
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Title"  />
-                                    </Frame>
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Body" />
-                                    </Frame>
-
-                                </StackLayout>
-                            </Frame>
+                         
                         </StackLayout>
                     </StackLayout>
                 </ScrollView>
                 <Frame VerticalOptions="End" HorizontalOptions="End" HeightRequest="60" WidthRequest="60" TranslationX="35" CornerRadius="30" Margin="0,60"  Padding="0" BackgroundColor="{StaticResource Primary}" >
                     <Label Text="{x:Static fa:FontAwesomeIcons.Plus}" FontFamily="FAS" FontSize="Subtitle" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddNewContactCommand}" />
+                    </Frame.GestureRecognizers>
                 </Frame>
             </Grid>
 
