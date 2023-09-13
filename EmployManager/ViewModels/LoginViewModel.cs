@@ -147,12 +147,18 @@ namespace EmployManager.ViewModels
 
 
             var adminUser = new Member { Id = Guid.NewGuid().ToString(), Role = Enums.MembersRole.Admin, Username = Login, Password = CreateHashPassword(Password) };
-            var firstDepartament = new Departanent {OrganizationId=Guid.NewGuid().ToString(), Id = Guid.NewGuid().ToString() ,CreaterId = adminUser.Id, Title = "default", Description = "defalut" };
-            adminUser.DepartamentId = firstDepartament.Id;
+            var firstOrganization = new Organization { Title = "default" };
+            var firstDepartament = new Departanent {OrganizationId= firstOrganization.Id ,CreaterId = adminUser.Id, Title = "default"};
+
             await realm.WriteAsync(() =>
             {
-                realm.Add(adminUser);
+                adminUser.DepartamentId = firstDepartament.Id;
+                adminUser.OrganizationId = firstOrganization.Id;
+                firstDepartament.Members.Add(adminUser);
+                //realm.Add(adminUser);
+                realm.Add(firstOrganization);
                 realm.Add(firstDepartament);
+               
             });
        
            

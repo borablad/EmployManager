@@ -69,16 +69,16 @@ namespace EmployManager.Services
             realm.Subscriptions.Update(() =>
             {
 
-
                 var (queryUser, queryNameUser) = GetQueryForSubUser(realm, SubscriptionType.All);
                 var (queryDepartament, queryNameDepartament) = GetQueryForDepartaments(realm, SubscriptionType.All);
                 var (queryContacts, queryNameContacts) = GetQueryContacts(realm, SubscriptionType.All);
+                var (queryOrganization,queryNameOrganization)= GetQueryOrganizations(realm, SubscriptionType.All);
 
 
 
 
+                realm.Subscriptions.Add(queryOrganization, new SubscriptionOptions { Name = queryNameOrganization });
                 realm.Subscriptions.Add(queryUser, new SubscriptionOptions { Name = queryNameUser });
-
                 realm.Subscriptions.Add(queryDepartament, new SubscriptionOptions { Name = queryNameDepartament });
                 realm.Subscriptions.Add(queryContacts, new SubscriptionOptions { Name = queryNameContacts });
 
@@ -114,12 +114,13 @@ namespace EmployManager.Services
                     var (queryUser, queryNameUser) = GetQueryForSubUser(realm, SubscriptionType.All);
                     var (queryDepartament, queryNameDepartament) = GetQueryForDepartaments(realm, SubscriptionType.All);
                     var (queryContacts, queryNameContacts) = GetQueryContacts(realm, SubscriptionType.All);
+                    var (queryOrganization, queryNameOrganization) = GetQueryOrganizations(realm, SubscriptionType.All);
 
 
 
 
+                    realm.Subscriptions.Add(queryOrganization, new SubscriptionOptions { Name = queryNameOrganization });
                     realm.Subscriptions.Add(queryUser, new SubscriptionOptions { Name = queryNameUser });
-
                     realm.Subscriptions.Add(queryDepartament, new SubscriptionOptions { Name = queryNameDepartament });
                     realm.Subscriptions.Add(queryContacts, new SubscriptionOptions { Name = queryNameContacts });
 
@@ -142,6 +143,28 @@ namespace EmployManager.Services
             else if (subType == SubscriptionType.Mine)
             {
                 query = realm.All<Models.Member>().Where(x => x.DepartamentId == CurrentDepartamentId);
+            }
+            else
+            {
+                throw new ArgumentException("Unknown subscription type");
+            }
+
+            return (query, queryName);
+        }      
+        private static (IQueryable<Models.Organization> Query, string Name) GetQueryOrganizations(Realm realm, SubscriptionType subType)
+        {
+            IQueryable<Models.Organization> query = null;
+            string queryName = null;
+
+            if (subType == SubscriptionType.All)
+            {
+                query = realm.All<Models.Organization>();
+                queryName = "allOrganizations";
+            }
+            else if (subType == SubscriptionType.Mine)
+            {
+                query = realm.All<Models.Organization>();
+                queryName = "allOrganizations";
             }
             else
             {

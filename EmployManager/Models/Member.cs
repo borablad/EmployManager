@@ -37,6 +37,9 @@ namespace EmployManager.Models
         [MapTo("last_name")]
         public string LastName { get; set; }
 
+        [MapTo("middle_name")]
+        public string MiddleName { get; set; }
+
         [MapTo("contacts")]
         public IList<Contacts> Contacts { get; }
 
@@ -44,12 +47,11 @@ namespace EmployManager.Models
         public string DepartamentId { get; set; }
         [MapTo("role_name")]
         public string RoleName { get; set; }
-        
-        [Ignored]//добавить
+
+        [MapTo("organization_id")]        
         public string OrganizationId { get; set; }
 
-        [Ignored]//добавить //отчество
-        public string MiddleName { get; set; }
+   
 
         [Ignored]
         public MembersRole Role
