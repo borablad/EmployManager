@@ -40,6 +40,7 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Главная" Margin="15,0" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Header" />
+                <Button Text="Сохранить" Command="{Binding CreateMemberCommand}" Margin="0,-5" Grid.Column="2" TextTransform="None" BorderWidth="3" BorderColor="{StaticResource Primary}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" />
 
             </Grid>
         </Frame>
@@ -73,6 +74,8 @@
 
                          
                         </StackLayout>
+
+
                     </StackLayout>
                 </ScrollView>
                 <Frame VerticalOptions="End" HorizontalOptions="End" HeightRequest="60" WidthRequest="60" TranslationX="35" CornerRadius="30" Margin="0,60"  Padding="0" BackgroundColor="{StaticResource Primary}" >
