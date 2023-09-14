@@ -1,6 +1,7 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using EmployManager.Helpers;
 using EmployManager.Models;
 using EmployManager.Services;
@@ -33,9 +34,11 @@ namespace EmployManager.ViewModels
 		[ObservableProperty]
 		private  Member currentUser;
 
+        [ObservableProperty]
+        bool isOrgSelekt, isntDepsSelect;
 
         [ObservableProperty]
-        string searchText;
+        string searchText , curretnOrgTitle;
 
         public static string MemberId { get => Preferences.Get(nameof(MemberId), ""); set => Preferences.Set(nameof(MemberId), value); }
 
@@ -66,6 +69,9 @@ namespace EmployManager.ViewModels
             SortHiPrice = Preferences.Get($"{nameof(SortHiPrice)}{CurrentDepartamentId}", false);
             realm =  RealmService.GetMainThreadRealm();
             await GetAllOrganizations();//после текущего юзера
+
+            IsOrgSelekt = false;
+            IsntDepsSelect = true;
 
             /* 
              CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
@@ -136,6 +142,10 @@ namespace EmployManager.ViewModels
 
             organizationID = organization.Id;
             CurrentOrganizationId= organization.Id;
+     
+            IsOrgSelekt = true;
+            IsntDepsSelect = false;
+            CurretnOrgTitle = organization.Title;
             GetAllDepartaments();
             LoadAllMembers();
             await Task.CompletedTask;
@@ -336,7 +346,7 @@ namespace EmployManager.ViewModels
         private async Task GetAllOrganizations()
         {
             if (CurrentUser is null)
-                return;
+                CurrentUser = realm.All<Member>().FirstOrDefault(x => x.Username == CurrentLogin);
             if(CurrentUser.Role is not MembersRole.Admin) {
                 var deps = realm.All<Departanent>().Where(x => x.Members.Any(y => y.Id == CurrentUser.Id));
                 var organizationIds = deps.Select(y => y.OrganizationId).ToList();
@@ -437,6 +447,22 @@ namespace EmployManager.ViewModels
                 return SortMember.MemberSalaryMin;
             }
         }
+
+
+
+
+     
+
+        [RelayCommand]
+        public void BackToOrg()
+        {
+            
+            IsOrgSelekt = false;
+            IsntDepsSelect = true;
+            CurrentOrganizationId = "";
+            GetAllOrganizations();
+        }
+
     }
 }
 
