@@ -40,9 +40,7 @@ namespace EmployManager.ViewModels
         [ObservableProperty]
         string searchText , curretnOrgTitle;
 
-        public static string MemberId { get => Preferences.Get(nameof(MemberId), ""); set => Preferences.Set(nameof(MemberId), value); }
-
-    
+     
 
         [ObservableProperty]
         private bool sortLowPrice, sortHiPrice;
@@ -179,9 +177,9 @@ namespace EmployManager.ViewModels
             if (member is null)
                 return;
 			
-			MemberId = member.Id;
+		
          
-            await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}");
+            await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}?member_id={member.Id}");
 
 
         }
@@ -222,11 +220,11 @@ namespace EmployManager.ViewModels
             if (Members is null)
                 return;
 
-           var tempMembers = GenerateRandomUsers(6);
+          // var tempMembers = GenerateRandomUsers(6);
         
             var file_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "out.xlsx");
 
-            var result = ExcelExportHelper.ImportMembersToExcel(members: tempMembers, filePath: file_path);
+            var result = ExcelExportHelper.ImportMembersToExcel(members: Members.ToList(), filePath: file_path);
            
 
             if (result)
@@ -248,8 +246,8 @@ namespace EmployManager.ViewModels
                     { DevicePlatform.Android, new string[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel" } },
                     { DevicePlatform.iOS, new string[] { "com.microsoft.excel.xlsx", "com.microsoft.excel.xls" } },
                     { DevicePlatform.WinUI, new string[] { ".xlsx", ".xls" } },
-                     { DevicePlatform.macOS, new string[] { "com.microsoft.excel.xlsx", "com.microsoft.excel.xls" } }, // Добавляем расширения для Mac Catalyst.
-                    // Добавьте другие платформы и их соответствующие расширения файлов по мере необходимости.
+                     { DevicePlatform.macOS, new string[] { "com.microsoft.excel.xlsx", "com.microsoft.excel.xls" } }, 
+                    
                 })
                 };
 
@@ -261,7 +259,7 @@ namespace EmployManager.ViewModels
             {
                 await DialogService.ShowError("Не удалось открыть файл");
                 return;
-                // Обработка ошибки, если что-то пошло не так.
+              
             }
             if(file is null) 
                 return;
@@ -270,6 +268,11 @@ namespace EmployManager.ViewModels
 
             var result = ExcelExportHelper.ExportMembersFromExcel( filePath: file_path);
 
+            if(result is null)
+            {
+                await DialogService.ShowError("Не получилось пользователей. Проверьте правильность заполняемых данных");
+                return;
+            }
             if (result.Count < 0)
             {
                 await DialogService.ShowError("Не получилось пользователей. Проверьте правильность заполняемых данных");

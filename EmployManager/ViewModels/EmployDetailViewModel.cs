@@ -12,12 +12,13 @@ using System.Security.Cryptography;
 using System.Text;
 
 using System.Collections.ObjectModel;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace EmployManager.ViewModels;
 
-public partial class EmployDetailViewModel : BaseViewModel
+public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
 {
-    public static string MemberId { get => Preferences.Get(nameof(MemberId), ""); set => Preferences.Set(nameof(MemberId), value); }
+  
     [ObservableProperty]
     private Member updateMember;
 
@@ -36,7 +37,7 @@ public partial class EmployDetailViewModel : BaseViewModel
     ObservableCollection<EmployManager.Models.Contacts> contactsVisual;
 
     private Member CurrentUser;
-
+    private string MemberId;
     private Realm realm;
     public EmployDetailViewModel()
     {
@@ -48,25 +49,40 @@ public partial class EmployDetailViewModel : BaseViewModel
     {
         if (realm is null)
             realm = RealmService.GetMainThreadRealm();
-        
-        if (IsNoEmpty(MemberId))
-        {
-            UpdateMember = realm.All<Member>().Where(x => x.Id == MemberId).FirstOrDefault();
 
-            MemberId = "";
-            if (UpdateMember is null)
-            {
-                UpdateMember = new Member();
-
-                IsUpdate = false;
-                return;
-            }
-            UpdateMember?.Contacts.ToList().ForEach(x => ContactsVisual.Add(x));
-
-        }
-        else
-            IsUpdate = false;
+        IsUpdate = false;
     }
+
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.Count > 0 && query.ContainsKey("member_id") && query["member_id"] != null)
+        {
+
+            if (realm is null)
+                realm = RealmService.GetMainThreadRealm();
+
+           
+                UpdateMember = realm.All<Member>().Where(x => x.Id == MemberId).FirstOrDefault();
+
+                MemberId = "";
+                if (UpdateMember is null)
+                {
+                    UpdateMember = new Member();
+
+                    IsUpdate = false;
+                    return;
+                }
+                UpdateMember?.Contacts.ToList().ForEach(x => ContactsVisual.Add(x));
+                IsUpdate = true;
+
+            }
+          
+    }
+    
+
+
+
     [RelayCommand]
     private async Task SelectRole(string parametr)
     {
