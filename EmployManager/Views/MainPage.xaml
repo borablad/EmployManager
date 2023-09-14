@@ -143,7 +143,7 @@
         </Frame>
 
         <Grid RowDefinitions="auto,*" Grid.Column="1" >
-            <Grid Background="red"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" >
+            <Grid VerticalOptions="Start" HorizontalOptions="FillAndExpand" >
                 <Label Text="{Binding CurrentDepartament.Title}" FontSize="Subtitle"  VerticalTextAlignment="Center" Margin="35,0" HorizontalTextAlignment="Start"  />
 
                 <HorizontalStackLayout  Spacing="15" Margin="25"  HorizontalOptions="CenterAndExpand">

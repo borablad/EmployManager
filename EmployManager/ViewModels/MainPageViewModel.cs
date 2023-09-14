@@ -69,27 +69,21 @@ namespace EmployManager.ViewModels
             SortHiPrice = Preferences.Get($"{nameof(SortHiPrice)}{CurrentDepartamentId}", false);
             realm =  RealmService.GetMainThreadRealm();
             // await GetAllOrganizations();
-            CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
-            await GetAllOrganizations();
-      
-            CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament() : null;
-            CurrentDepartamentId = CurrentDepartament?.Id;
-            LoadAllMembers();
-
+        
 
             //после текущего юзера
 
             IsOrgSelekt = false;
             IsntDepsSelect = true;
 
-            /* 
+            
              CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
               await GetAllOrganizations();
-            await f();
+            
              CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament():null;
              CurrentDepartamentId=CurrentDepartament?.Id;
              LoadAllMembers();
- */
+ 
 
             loadDefaultOrganizations();
             LoadDefaultDep();
@@ -155,8 +149,8 @@ namespace EmployManager.ViewModels
             IsOrgSelekt = true;
             IsntDepsSelect = false;
             CurretnOrgTitle = organization.Title;
-            GetAllDepartaments();
-            LoadAllMembers();
+            await GetAllDepartaments();
+            await LoadAllMembers();
             await Task.CompletedTask;
         }
 
@@ -483,17 +477,17 @@ namespace EmployManager.ViewModels
             }
             else if (IsNoEmpty(organizationID) )
             {
-                filter = $"organization_id == {CurrentOrganizationId} AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
+                filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
 
             }
 
             else if (!IsNoEmpty(SearchText))
             {
-                filter = $"departament_id == '{CurrentDepartamentId}' AND user_name != '{CurrentLogin}'";
+                filter = $"departament_id == '{CurrentDepartamentId}' AND organization_id =='{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'";
             }
             else
             {
-               filter= $"departament_id == {CurrentDepartamentId} AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
+               filter= $"departament_id == '{CurrentDepartamentId}' AND  organization_id == '{CurrentOrganizationId}'  AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
 
             }
 
