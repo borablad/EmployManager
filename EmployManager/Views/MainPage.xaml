@@ -155,7 +155,7 @@
             </ScrollView>
 
             <StackLayout Margin="60" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
-                <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}"/>
+                <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ExportExcelCommand}"/>
                 <Button Text="{x:Static fa:FontAwesomeIcons.FileImport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}"/>
                 <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding CreateMemberCommand}"/>
             </StackLayout>
