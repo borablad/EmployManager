@@ -20,27 +20,58 @@ using static EmployManager.Models.Enums;
 
 namespace EmployManager.ViewModels
 {
-	public partial   class MainPageViewModel : BaseViewModel
-	{
+    public partial class MainPageViewModel : BaseViewModel
+    {
         [ObservableProperty]
         IQueryable departanents;
 
-        [ObservableProperty]
-         IQueryable<Member> members;
+
+        private IQueryable<Member> members;
+
+        public IQueryable<Member> Members
+        {
+            get { return members; }
+            set
+            {
+                members = value; OnPropertyChanged(nameof(Members));
+            }
+        }
 
         [ObservableProperty]
-         IQueryable<Organization> organizations;
-
-		[ObservableProperty]
-		private  Member currentUser;
+        IQueryable<Organization> organizations;
 
         [ObservableProperty]
-        bool isOrgSelekt, isntDepsSelect;
+        private Member currentUser;
+
+
+
+        /* [ObservableProperty]
+         bool isOrgSelekt, isntDepsSelect;*/
+
+        private string organizationIdTemp;
+
+        public string OrganizationIdTemp
+        {
+            get
+            {
+                return organizationIdTemp;
+            }
+            set
+            {
+                organizationIdTemp = value;
+                OnPropertyChanged(nameof(organizationIdTemp));
+                OnPropertyChanged(nameof(IsOrgSelect));
+                OnPropertyChanged(nameof(IsDepsSelect));
+            }
+        }
+
+        public bool IsOrgSelect { get { return !IsNoEmpty(OrganizationIdTemp); } }
+        public bool IsDepsSelect { get { return IsNoEmpty(OrganizationIdTemp); } }
 
         [ObservableProperty]
-        string searchText , curretnOrgTitle;
+        string searchText, curretnOrgTitle;
 
-     
+
 
         [ObservableProperty]
         private bool sortLowPrice, sortHiPrice;
@@ -50,38 +81,60 @@ namespace EmployManager.ViewModels
 
 
 
-        public ObservableCollection<Organization> TestOrganizations { get; set; }   =new ObservableCollection<Organization>();
-        public ObservableCollection<Departanent> TestDep{ get; set; }   =new ObservableCollection<Departanent>();
+        public ObservableCollection<Organization> TestOrganizations { get; set; } = new ObservableCollection<Organization>();
+        public ObservableCollection<Departanent> TestDep { get; set; } = new ObservableCollection<Departanent>();
 
-		private Realm realm;
-        private string organizationID;
-		public MainPageViewModel()
-		{
-			
+        private Realm realm;
+        private IDisposable subscribeMembers;
+
+        public MainPageViewModel()
+        {
+
 
         }
 
 
-		internal async void OnAppering()
-		{
+        internal async void OnAppering()
+        {
             SortHiPrice = Preferences.Get($"{nameof(SortHiPrice)}{CurrentDepartamentId}", false);
-            realm =  RealmService.GetMainThreadRealm();
-            // await GetAllOrganizations();
-        
+            realm = RealmService.GetMainThreadRealm();
 
-            //после текущего юзера
+            /*   IsOrgSelekt = true;
+               IsntDepsSelect = false;*/
 
-            IsOrgSelekt = false;
-            IsntDepsSelect = true;
 
-            
-             CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
-              await GetAllOrganizations();
-            
-             CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament():null;
-             CurrentDepartamentId=CurrentDepartament?.Id;
-             LoadAllMembers();
- 
+            CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
+            await GetAllOrganizations();
+
+            if (Organizations is null)
+                return;
+            if (Organizations.Count() <= 0)
+                return;
+
+            /* CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament():null;
+             CurrentDepartamentId=CurrentDepartament?.Id;*/
+            LoadAllMembers();
+
+            subscribeMembers = realm.All<Member>().Where(x => x.OrganizationId == CurrentOrganizationId)
+                  .SubscribeForNotifications((sender, changes) =>
+                  {
+                      if (changes == null)
+                          return;
+                      foreach (var i in changes.NewModifiedIndices)
+                      {
+                          LoadAllMembers();
+                      }
+
+                      foreach (var i in changes.InsertedIndices)
+                      {
+                          LoadAllMembers();
+                      }
+                      foreach (var i in changes.DeletedIndices)
+                      {
+                          LoadAllMembers();
+                      }
+                  });
+
 
             loadDefaultOrganizations();
             LoadDefaultDep();
@@ -89,7 +142,7 @@ namespace EmployManager.ViewModels
 
         private void loadDefaultOrganizations()
         {
-          
+
 
             // Генерируем и добавляем 5 рандомных объектов Organization в список
             for (int i = 0; i < 5; i++)
@@ -109,7 +162,7 @@ namespace EmployManager.ViewModels
 
             for (int i = 0; i < 5; i++)
             {
-             
+
                 Departanent department = new Departanent
                 {
                     CreaterId = "CreatorId " + (i + 1),
@@ -117,7 +170,7 @@ namespace EmployManager.ViewModels
                     Title = "Department " + (i + 1),
                     Description = "Description for Department " + (i + 1),
                     PhotoUrl = "https://example.com/photo" + (i + 1) + ".jpg",
-                
+
 
                 };
 
@@ -134,18 +187,22 @@ namespace EmployManager.ViewModels
 
         private Departanent ReturnFirstDepartament()
         {
-            return realm.All<Departanent>().ToList()[0];    
+            return realm.All<Departanent>().ToList()[0];
         }
 
         [RelayCommand]
         public async Task SelectOrganization(Organization organization)
         {
+            if (organization is null)
+                return;
 
-            organizationID = organization.Id;
-            CurrentOrganizationId= organization.Id;
-     
-            IsOrgSelekt = true;
-            IsntDepsSelect = false;
+            CurrentOrganizationId = IsNoEmpty(organization.Id) ? organization.Id : CurrentOrganizationId;
+            OrganizationIdTemp = CurrentOrganizationId;
+            CurrentDepartamentId = "";
+            Title = "";
+
+            /*IsOrgSelekt = true;
+            IsntDepsSelect = false;*/
             CurretnOrgTitle = organization.Title;
             await GetAllDepartaments();
             await LoadAllMembers();
@@ -153,32 +210,31 @@ namespace EmployManager.ViewModels
         }
 
 
-		[RelayCommand]
-		public async void SelectDepartament( Departanent departanent)
-		{
-            organizationID=string.Empty;
+        [RelayCommand]
+        public async void SelectDepartament(Departanent departanent)
+        {
 
             CurrentDepartament = departanent;
-			CurrentDepartamentId = departanent.Id;
-            LoadAllMembers();  
-			//Members = departanent.Members.ToList();
-			//departanent.Members.ToList().ForEach(x=>Members.Add(x));
-		}
+            CurrentDepartamentId = departanent.Id;
+            LoadAllMembers();
+            //Members = departanent.Members.ToList();
+            //departanent.Members.ToList().ForEach(x=>Members.Add(x));
+        }
 
-		[RelayCommand]
-		public async void GoToSettings()
-		{
-			await AppShell.Current.GoToAsync($"{nameof(SetingsPage)}");
-		}
+        [RelayCommand]
+        public async void GoToSettings()
+        {
+            await AppShell.Current.GoToAsync($"{nameof(SetingsPage)}");
+        }
 
         [RelayCommand]
         public async void GoToEmployDetail(Member member)
         {
             if (member is null)
                 return;
-			
-		
-         
+
+
+
             await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}?member_id={member.Id}");
 
 
@@ -188,16 +244,16 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         public async void LogOut()
         {
-			Token = string.Empty;
-			CurrentLogin = string.Empty;
+            Token = string.Empty;
+            CurrentLogin = string.Empty;
             DateLogin = DateTime.MinValue;
             await AppShell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
 
-         public async void OnSearchtextChanged(string value)
+        public async void OnSearchtextChanged(string value)
         {
             await LoadAllMembers();
-			/*if (string.IsNullOrWhiteSpace(value))
+            /*if (string.IsNullOrWhiteSpace(value))
 			{
 				LoadAllMembers();
                 return;
@@ -220,12 +276,12 @@ namespace EmployManager.ViewModels
             if (Members is null)
                 return;
 
-          // var tempMembers = GenerateRandomUsers(6);
-        
+            // var tempMembers = GenerateRandomUsers(6);
+
             var file_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "out.xlsx");
 
             var result = ExcelExportHelper.ImportMembersToExcel(members: Members.ToList(), filePath: file_path);
-           
+
 
             if (result)
                 await DialogService.ShowError("успех");
@@ -246,8 +302,8 @@ namespace EmployManager.ViewModels
                     { DevicePlatform.Android, new string[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel" } },
                     { DevicePlatform.iOS, new string[] { "com.microsoft.excel.xlsx", "com.microsoft.excel.xls" } },
                     { DevicePlatform.WinUI, new string[] { ".xlsx", ".xls" } },
-                     { DevicePlatform.macOS, new string[] { "com.microsoft.excel.xlsx", "com.microsoft.excel.xls" } }, 
-                    
+                     { DevicePlatform.macOS, new string[] { "com.microsoft.excel.xlsx", "com.microsoft.excel.xls" } },
+
                 })
                 };
 
@@ -259,16 +315,16 @@ namespace EmployManager.ViewModels
             {
                 await DialogService.ShowError("Не удалось открыть файл");
                 return;
-              
+
             }
-            if(file is null) 
+            if (file is null)
                 return;
 
             var file_path = file.FullPath;
 
-            var result = ExcelExportHelper.ExportMembersFromExcel( filePath: file_path);
+            var result = ExcelExportHelper.ExportMembersFromExcel(filePath: file_path);
 
-            if(result is null)
+            if (result is null)
             {
                 await DialogService.ShowError("Не получилось пользователей. Проверьте правильность заполняемых данных");
                 return;
@@ -285,8 +341,8 @@ namespace EmployManager.ViewModels
             });
 
             await LoadAllMembers();
-            
-               
+
+
             await Task.CompletedTask;
         }
 
@@ -305,7 +361,7 @@ namespace EmployManager.ViewModels
                     Salary = random.NextDouble() * 10000,
                     FirstName = $"FirstName{i + 1}",
                     LastName = $"LastName{i + 1}",
-                     // Здесь вы можете добавить случайную генерацию контактов
+                    // Здесь вы можете добавить случайную генерацию контактов
                     DepartamentId = $"Department{i + 1}",
                     RoleName = $"Role{i + 1}",
                     OrganizationId = $"Organization{i + 1}",
@@ -319,7 +375,7 @@ namespace EmployManager.ViewModels
             return randomUsers;
         }
 
- 
+
 
         public static MembersRole GenerateRandomRole()
         {
@@ -328,96 +384,27 @@ namespace EmployManager.ViewModels
             Random random = new Random();
             return (MembersRole)values.GetValue(random.Next(values.Length));
         }
-    
 
 
-    [RelayCommand]
-        private async Task CreateMember()
-        {
-            await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}");
-            return;
 
-            var UpdateMember = new Member();
-            var Login = GenerateRandomString(22);
-            var Password = "123";
-            if (!IsNoEmpty(Login) || !IsNoEmpty(Password))
-            {
-                await DialogService.ShowAlertAsync("Ошибка", "Заполните все обязательные поля!");
-                return;
-            }
-            var Contact = new Models.Contacts { Title = "123", Body = "test" };
-            UpdateMember.FirstName = "!";
-            UpdateMember.LastName = "123";
-            UpdateMember.Username = Login;
-            UpdateMember.Password = CreateHashPassword(Password);
-            UpdateMember.Contacts.Add(Contact);
-     
-            UpdateMember.Role = Enums.MembersRole.Manager;
-            UpdateMember.DepartamentId = CurrentDepartamentId;
-            var currentDep = realm.All<Departanent>().FirstOrDefault(x => x.Id == CurrentDepartamentId);
-           
-            await realm.WriteAsync(() =>
-            {
-                currentDep.Members.Add(UpdateMember);
-             /*   realm.Add(Contact);
-               realm.Add(UpdateMember);
-*/
-               
-              
-                realm.Add(currentDep);
-            });
-
-         /*   var i = CurrentDepartament.Members;
-            currentDep.Members.ToList().ForEach(x=>Members.Add(x));*/
-        }
-        private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        public static string GenerateRandomString(int length)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            Random random= new Random();
-            for (int i = 0; i < length; i++)
-            {
-                int randomIndex = random.Next(0, characters.Length);
-                char randomChar = characters[randomIndex];
-                stringBuilder.Append(randomChar);
-            }
-
-            return stringBuilder.ToString();
-        }
-        private string CreateHashPassword(string password)
-        {
-            using (MD5 md5Hash = MD5.Create())
-            {
-                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                StringBuilder sBuilder = new StringBuilder();
-
-                for (int i = 0; i < data.Length; i++)
-                {
-                    sBuilder.Append(data[i].ToString("x2"));
-                }
-
-                return sBuilder.ToString();
-            }
-        }
 
         /// <returns></returns>
         private async Task GetAllDepartaments()
         {
-            Departanents = realm.All<Departanent>().Where(x => x.OrganizationId ==CurrentOrganizationId);
+            Departanents = realm.All<Departanent>().Where(x => x.OrganizationId == CurrentOrganizationId);
         }
         private async Task GetAllOrganizations()
         {
             if (CurrentUser is null)
                 CurrentUser = realm.All<Member>().FirstOrDefault(x => x.Username == CurrentLogin);
-            if(CurrentUser.Role is not MembersRole.Admin) {
+            if (CurrentUser.Role is not MembersRole.Admin)
+            {
                 var deps = realm.All<Departanent>().Where(x => x.Members.Any(y => y.Id == CurrentUser.Id));
                 var organizationIds = deps.Select(y => y.OrganizationId).ToList();
                 Organizations = realm.All<Organization>().Where(x => organizationIds.Contains(x.Id));
                 return;
             }
-               
+
             Organizations = realm.All<Organization>();
         }
 
@@ -430,7 +417,7 @@ namespace EmployManager.ViewModels
             switch (sort)
             {
                 case SortMember.MemberSalaryMin:
-               
+
                     SortHiPrice = false;
                     SortLowPrice = true;
                     break;
@@ -438,18 +425,18 @@ namespace EmployManager.ViewModels
                     SortHiPrice = true;
                     SortLowPrice = false;
                     break;
-               
+
             }
 
-         
+
             Preferences.Set($"{nameof(SortLowPrice)}{CurrentDepartamentId}", SortLowPrice);
-           // Preferences.Set($"{nameof(SortHiPrice)}{CurrentShopID}", SortHiPrice);
+            // Preferences.Set($"{nameof(SortHiPrice)}{CurrentShopID}", SortHiPrice);
             await LoadAllMembers();
         }
 
         private async Task LoadAllMembers()
         {
-           /// var members = realm.All<Member>().Filter(rqlQuery).ToList();
+            /// var members = realm.All<Member>().Filter(rqlQuery).ToList();
             var filter = "";
             var _sort = "";
 
@@ -471,31 +458,38 @@ namespace EmployManager.ViewModels
                 case SortMember.NameZxy:
                     _sort = "SORT(last_name DESC)";
                     break;
-                
-            }
 
-            if (!IsNoEmpty(SearchText) && IsNoEmpty(organizationID) )
+            }
+            try
             {
-                filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'";
+                if (!IsNoEmpty(SearchText) && IsNoEmpty(CurrentOrganizationId) && !IsNoEmpty(CurrentDepartamentId))
+                {
+                    filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}' ";
+                }
+                else if (IsNoEmpty(CurrentOrganizationId) && !IsNoEmpty(CurrentDepartamentId))
+                {
+                    filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
+
+                }
+
+                else if (!IsNoEmpty(SearchText))
+                {
+                    filter = $"departament_id == '{CurrentDepartamentId}' AND organization_id =='{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'";
+                }
+                else
+                {
+                    filter = $"departament_id == '{CurrentDepartamentId}' AND  organization_id == '{CurrentOrganizationId}'  AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
+
+                }
+
+                //var i = realm.All<Member>().Filter($"{filter} {_sort}");
+                Members = realm.All<Member>().Filter($"{filter} {_sort}");
+                //   Members = realm.All<Member>().Where(x => x.OrganizationId == CurrentOrganizationId);
             }
-            else if (IsNoEmpty(organizationID) )
+            catch (Exception ex)
             {
-                filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
 
             }
-
-            else if (!IsNoEmpty(SearchText))
-            {
-                filter = $"departament_id == '{CurrentDepartamentId}' AND organization_id =='{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'";
-            }
-            else
-            {
-               filter= $"departament_id == '{CurrentDepartamentId}' AND  organization_id == '{CurrentOrganizationId}'  AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
-
-            }
-
-
-            Members = realm.All<Member>().Filter($"{filter} {_sort}");
             await Task.CompletedTask;
         }
 
@@ -506,7 +500,7 @@ namespace EmployManager.ViewModels
             {
                 if (SortHiPrice)
                     return SortMember.MemberSalaryMax;
-               
+
 
                 return SortMember.MemberSalaryMin;
             }
@@ -515,18 +509,23 @@ namespace EmployManager.ViewModels
 
 
 
-     
+
 
         [RelayCommand]
         public void BackToOrg()
         {
-            
-            IsOrgSelekt = false;
-            IsntDepsSelect = true;
-            CurrentOrganizationId = "";
-            GetAllOrganizations();
+
+            /* IsOrgSelekt = false;
+             IsntDepsSelect = true;*/
+            OrganizationIdTemp = string.Empty;
+            CurrentOrganizationId = string.Empty;
+            CurrentDepartamentId = string.Empty;
+            curretnOrgTitle = string.Empty;
+            //GetAllOrganizations();
         }
 
     }
+
 }
 
+    
