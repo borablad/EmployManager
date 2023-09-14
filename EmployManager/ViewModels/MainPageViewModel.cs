@@ -68,7 +68,16 @@ namespace EmployManager.ViewModels
 		{
             SortHiPrice = Preferences.Get($"{nameof(SortHiPrice)}{CurrentDepartamentId}", false);
             realm =  RealmService.GetMainThreadRealm();
-            await GetAllOrganizations();//после текущего юзера
+            // await GetAllOrganizations();
+            CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
+            await GetAllOrganizations();
+      
+            CurrentDepartament = GetCount() > 0 ? ReturnFirstDepartament() : null;
+            CurrentDepartamentId = CurrentDepartament?.Id;
+            LoadAllMembers();
+
+
+            //после текущего юзера
 
             IsOrgSelekt = false;
             IsntDepsSelect = true;
@@ -173,6 +182,8 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         public async void GoToEmployDetail(Member member)
         {
+            if (member is null)
+                return;
 			
 			MemberId = member.Id;
          
@@ -214,7 +225,10 @@ namespace EmployManager.ViewModels
         {
 
 
-            var tempMembers = GenerateRandomUsers(6);
+            if (Members is null)
+                return;
+
+           var tempMembers = GenerateRandomUsers(6);
         
             var file_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "out.xlsx");
 
@@ -223,6 +237,59 @@ namespace EmployManager.ViewModels
 
             if (result)
                 await DialogService.ShowError("успех");
+            await Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        private async Task ExportExcel()
+        {
+
+            FileResult file;
+            try
+            {
+                var options = new PickOptions
+                {
+                    FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.Android, new string[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel" } },
+                    { DevicePlatform.iOS, new string[] { "com.microsoft.excel.xlsx", "com.microsoft.excel.xls" } },
+                    { DevicePlatform.WinUI, new string[] { ".xlsx", ".xls" } },
+                     { DevicePlatform.macOS, new string[] { "com.microsoft.excel.xlsx", "com.microsoft.excel.xls" } }, // Добавляем расширения для Mac Catalyst.
+                    // Добавьте другие платформы и их соответствующие расширения файлов по мере необходимости.
+                })
+                };
+
+                file = await FilePicker.PickAsync(options);
+                if (file is null)
+                    return;
+            }
+            catch (Exception ex)
+            {
+                await DialogService.ShowError("Не удалось открыть файл");
+                return;
+                // Обработка ошибки, если что-то пошло не так.
+            }
+            if(file is null) 
+                return;
+
+            var file_path = file.FullPath;
+
+            var result = ExcelExportHelper.ExportMembersFromExcel( filePath: file_path);
+
+            if (result.Count < 0)
+            {
+                await DialogService.ShowError("Не получилось пользователей. Проверьте правильность заполняемых данных");
+                return;
+            }
+
+            await realm.WriteAsync(() =>
+            {
+                realm.Add(result);
+            });
+
+            await LoadAllMembers();
+            
+               
             await Task.CompletedTask;
         }
 
@@ -410,11 +477,11 @@ namespace EmployManager.ViewModels
                 
             }
 
-            if (!IsNoEmpty(SearchText) && IsNoEmpty(organizationID))
+            if (!IsNoEmpty(SearchText) && IsNoEmpty(organizationID) )
             {
                 filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'";
             }
-            else if (IsNoEmpty(organizationID))
+            else if (IsNoEmpty(organizationID) )
             {
                 filter = $"organization_id == {CurrentOrganizationId} AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
 

@@ -92,7 +92,7 @@ namespace EmployManager.ViewModels
             {
                 if(ex.Message.Contains("login"))
                     await DialogService.ShowError("Не правильный логин , повторите попытку");
-                else if (ex.Message.Contains("login"))
+                else if (ex.Message.Contains("password"))
                     await DialogService.ShowError("Не правильный  пароль, повторите попытку");
                 else
                     await DialogService.ShowError("Введутся технические работы, повторите попытку позже");

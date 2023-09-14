@@ -73,19 +73,26 @@ public static class ExcelExportHelper
 
                     for (int row = 2; row <= rowCount; row++) // Начинаем с 2 строки, так как первая строка содержит заголовки
                     {
-                        var member = new Member
+                        Member member;
+                        try
                         {
-                            FirstName = worksheet.Cell(row, 1).Value.ToString(),
-                            LastName = worksheet.Cell(row, 2).Value.ToString(),
-                            MiddleName = worksheet.Cell(row, 3).Value.ToString(),
-                            RoleName = worksheet.Cell(row, 4).Value.ToString(),
-                            Salary = Convert.ToDouble(worksheet.Cell(row, 5).Value),
-                            Username = worksheet.Cell(row, 7).Value.ToString(),
-                            Role = GetRoleByVisualString(worksheet.Cell(row, 8).Value.ToString()),
-                            Password = CreateHashPassword(worksheet.Cell(row, 9).Value.ToString()),
-                            DepartamentId = CurrentDepartamentId,
-                            OrganizationId = CurrentOrganizationId
-                        };
+                            member = new Member
+                            {
+                                FirstName = worksheet.Cell(row, 1).Value.ToString(),
+                                LastName = worksheet.Cell(row, 2).Value.ToString(),
+                                MiddleName = worksheet.Cell(row, 3).Value.ToString(),
+                                RoleName = worksheet.Cell(row, 4).Value.ToString(),
+                                Salary = Convert.ToDouble(worksheet.Cell(row, 5).Value.ToString()),
+                                Username = worksheet.Cell(row, 7).Value.ToString(),
+                                Role = GetRoleByVisualString(worksheet.Cell(row, 8).Value.ToString()),
+                                Password = CreateHashPassword(worksheet.Cell(row, 9).Value.ToString()),
+                                DepartamentId = CurrentDepartamentId,
+                                OrganizationId = CurrentOrganizationId
+                            };
+                        }catch(Exception ex)
+                        {
+                            continue;
+                        }
 
                         string contactsString = worksheet.Cell(row, 6).Value.ToString();
                         // Разбиваем строку контактов на отдельные контакты
