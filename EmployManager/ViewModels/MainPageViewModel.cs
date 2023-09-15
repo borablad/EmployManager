@@ -33,7 +33,8 @@ namespace EmployManager.ViewModels
             get { return members; }
             set
             {
-                members = value; OnPropertyChanged(nameof(Members));
+                members = value; OnPropertyChanged(nameof(Members)); UpdateCollectinSpan();
+               
             }
         }
 
@@ -45,8 +46,8 @@ namespace EmployManager.ViewModels
 
 
 
-        /* [ObservableProperty]
-         bool isOrgSelekt, isntDepsSelect;*/
+        [ObservableProperty]
+        int collectinSpan = 1;
 
         private string organizationIdTemp;
 
@@ -93,6 +94,12 @@ namespace EmployManager.ViewModels
 
         }
 
+        public void UpdateCollectinSpan()
+        {
+            if (Members.Count() >= 4)
+                CollectinSpan = 4;
+            else CollectinSpan = Members.Count();
+        }
 
         internal async void OnAppering()
         {
@@ -242,6 +249,18 @@ namespace EmployManager.ViewModels
 
 
         [RelayCommand]
+        public async void AddMember()
+        {
+            
+
+
+
+            await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}");
+
+
+        }
+
+        [RelayCommand]
         public async void LogOut()
         {
             Token = string.Empty;
@@ -270,26 +289,6 @@ namespace EmployManager.ViewModels
 
         [RelayCommand]
         private async Task ImportExcel()
-        {
-
-
-            if (Members is null)
-                return;
-
-            // var tempMembers = GenerateRandomUsers(6);
-
-            var file_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "out.xlsx");
-
-            var result = ExcelExportHelper.ImportMembersToExcel(members: Members.ToList(), filePath: file_path);
-
-
-            if (result)
-                await DialogService.ShowError("успех");
-            await Task.CompletedTask;
-        }
-
-        [RelayCommand]
-        private async Task ExportExcel()
         {
 
             FileResult file;
@@ -343,6 +342,27 @@ namespace EmployManager.ViewModels
             await LoadAllMembers();
 
 
+            await Task.CompletedTask;
+
+        }
+
+        [RelayCommand]
+        private async Task ExportExcel()
+        {
+
+            if (Members is null)
+                return;
+
+            // var tempMembers = GenerateRandomUsers(6);
+
+            var file_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), $"out.xlsx");
+
+            var result = ExcelExportHelper.ImportMembersToExcel(members: Members.ToList(), filePath: file_path);
+
+
+            if (result)
+                await AppShell.Current.DisplayAlert("Документ создан","В ваших документа успешно создан экспортированый фаил","ок");
+                //await DialogService.ShowError("успех");
             await Task.CompletedTask;
         }
 

@@ -113,7 +113,7 @@ namespace EmployManager.ViewModels
 
         private async void AutoLogin()
         {
-			if ( IsUserDataEmpty() && !IsNoEmpty(CurrentLogin))
+			if ( IsUserDataEmpty() || !IsNoEmpty(CurrentLogin))
                 return;
 			
             await DoLogin();

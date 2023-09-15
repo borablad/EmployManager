@@ -52,7 +52,7 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
     {
         if (realm is null)
             realm = RealmService.GetMainThreadRealm();
-        ContactsVisual.Add(new EmployManager.Models.Contacts());
+        //ContactsVisual.Add(new EmployManager.Models.Contacts());
 
        
     }
@@ -97,8 +97,8 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
     [RelayCommand]
     public async Task SelectRole(MembersRole parametr)
     {
-        if (CurrentUser.Role == MembersRole.Manager && parametr == (MembersRole.Admin))
-            return;
+        //if (CurrentUser.Role == MembersRole.Manager && parametr == (MembersRole.Admin))
+        //    return;
         MemberRole = parametr;//switch
         //{
         //    nameof(MembersRole.Admin) => MembersRole.Admin,

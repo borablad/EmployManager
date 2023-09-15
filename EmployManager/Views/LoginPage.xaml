@@ -51,7 +51,7 @@
 
 
 
-                    <BoxView HeightRequest="1" Margin="10,0" Opacity=".3"/>
+                    <!--<BoxView HeightRequest="1" Margin="10,0" Opacity=".3"/>-->
                     <Grid Padding="0">
               
                         <Entry x:Name="PassEntry"  HorizontalTextAlignment="Start" Text="{Binding Password}" FontSize="Default" Placeholder="{x:Static  res:AppResources.PasswordLabel}" IsPassword="True"  />

@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:EmployManager.ViewModels"
              xmlns:model="clr-namespace:EmployManager.Models"
              xmlns:fa="clr-namespace:FontAwesome"
+             Shell.NavBarIsVisible="False"
              Title="EmployDetailPage">
     <ContentPage.BindingContext>
         <vm:EmployDetailViewModel/>
@@ -29,26 +30,26 @@
 
     </ContentPage.Resources>
 
-    <Grid  RowDefinitions="55,*">
+    <Grid  RowDefinitions="65,*">
 
         <!-- Кастомный навбар -->
-        <Frame CornerRadius="0" Padding="20,15">
+        <Frame CornerRadius="0" Padding="20,5">
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
                 <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding BackCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Главная" Margin="15,0" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Header" />
-                <Button Text="Сохранить" Command="{Binding CreateMemberCommand}" Margin="0,-5" Grid.Column="2" TextTransform="None" BorderWidth="3" BorderColor="{StaticResource Primary}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" />
+                <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Главная" Margin="15,0" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Subtitle" />
+                <Button Text="Сохранить" Command="{Binding CreateMemberCommand}" Margin="0,-5" Padding="15,3" Grid.Column="2" TextTransform="None" BorderWidth="3" BorderColor="{StaticResource Primary}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" />
 
             </Grid>
         </Frame>
 
-        <Grid Grid.Row="1" ColumnDefinitions=".5*,*,.5*">
+        <Grid Grid.Row="1" ColumnDefinitions=".35*,*,.35*">
             <Grid Grid.Column="1">
-                <ScrollView >
-                    <StackLayout  Spacing="15" Margin="0,25,0,5">
+                <ScrollView  >
+                    <StackLayout Padding="30,0"  Spacing="15" Margin="0,25,0,5">
                         <Frame Padding="15">
                             <Grid ColumnDefinitions="*,Auto" >
                                 <StackLayout  Spacing="15" VerticalOptions="CenterAndExpand">
@@ -90,13 +91,15 @@
                                     </Frame>
 
                                 </Grid>
-                                <StackLayout Grid.Row="1"  Spacing="15" VerticalOptions="CenterAndExpand">
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Picker HorizontalTextAlignment="Center" x:Name="RolePicker" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemsSource="{Binding Roles}" Title="Доступ" />
-                                    </Frame>
+
+                                <Frame Grid.Row="1" Padding="5,0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                    <Grid >
+                                        <Picker Margin="0" MinimumWidthRequest="400" HorizontalTextAlignment="Center" x:Name="RolePicker" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemsSource="{Binding Roles}" Title="Доступ" />
+                                    </Grid>
+                                </Frame>
                                  
 
-                                </StackLayout>
+                               
                               
                             </Grid>
 

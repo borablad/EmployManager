@@ -84,7 +84,7 @@
 
                 <HorizontalStackLayout Grid.Row="1" IsVisible="{Binding IsDepsSelect}">
                     <Frame Padding="10" Margin="0" BorderColor="Transparent" HasShadow="False">
-                        <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Header"  />
+                        <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Subtitle"  />
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BackToOrgCommand}"/>
 
@@ -146,10 +146,10 @@
         </Frame>
 
         <Grid RowDefinitions="auto,*" Grid.Column="1" >
-            <Grid VerticalOptions="Start" HorizontalOptions="FillAndExpand" >
+            <Grid ColumnDefinitions="Auto,*,auto" VerticalOptions="Start" HorizontalOptions="FillAndExpand" >
                 <Label Text="{Binding CurrentDepartament.Title}" FontSize="Subtitle"  VerticalTextAlignment="Center" Margin="35,0" HorizontalTextAlignment="Start"  />
 
-                <HorizontalStackLayout  Spacing="15" Margin="25"  HorizontalOptions="CenterAndExpand">
+                <HorizontalStackLayout Grid.Column="2" Spacing="15" Margin="25"  HorizontalOptions="CenterAndExpand">
                     <Frame  Padding="5"  MaximumWidthRequest="500" MinimumWidthRequest="500">
                         <Grid >
                             <Entry Placeholder="Поиск"  VerticalTextAlignment="Center"  FontAttributes="Bold" FontSize="Default" />
@@ -159,10 +159,10 @@
                         </Grid>
 
                     </Frame>
-                    <Frame Grid.Column="1" Padding="5" >
+                    <!--<Frame Grid.Column="1" Padding="5" >
                         <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
 
-                    </Frame>
+                    </Frame>-->
                 </HorizontalStackLayout>
                 
             </Grid>
@@ -184,7 +184,7 @@
             <StackLayout Margin="60" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
                 <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ExportExcelCommand}"/>
                 <Button Text="{x:Static fa:FontAwesomeIcons.FileImport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}"/>
-                <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding CreateMemberCommand}"/>
+                <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding AddMemberCommand}"/>
             </StackLayout>
 
         </Grid>
