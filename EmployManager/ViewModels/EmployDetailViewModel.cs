@@ -23,7 +23,7 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
     private Member updateMember;
 
     [ObservableProperty]
-    private bool isUpdate=true;
+    private bool isUpdate;
     [ObservableProperty]
     private string firstName, lastName, password, photoUrl, login, roleName, midleName;
 
@@ -153,6 +153,9 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
             await DialogService.ShowAlertAsync("Ошибка", "Заполните все обязательные поля!");
             return;
         }
+        if (ContactsVisual is null)
+            ContactsVisual = new ObservableCollection<Models.Contacts>();
+        UpdateMember = new Member();
         UpdateMember.FirstName = FirstName;
         UpdateMember.LastName = LastName;
         UpdateMember.MiddleName = MidleName;
@@ -163,6 +166,9 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
         UpdateMember.DepartamentId = CurrentDepartamentId;
         UpdateMember.OrganizationId = CurrentOrganizationId;
         UpdateMember.RoleName = RoleName;
+
+
+
 
         var currentDep = realm.All<Departanent>().FirstOrDefault(x => x.Id == CurrentDepartamentId);
         var result = ContactsVisual.Where(x => IsNoEmpty(x.Body) && IsNoEmpty(x.Title)).ToList();

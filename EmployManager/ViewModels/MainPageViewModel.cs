@@ -224,6 +224,7 @@ namespace EmployManager.ViewModels
             CurrentDepartament = departanent;
             CurrentDepartamentId = departanent.Id;
             LoadAllMembers();
+            CurretnOrgTitle = "";
             //Members = departanent.Members.ToList();
             //departanent.Members.ToList().ForEach(x=>Members.Add(x));
         }
@@ -482,28 +483,33 @@ namespace EmployManager.ViewModels
             }
             try
             {
-                if (!IsNoEmpty(SearchText) && IsNoEmpty(CurrentOrganizationId) && !IsNoEmpty(CurrentDepartamentId))
+                if (!IsNoEmpty(SearchText) && IsNoEmpty(OrganizationIdTemp) && !IsNoEmpty(CurrentDepartamentId))
                 {
                     filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}' ";
                 }
-                else if (IsNoEmpty(CurrentOrganizationId) && !IsNoEmpty(CurrentDepartamentId))
+                else if (IsNoEmpty(CurrentOrganizationId) && !IsNoEmpty(CurrentDepartamentId) && IsNoEmpty(SearchText))
                 {
                     filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
 
                 }
 
-                else if (!IsNoEmpty(SearchText))
+                else if (!IsNoEmpty(SearchText) && IsNoEmpty(CurrentOrganizationId) && IsNoEmpty(CurrentDepartamentId))
                 {
                     filter = $"departament_id == '{CurrentDepartamentId}' AND organization_id =='{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'";
                 }
-                else
+                else if (IsNoEmpty(SearchText)&&IsNoEmpty(CurrentOrganizationId) && IsNoEmpty(CurrentDepartamentId))
                 {
                     filter = $"departament_id == '{CurrentDepartamentId}' AND  organization_id == '{CurrentOrganizationId}'  AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR ANY(Contacts, title CONTAINS[c] '{SearchText}' OR body CONTAINS[c] '{SearchText}'))";
 
                 }
+                else
+                    filter = "departament_id == '{CurrentDepartamentId}'";
 
                 //var i = realm.All<Member>().Filter($"{filter} {_sort}");
-                Members = realm.All<Member>().Filter($"{filter} {_sort}");
+                
+                    Members = realm.All<Member>().Filter($"{filter} {_sort}");
+
+                
                 //   Members = realm.All<Member>().Where(x => x.OrganizationId == CurrentOrganizationId);
             }
             catch (Exception ex)
@@ -540,7 +546,10 @@ namespace EmployManager.ViewModels
             OrganizationIdTemp = string.Empty;
             CurrentOrganizationId = string.Empty;
             CurrentDepartamentId = string.Empty;
-            curretnOrgTitle = string.Empty;
+            CurretnOrgTitle = string.Empty;
+            CurrentDepartament = null;
+            Title = "";
+            LoadAllMembers();
             //GetAllOrganizations();
         }
 
