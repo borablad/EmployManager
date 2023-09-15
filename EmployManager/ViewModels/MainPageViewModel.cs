@@ -524,6 +524,16 @@ namespace EmployManager.ViewModels
             //GetAllOrganizations();
         }
 
+        [RelayCommand]
+        public async void AddOrgOrDep()
+        {
+            if (IsDepsSelect)
+                await AppShell.Current.GoToAsync($"{nameof(DepPage)}");
+            else
+                await AppShell.Current.GoToAsync($"{nameof(OrgPage)}");
+
+        }
+
     }
 
 }

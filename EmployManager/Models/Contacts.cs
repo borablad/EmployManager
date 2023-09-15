@@ -14,9 +14,9 @@ namespace EmployManager.Models
         public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
         [MapTo("title")]
-        public string Title { get; set; } = "";
+        public string Title { get; set; } = " ";
         [MapTo("body")]
-        public string Body { get; set; } = "";
+        public string Body { get; set; } = " ";
     }
 
 

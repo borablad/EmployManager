@@ -15,4 +15,8 @@ public partial class EmployDetailPage : ContentPage
         base.OnAppearing();
 		vm.OnAppering();
     }
+
+    void Picker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
+    {
+    }
 }

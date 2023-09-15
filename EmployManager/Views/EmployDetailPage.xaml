@@ -52,9 +52,17 @@
                         <Frame Padding="15">
                             <Grid ColumnDefinitions="*,Auto" >
                                 <StackLayout  Spacing="15" VerticalOptions="CenterAndExpand">
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Имя"  />
-                                    </Frame>
+                                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="15" >
+                                        <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                            <Entry Placeholder="Имя"  />
+                                        </Frame>
+                                        <Frame Grid.Column="1" Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                            <Entry Placeholder="Фамилия"  />
+                                        </Frame>
+                                        <Frame Grid.Column="2" Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                            <Entry Placeholder="Отчество"  />
+                                        </Frame>
+                                    </Grid>
                                     <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
                                         <Entry Placeholder="Должность" />
                                     </Frame>
@@ -70,11 +78,45 @@
 
                         </Frame>
 
+                          <Frame Padding="20">
+                            <Grid RowDefinitions="auto,auto" RowSpacing="15">
+                                <Grid ColumnDefinitions="*,*"  ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Логин"  />
+                                    </Frame>
+                                    <Frame Grid.Column="1" Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Пороль" />
+                                    </Frame>
+
+                                </Grid>
+                                <StackLayout Grid.Row="1"  Spacing="15" VerticalOptions="CenterAndExpand">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Picker HorizontalTextAlignment="Center" ItemsSource="{Binding Roles}" Title="Доступ" />
+                                    </Frame>
+                                 
+
+                                </StackLayout>
+                              
+                            </Grid>
+
+                        </Frame>
+
                         <StackLayout Spacing="15" BindableLayout.ItemsSource="{Binding ContactsVisual}" BindableLayout.ItemTemplate="{StaticResource ContactTemplate}">
 
                          
                         </StackLayout>
 
+                         <Frame Padding="15" >
+                                <StackLayout Spacing="15" VerticalOptions="Center">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Title"  />
+                                    </Frame>
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Body" />
+                                    </Frame>
+
+                                </StackLayout>
+                          </Frame>
 
                     </StackLayout>
                 </ScrollView>

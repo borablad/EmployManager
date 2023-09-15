@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmployManager.Views.DepPage"
+             Title="DepPage"    xmlns:fa="clr-namespace:FontAwesome"
+           >
+    <Grid  RowDefinitions="55,*">
+
+        <!-- Кастомный навбар -->
+        <Frame CornerRadius="0" Padding="20,15">
+            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
+                <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer   />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Главная" Margin="15,0" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Header" />
+                <Button Text="Сохранить"   Margin="0,-5" Grid.Column="2" TextTransform="None" BorderWidth="3" BorderColor="{StaticResource Primary}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" />
+
+            </Grid>
+        </Frame>
+
+        <Grid Grid.Row="1" ColumnDefinitions=".5*,*,.5*">
+
+             <Grid Grid.Column="1">
+                <ScrollView >
+                    <StackLayout  Spacing="15" Margin="0,25,0,5">
+                        <Frame Padding="15">
+                            <Grid ColumnDefinitions="*,Auto" >
+                                <StackLayout  Spacing="15" VerticalOptions="CenterAndExpand">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Название"  />
+                                    </Frame>
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Описание" />
+                                    </Frame>
+
+                                </StackLayout>
+                                <Frame Grid.Column="1" HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource Primary}" Margin="15" Padding="6" CornerRadius="15" VerticalOptions="CenterAndExpand">
+                                    <Frame CornerRadius="10">
+                                        <Label Text="{x:Static fa:FontAwesomeIcons.Users}" FontSize="65" FontFamily="FAS" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+
+                                    </Frame>
+                                </Frame>
+                            </Grid>
+
+                        </Frame>
+
+                         <!--<Frame Padding="15">
+                            <Grid ColumnDefinitions="*,*" >
+                                <StackLayout  Spacing="15" VerticalOptions="CenterAndExpand">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Название"  />
+                                    </Frame>
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Описание" />
+                                    </Frame>
+
+                                </StackLayout>
+                                <StackLayout Grid.Column="1"  Spacing="15" VerticalOptions="CenterAndExpand">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Название"  />
+                                    </Frame>
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Placeholder="Описание" />
+                                    </Frame>
+
+                                </StackLayout>
+                              
+                            </Grid>
+
+                        </Frame>-->
+
+                    </StackLayout>
+                </ScrollView>
+             
+            </Grid>
+
+        </Grid>
+    </Grid>
+
+</ContentPage>

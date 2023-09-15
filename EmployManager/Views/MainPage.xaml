@@ -117,6 +117,9 @@
                 </ScrollView>
                 <Frame Grid.Row="2" BackgroundColor="{StaticResource Primary}" Padding="0" HorizontalOptions="End" VerticalOptions="End" Margin="10,25" HeightRequest="55" WidthRequest="55" CornerRadius="27.5">
                     <Label Text="{x:Static fa:FontAwesomeIcons.Plus}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Subtitle" />
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddOrgOrDepCommand}" />
+                    </Frame.GestureRecognizers>
                 </Frame>
 
                 <BoxView Grid.Row="3" HeightRequest="1" Opacity="0.3" VerticalOptions="Start"/>

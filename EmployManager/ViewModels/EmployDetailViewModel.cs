@@ -26,8 +26,9 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
     private bool isUpdate=true;
     [ObservableProperty]
     private string firstName, lastName, password, photoUrl, login, roleName, midleName;
-    
- 
+
+    [ObservableProperty]
+     List<string> roles = new List<string>();
 
     [ObservableProperty]
     private MembersRole memberRole=MembersRole.User;
@@ -41,14 +42,21 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
     private Realm realm;
     public EmployDetailViewModel()
     {
+        Roles.Add("Администратор");
+        Roles.Add("Мэнэджер");
+        Roles.Add("Пользователь");
 
-        
     }
 
     internal async Task OnAppering()
     {
         if (realm is null)
             realm = RealmService.GetMainThreadRealm();
+        ContactsVisual.Add(new EmployManager.Models.Contacts());
+
+        Roles.Add("Администратор");
+        Roles.Add("Мэнэджер");
+        Roles.Add("Пользователь");
 
         IsUpdate = false;
     }
