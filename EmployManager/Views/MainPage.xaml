@@ -159,10 +159,10 @@
                         </Grid>
 
                     </Frame>
-                    <Frame Grid.Column="1" Padding="5" >
+                    <!--<Frame Grid.Column="1" Padding="5" >
                         <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
 
-                    </Frame>
+                    </Frame>-->
                 </HorizontalStackLayout>
                 
             </Grid>

@@ -90,8 +90,8 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
     [RelayCommand]
     public async Task SelectRole(MembersRole parametr)
     {
-        if (CurrentUser.Role == MembersRole.Manager && parametr == (MembersRole.Admin))
-            return;
+        //if (CurrentUser.Role == MembersRole.Manager && parametr == (MembersRole.Admin))
+        //    return;
         MemberRole = parametr;//switch
         //{
         //    nameof(MembersRole.Admin) => MembersRole.Admin,
