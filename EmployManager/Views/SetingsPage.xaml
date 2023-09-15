@@ -11,10 +11,10 @@
     </ContentPage.BindingContext>
 
 
-    <Grid  RowDefinitions="55,*">
+    <Grid  RowDefinitions="65,*">
 
         <!-- Кастомный навбар -->
-        <Frame CornerRadius="0" Padding="20,15">
+        <Frame CornerRadius="0" Padding="20,3">
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
                 <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
                     <Label.GestureRecognizers>
@@ -24,8 +24,8 @@
                 <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Настройки" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Subtitle" />
 
                 <Grid Grid.Column="2" RowDefinitions="Auto,Auto"  VerticalOptions="Center" >
-                    <Label Grid.Row="0" Text="{x:Static fa:FontAwesomeIcons.ArrowRightFromBracket}" VerticalTextAlignment="Center" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="Default" />
-                    <Label Grid.Row="1" VerticalTextAlignment="Center" Text="Выйти" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Micro" />
+                    <Label Grid.Row="0" Text="{x:Static fa:FontAwesomeIcons.ArrowRightFromBracket}" VerticalTextAlignment="Center" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="Body" />
+                    <Label Grid.Row="1" VerticalTextAlignment="Center" Text="Выйти" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Body" />
 
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding LogOutCommand}" />

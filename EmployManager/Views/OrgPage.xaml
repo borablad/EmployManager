@@ -4,17 +4,17 @@
              x:Class="EmployManager.Views.OrgPage"
              xmlns:fa="clr-namespace:FontAwesome"
            >
-    <Grid  RowDefinitions="55,*">
+    <Grid  RowDefinitions="65,*">
 
         <!-- Кастомный навбар -->
-        <Frame CornerRadius="0" Padding="20,15">
+        <Frame CornerRadius="0" Padding="20,5">
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
                 <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer   />
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Главная" Margin="15,0" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Header" />
+                <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Главная" Margin="15,0" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Subtitle" />
                 <Button Text="Сохранить"   Margin="0,-5" Grid.Column="2" TextTransform="None" BorderWidth="3" BorderColor="{StaticResource Primary}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" />
 
             </Grid>

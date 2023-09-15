@@ -52,7 +52,7 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
     {
         if (realm is null)
             realm = RealmService.GetMainThreadRealm();
-        ContactsVisual.Add(new EmployManager.Models.Contacts());
+        //ContactsVisual.Add(new EmployManager.Models.Contacts());
 
         IsUpdate = false;
     }

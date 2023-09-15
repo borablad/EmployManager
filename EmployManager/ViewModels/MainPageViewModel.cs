@@ -33,7 +33,8 @@ namespace EmployManager.ViewModels
             get { return members; }
             set
             {
-                members = value; OnPropertyChanged(nameof(Members));
+                members = value; OnPropertyChanged(nameof(Members)); UpdateCollectinSpan();
+               
             }
         }
 
@@ -45,8 +46,8 @@ namespace EmployManager.ViewModels
 
 
 
-        /* [ObservableProperty]
-         bool isOrgSelekt, isntDepsSelect;*/
+        [ObservableProperty]
+        int collectinSpan = 1;
 
         private string organizationIdTemp;
 
@@ -93,6 +94,12 @@ namespace EmployManager.ViewModels
 
         }
 
+        public void UpdateCollectinSpan()
+        {
+            if (Members.Count() >= 4)
+                CollectinSpan = 4;
+            else CollectinSpan = Members.Count();
+        }
 
         internal async void OnAppering()
         {
@@ -240,6 +247,18 @@ namespace EmployManager.ViewModels
 
         }
 
+
+        [RelayCommand]
+        public async void AddMember()
+        {
+            
+
+
+
+            await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}");
+
+
+        }
 
         [RelayCommand]
         public async void LogOut()
