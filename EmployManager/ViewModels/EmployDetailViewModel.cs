@@ -54,10 +54,6 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
             realm = RealmService.GetMainThreadRealm();
         ContactsVisual.Add(new EmployManager.Models.Contacts());
 
-        Roles.Add("Администратор");
-        Roles.Add("Мэнэджер");
-        Roles.Add("Пользователь");
-
         IsUpdate = false;
     }
 
@@ -92,16 +88,16 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
 
 
     [RelayCommand]
-    private async Task SelectRole(string parametr)
+    public async Task SelectRole(MembersRole parametr)
     {
-        if (CurrentUser.Role == MembersRole.Manager && parametr == nameof(MembersRole.Admin))
+        if (CurrentUser.Role == MembersRole.Manager && parametr == (MembersRole.Admin))
             return;
-        MemberRole = parametr switch
-        {
-            nameof(MembersRole.Admin) => MembersRole.Admin,
-            nameof(MembersRole.Manager)=> MembersRole.Manager,   
-            _ => MembersRole.User
-        };
+        MemberRole = parametr;//switch
+        //{
+        //    nameof(MembersRole.Admin) => MembersRole.Admin,
+        //    nameof(MembersRole.Manager)=> MembersRole.Manager,   
+        //    _ => MembersRole.User
+        //};
          
     }
 
@@ -172,7 +168,7 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
             currentDep.Members.Add(UpdateMember);
             realm.Add(currentDep);
         });
-        await AppShell.Current.GoToAsync($"{nameof(MainPage)}");
+        await AppShell.Current.GoToAsync($"..");
 
     }
 
@@ -194,4 +190,9 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
 
     }
 
+    [RelayCommand]
+    void Back()
+    {
+        AppShell.Current.GoToAsync("..");
+    }
 }
