@@ -54,7 +54,7 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
             realm = RealmService.GetMainThreadRealm();
         ContactsVisual.Add(new EmployManager.Models.Contacts());
 
-        IsUpdate = false;
+       
     }
 
 
@@ -66,7 +66,7 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
             if (realm is null)
                 realm = RealmService.GetMainThreadRealm();
 
-           
+            MemberId = query["member_id"].ToString();
                 UpdateMember = realm.All<Member>().Where(x => x.Id == MemberId).FirstOrDefault();
 
                 MemberId = "";
@@ -77,6 +77,13 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
                     IsUpdate = false;
                     return;
                 }
+            FirstName = UpdateMember?.FirstName;
+            LastName = UpdateMember?.LastName;
+            PhotoUrl = UpdateMember?.PhotoUrl;
+            RoleName = UpdateMember?.RoleName;
+            MidleName = UpdateMember?.MiddleName;
+            MemberRole = UpdateMember.Role;
+
                 UpdateMember?.Contacts.ToList().ForEach(x => ContactsVisual.Add(x));
                 IsUpdate = true;
 
@@ -168,7 +175,7 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
             currentDep.Members.Add(UpdateMember);
             realm.Add(currentDep);
         });
-        await AppShell.Current.GoToAsync($"..");
+                            await AppShell.Current.GoToAsync($"..");
 
     }
 
