@@ -48,7 +48,18 @@
                             </Frame>
                         </Frame>
                         <StackLayout>
-                            <Label Grid.Row="1" Text="{Binding Username}" FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                            <Label Grid.Row="1"  FontAttributes="Bold" FontSize="Default" Margin="15,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                               <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding LastName}" />
+                                        <Span Text=" " />
+                                        <Span Text="{Binding FirstName}" />
+                                        <Span Text=" " />
+                                        <Span Text="{Binding MiddleName }"/>
+
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
                             <Label Grid.Row="1" Text="{Binding RoleName}" VerticalTextAlignment="End" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Small" Margin="15,0" HorizontalTextAlignment="Center" ></Label>
                         </StackLayout>
 

@@ -50,7 +50,7 @@ public partial class EmployDetailViewModel : BaseViewModel,IQueryAttributable
 
     internal async Task OnAppering()
     {
-        if (realm is null)
+                if (realm is null)
             realm = RealmService.GetMainThreadRealm();
         //ContactsVisual.Add(new EmployManager.Models.Contacts());
 
