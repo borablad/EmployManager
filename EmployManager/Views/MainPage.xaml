@@ -6,12 +6,14 @@
              x:Class="EmployManager.Views.MainPage"
              Shell.NavBarIsVisible="False"
              Title="Главная"
+             xmlns:local="clr-namespace:EmployManager.Helpers"
               xmlns:vm="clr-namespace:EmployManager.ViewModels">
     <ContentPage.BindingContext>
         <vm:MainPageViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
+            <local:StringIsNullConverter x:Key="StringIsNullConverter" />
             <DataTemplate x:Key="DeportTemplate" x:DataType="model:Departanent">
                 <Grid ColumnDefinitions="auto,*,auto">
                     <Frame BackgroundColor="{AppThemeBinding Light={StaticResource BoraCastomColorLight},Dark={StaticResource BoraElementColorDark}}"  HorizontalOptions="Center" Margin="5" Padding="10">
@@ -179,16 +181,16 @@
             <Grid ColumnDefinitions="Auto,*,auto" VerticalOptions="Start" HorizontalOptions="FillAndExpand" >
                 <Label Text="{Binding CurrentDepartament.Title}" FontSize="Subtitle"  VerticalTextAlignment="Center" Margin="35,0" HorizontalTextAlignment="Start"  />
 
-                <HorizontalStackLayout Grid.Column="2" Spacing="15" Margin="25"  HorizontalOptions="CenterAndExpand">
-                    <Frame  Padding="5"  MaximumWidthRequest="500" MinimumWidthRequest="500">
+                <HorizontalStackLayout   IsVisible="{Binding MemberIsNotNull}"  Padding="5"  MaximumWidthRequest="500" MinimumWidthRequest="500"  Grid.Column="2" Spacing="15" Margin="25"  HorizontalOptions="CenterAndExpand">
+                   
                         <Grid >
-                            <Entry Placeholder="Поиск"  VerticalTextAlignment="Center"  FontAttributes="Bold" FontSize="Default" />
+                            <Entry Placeholder="Поиск" Text="{Binding SearchText}"  VerticalTextAlignment="Center"  FontAttributes="Bold" FontSize="Default" />
                             <Label Text="{x:Static fa:FontAwesomeIcons.MagnifyingGlass}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
 
 
                         </Grid>
 
-                    </Frame>
+               
                     <!--<Frame Grid.Column="1" Padding="5" >
                         <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
 
@@ -212,9 +214,9 @@
             </ScrollView>
 
             <StackLayout Margin="60" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
-                <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ExportExcelCommand}"/>
-                <Button Text="{x:Static fa:FontAwesomeIcons.FileImport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}"/>
-                <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding AddMemberCommand}"/>
+                <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ExportExcelCommand}" IsVisible="{Binding MemberIsNotNull}"/>
+                <Button Text="{x:Static fa:FontAwesomeIcons.FileImport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}" IsVisible="{Binding IsDepNull}"/>
+                <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding AddMemberCommand}" IsVisible="{Binding IsDepNull}" />
             </StackLayout>
 
         </Grid>

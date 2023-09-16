@@ -41,7 +41,7 @@ public partial class EmployDetailViewModel : BaseViewModel, IQueryAttributable
 
 
     [ObservableProperty]
-    ObservableCollection<EmployManager.Models.Contacts> contactsVisual;
+    ObservableCollection<EmployManager.Models.Contacts> contactsVisual= new ObservableCollection<Models.Contacts>();
 
     private Member CurrentUser;
     private string MemberId;

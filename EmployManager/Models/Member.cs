@@ -11,19 +11,19 @@ using static EmployManager.Models.Enums;
 
 namespace EmployManager.Models
 {
-    public class Member :RealmObject
+    public class Member : RealmObject
     {
         [PrimaryKey, MapTo("_id")]
-        public string Id { get; set; }= ObjectId.GenerateNewId().ToString();
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
-        [MapTo("user_name"),Required]
+        [MapTo("user_name"), Required]
         public string Username { get; set; }
 
-        [MapTo("password"),Required]
+        [MapTo("password"), Required]
         public string Password { get; set; }
 
-        [MapTo("role"),Required]
-        public string RoleRaw { get; set; }  
+        [MapTo("role"), Required]
+        public string RoleRaw { get; set; }
 
         [MapTo("photo_url")]
         public string PhotoUrl { get; set; } = "";
@@ -43,15 +43,15 @@ namespace EmployManager.Models
         [MapTo("contacts")]
         public IList<Contacts> Contacts { get; }
 
-        [MapTo("departament_id"),Required]
+        [MapTo("departament_id"), Required]
         public string DepartamentId { get; set; }
         [MapTo("role_name")]
         public string RoleName { get; set; }
 
-        [MapTo("organization_id")]        
+        [MapTo("organization_id")]
         public string OrganizationId { get; set; }
 
-   
+
 
         [Ignored]
         public MembersRole Role
@@ -64,20 +64,21 @@ namespace EmployManager.Models
         public string FullName { get { return $"{FirstName} {LastName}"; } }
 
         [Ignored]
-        public string RoleEnumString { 
+        public string RoleEnumString
+        {
             get
-            { 
-                return Role switch 
+            {
+                return Role switch
                 {
                     MembersRole.Admin => "Администратор",
-                    MembersRole.Manager=> "Менеджер" ,
-                    _=>"Сотрудник" 
-                }; 
-            } 
+                    MembersRole.Manager => "Менеджер",
+                    _ => "Сотрудник"
+                };
+            }
         }
 
-      
-        
+
+
 
         [Ignored]
         public bool IsPhotoURL { get => string.IsNullOrEmpty(PhotoUrl); }
