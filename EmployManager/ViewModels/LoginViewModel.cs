@@ -56,6 +56,8 @@ namespace EmployManager.ViewModels
 		[RelayCommand]
 		public async Task DoLogin()
 		{
+            CurrentOrganizationId = string.Empty;
+            CurrentDepartamentId = string.Empty;
 
             if (realm is null)
                 realm = RealmService.GetMainThreadRealm();

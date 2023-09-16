@@ -4,7 +4,12 @@
              x:Class="EmployManager.Views.OrgPage"
              xmlns:fa="clr-namespace:FontAwesome"
              Shell.NavBarIsVisible="False"
+              xmlns:vm="clr-namespace:EmployManager.ViewModels"
            >
+
+     <ContentPage.BindingContext>
+        <vm:OrgDepPageViewModel/>
+    </ContentPage.BindingContext>
     <Grid  RowDefinitions="65,*">
 
         <!-- Кастомный навбар -->
@@ -12,11 +17,11 @@
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
                 <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer   />
+                        <TapGestureRecognizer  Command="{Binding BackCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Главная" Margin="15,0" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Subtitle" />
-                <Button Text="Сохранить"   Margin="0,-5" Grid.Column="2" TextTransform="None" BorderWidth="3" BorderColor="{StaticResource Primary}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" />
+                <Button Text="Сохранить"  Command="{Binding SaveOrgDepCommand}"  Margin="0,-5" Grid.Column="2" TextTransform="None" BorderWidth="3" BorderColor="{StaticResource Primary}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" />
 
             </Grid>
         </Frame>
@@ -30,10 +35,10 @@
                             <Grid ColumnDefinitions="*,Auto" >
                                 <StackLayout  Spacing="15" VerticalOptions="CenterAndExpand">
                                     <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Название"  />
+                                        <Entry Placeholder="Название"  Text="{Binding Name}" />
                                     </Frame>
                                     <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Описание" />
+                                        <Entry Placeholder="Описание" Text="{Binding Description}"/>
                                     </Frame>
 
                                 </StackLayout>

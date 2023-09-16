@@ -26,6 +26,10 @@ namespace EmployManager.Models
         [MapTo("photo_url")]
         public string PhotoUrl { get; set; }
         [MapTo("members")]
-        public IList<Member> Members { get;  } 
+        public IList<Member> Members { get;  }
+
+
+        [Ignored]
+        public bool IsSelect { get; set; }
     }
 }

@@ -94,7 +94,7 @@
 
                                 <Frame Grid.Row="1" Padding="5,0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
                                     <Grid >
-                                        <Picker Margin="0" MinimumWidthRequest="400" HorizontalTextAlignment="Center" x:Name="RolePicker" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemsSource="{Binding Roles}" Title="Доступ" />
+                                        <Picker  SelectedIndex="{Binding SelectedIndex}" Margin="0" MinimumWidthRequest="400" HorizontalTextAlignment="Center" x:Name="RolePicker" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemsSource="{Binding Roles}" Title="Доступ" />
                                     </Grid>
                                 </Frame>
                                  
@@ -110,17 +110,7 @@
                          
                         </StackLayout>
 
-                         <Frame Padding="15" >
-                                <StackLayout Spacing="15" VerticalOptions="Center">
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Дополнительно"  />
-                                    </Frame>
-                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                        <Entry Placeholder="Описание" />
-                                    </Frame>
-
-                                </StackLayout>
-                          </Frame>
+                         
 
                     </StackLayout>
                 </ScrollView>

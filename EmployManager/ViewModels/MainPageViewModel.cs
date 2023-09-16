@@ -220,11 +220,15 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         public async void SelectDepartament(Departanent departanent)
         {
+            if(CurrentDepartament is not null)
+                CurrentDepartament.IsSelect = false;
 
+            departanent.IsSelect = true;
             CurrentDepartament = departanent;
             CurrentDepartamentId = departanent.Id;
             LoadAllMembers();
-            CurretnOrgTitle = "";
+            OrganizationIdTemp = "";
+
             //Members = departanent.Members.ToList();
             //departanent.Members.ToList().ForEach(x=>Members.Add(x));
         }
@@ -557,9 +561,27 @@ namespace EmployManager.ViewModels
         public async void AddOrgOrDep()
         {
             if (IsDepsSelect)
-                await AppShell.Current.GoToAsync($"{nameof(DepPage)}");
+                await AppShell.Current.GoToAsync($"{nameof(DepPage)}?is_dep=true");
             else
-                await AppShell.Current.GoToAsync($"{nameof(OrgPage)}");
+                await AppShell.Current.GoToAsync($"{nameof(OrgPage)}?is_dep=false");
+
+        }
+       
+
+        [RelayCommand]
+        public async void GoToOrgDepDetail(string param)
+        {
+            if (!IsNoEmpty(param))
+                return;
+          
+            if (IsNoEmpty(OrganizationIdTemp))
+            {
+               
+                await AppShell.Current.GoToAsync($"{nameof(DepPage)}?dep_id={param}");
+                return;
+            }
+           
+               await AppShell.Current.GoToAsync($"{nameof(OrgPage)}?org_id={param}");
 
         }
 
