@@ -22,49 +22,14 @@ namespace EmployManager.ViewModels
 {
     public partial class MainPageViewModel : BaseViewModel
     {
-        [ObservableProperty]
-        IQueryable departanents;
-
+        private string isDepId;
 
         private IQueryable<Member> members;
 
-
-        [ObservableProperty]
-        private bool memberIsNotNull;
-
-
-        private string isDepId;
-
-        public bool IsDepNull { get { return IsNoEmpty(IsDepId); }  }
-        public string IsDepId { get { return isDepId; } set { isDepId = value; OnPropertyChanged(nameof(IsDepId)); OnPropertyChanged(nameof(IsDepNull)); } }
-
-
-        public IQueryable<Member> Members
-        {
-            get { return members; }
-            set
-            {
-                members = value; OnPropertyChanged(nameof(Members)); UpdateCollectinSpan();
-               
-            }
-        }
-
-        [ObservableProperty]
-        IQueryable<Organization> organizations;
-
-        [ObservableProperty]
-        private Member currentUser;
-
-
-
-        [ObservableProperty]
-        int collectinSpan = 1;
-
-
-        [ObservableProperty]
-        private bool isAdmin, isUser, isManager;
-
         private string organizationIdTemp;
+        private Realm realm;
+        private IDisposable subscribeMembers, subscribeDeparaments;
+        private string searchText;
 
         public string OrganizationIdTemp
         {
@@ -84,24 +49,53 @@ namespace EmployManager.ViewModels
         public bool IsOrgSelect { get { return !IsNoEmpty(OrganizationIdTemp); } }
         public bool IsDepsSelect { get { return IsNoEmpty(OrganizationIdTemp); } }
 
+        public bool IsDepNull { get { return IsNoEmpty(IsDepId); } }
+        public string IsDepId { get { return isDepId; } set { isDepId = value; OnPropertyChanged(nameof(IsDepId)); OnPropertyChanged(nameof(IsDepNull)); } }
+
         
+        public string SearchText { get { return searchText; } set { searchText = value; OnPropertyChanged(nameof(SearchText)); OnSearchtextChanged(); } }
+
+        public IQueryable<Member> Members
+        {
+            get { return members; }
+            set
+            {
+                members = value; OnPropertyChanged(nameof(Members)); UpdateCollectinSpan();
+
+            }
+        }
+
 
 
         [ObservableProperty]
-       string curretnOrgTitle;
+        IQueryable departanents;
+
+        [ObservableProperty]
+        private bool memberIsNotNull, searchVisible;
 
 
-        private string searchText;
-        public string SearchText { get { return searchText; } set { searchText = value; OnPropertyChanged(nameof(SearchText)); OnSearchtextChanged(); } }
+        [ObservableProperty]
+        IQueryable<Organization> organizations;
 
+        [ObservableProperty]
+        private Member currentUser;
+
+
+        [ObservableProperty]
+        int collectinSpan = 1;
+
+        [ObservableProperty]
+        private bool isAdmin, isUser, isManager;
+
+        [ObservableProperty]
+         string curretnOrgTitle;
 
         [ObservableProperty]
         private bool sortLowPrice, sortHiPrice;
 
         [ObservableProperty]
         Departanent currentDepartament;
-        private Realm realm;
-        private IDisposable subscribeMembers,subscribeDeparaments;
+     
 
         public MainPageViewModel()
         {
@@ -113,7 +107,13 @@ namespace EmployManager.ViewModels
         {
             if (Members.Count() >= 4)
                 CollectinSpan = 4;
-            else CollectinSpan = Members.Count();
+            else
+            {
+                if (Members.Count() <= 0)
+                    CollectinSpan = 1;
+                else
+                    CollectinSpan = Members.Count();
+            }
         }
 
         internal async void OnAppering()
@@ -220,6 +220,7 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         public async Task SelectOrganization(Organization organization)
         {
+            SearchVisible = true;
             if (organization is null)
                 return;
 
@@ -239,6 +240,7 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         public async void SelectDepartament(Departanent departanent)
         {
+            SearchVisible=true;
             if(CurrentDepartament is not null)
                 CurrentDepartament.IsSelect = false;
            // OrganizationIdTemp = "";
@@ -457,22 +459,27 @@ namespace EmployManager.ViewModels
                 }
                 else if (IsNoEmpty(CurrentOrganizationId) && !IsNoEmpty(CurrentDepartamentId) && IsNoEmpty(SearchText))
                 {
-                    filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR middle_name CONTAINS[c]) OR (contacts.Any(c => c.title CONTAINS[c] 'f' OR c.body CONTAINS[c] 'f'))) ";
-
+                    filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'" +
+                        $" AND ((user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' " +
+                        $"OR last_name CONTAINS[c] '{SearchText}' OR middle_name CONTAINS[c] '{SearchText}'" +
+                        $" OR ANY contacts.title CONTAINS[c] '{SearchText}' OR ANY contacts.body CONTAINS[c] '{SearchText}'))";
                 }
 
                 else if (!IsNoEmpty(SearchText) && IsNoEmpty(CurrentOrganizationId) && IsNoEmpty(CurrentDepartamentId))
                 {
                     filter = $"departament_id == '{CurrentDepartamentId}' AND organization_id =='{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'";
                 }
-                else if (IsNoEmpty(SearchText)&&IsNoEmpty(CurrentOrganizationId) && IsNoEmpty(CurrentDepartamentId))
+                else if (IsNoEmpty(SearchText) && IsNoEmpty(CurrentOrganizationId) && IsNoEmpty(CurrentDepartamentId))
                 {
-                    filter = $"departament_id == '{CurrentDepartamentId}' AND  organization_id == '{CurrentOrganizationId}'  AND user_name != '{CurrentLogin}' AND (user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR last_name CONTAINS[c] '{SearchText}' OR (Contacts.Any(c => c.title CONTAINS[c] 'f' OR c.body CONTAINS[c] 'f')))";
-
+                    filter = $"departament_id == '{CurrentDepartamentId}' AND organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'" +
+                       $" AND ((user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' " +
+                       $"OR last_name CONTAINS[c] '{SearchText}' OR middle_name CONTAINS[c] '{SearchText}'" +
+                       $" OR ANY contacts.title CONTAINS[c] '{SearchText}' OR ANY contacts.body CONTAINS[c] '{SearchText}'))";   
                 }
                 else
                     filter = "departament_id == '{CurrentDepartamentId}'";
-                    Members = realm.All<Member>().Filter($"{filter} {_sort}");
+
+                Members = realm.All<Member>().Filter($"{filter} {_sort}");
 
                 if (Members is not null)
                     MemberIsNotNull = Members.Count() > 0;
@@ -505,6 +512,7 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         public void BackToOrg()
         {
+            SearchVisible = false;
 
             /* IsOrgSelekt = false;
              IsntDepsSelect = true;*/
