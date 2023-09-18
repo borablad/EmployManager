@@ -9,7 +9,8 @@ public partial class EmployDetailPage : ContentPage
 	public EmployDetailPage()
 	{
 		InitializeComponent();
-		vm= new EmployDetailViewModel();
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
+        vm = new EmployDetailViewModel();
 		BindingContext = vm;
 	}
 

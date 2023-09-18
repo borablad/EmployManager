@@ -6,7 +6,8 @@
              xmlns:model="clr-namespace:EmployManager.Models"
              xmlns:fa="clr-namespace:FontAwesome"
              Shell.NavBarIsVisible="False"
-             Shell.TabBarIsVisible="False">
+             Shell.TabBarIsVisible="False"
+             >
     <ContentPage.BindingContext>
         <vm:EmployDetailViewModel/>
     </ContentPage.BindingContext>

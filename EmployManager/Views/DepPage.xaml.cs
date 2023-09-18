@@ -8,7 +8,9 @@ public partial class DepPage : ContentPage
 	public DepPage()
 	{
 		InitializeComponent();
-		vm = new OrgDepPageViewModel();
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
+
+        vm = new OrgDepPageViewModel();
 		BindingContext = vm;
 	}
 

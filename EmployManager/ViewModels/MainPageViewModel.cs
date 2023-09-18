@@ -405,9 +405,9 @@ namespace EmployManager.ViewModels
                 CurrentUser = realm.All<Member>().FirstOrDefault(x => x.Username == CurrentLogin);
             if (CurrentUser.Role is not MembersRole.Admin)
             {
-                var deps = realm.All<Departanent>().Where(x => x.Members.Any(y => y.Id == CurrentUser.Id));
-                var organizationIds = deps.Select(y => y.OrganizationId).ToList();
-                Organizations = realm.All<Organization>().Where(x => organizationIds.Contains(x.Id));
+                var deps = realm.All<Departanent>().ToList().Where(x => x.Members.Any(y => y.Id == CurrentUser.Id));
+                var organizationIds = deps.ToList().Select(y => y.OrganizationId).ToList();
+               Organizations= realm.All<Organization>().ToList().Where(x => organizationIds.ToList().Any(y=>y==x.Id)).ToList().AsQueryable();
                 return;
             }
 
@@ -475,7 +475,7 @@ namespace EmployManager.ViewModels
                 else if (IsNoEmpty(CurrentOrganizationId) && !IsNoEmpty(CurrentDepartamentId) && IsNoEmpty(SearchText))
                 {
                     filter = $"organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'" +
-                        $" AND ((user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' " +
+                        $" AND ((user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR role_name CONTAINS[c] '{SearchText}' " +
                         $"OR last_name CONTAINS[c] '{SearchText}' OR middle_name CONTAINS[c] '{SearchText}'" +
                         $" OR ANY contacts.title CONTAINS[c] '{SearchText}' OR ANY contacts.body CONTAINS[c] '{SearchText}'))";
                 }
@@ -487,7 +487,7 @@ namespace EmployManager.ViewModels
                 else if (IsNoEmpty(SearchText) && IsNoEmpty(CurrentOrganizationId) && IsNoEmpty(CurrentDepartamentId))
                 {
                     filter = $"departament_id == '{CurrentDepartamentId}' AND organization_id == '{CurrentOrganizationId}' AND user_name != '{CurrentLogin}'" +
-                       $" AND ((user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' " +
+                       $" AND ((user_name CONTAINS[c] '{SearchText}' OR first_name CONTAINS[c] '{SearchText}' OR role_name CONTAINS[c] '{SearchText}' " +
                        $"OR last_name CONTAINS[c] '{SearchText}' OR middle_name CONTAINS[c] '{SearchText}'" +
                        $" OR ANY contacts.title CONTAINS[c] '{SearchText}' OR ANY contacts.body CONTAINS[c] '{SearchText}'))";   
                 }

@@ -8,6 +8,8 @@ public partial class LoginPage : ContentPage
     public LoginPage()
     {
         InitializeComponent();
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
+
         vm = new LoginViewModel();
         BindingContext = vm;
         //vm.IsBusy = true;

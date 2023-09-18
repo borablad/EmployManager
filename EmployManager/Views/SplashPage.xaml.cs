@@ -9,6 +9,8 @@ public partial class SplashPage : ContentPage
         public SplashPage()
 	{
 		InitializeComponent();
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
+
         vm = new SplashViewModel();
         BindingContext = vm;
     }

@@ -9,7 +9,9 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-		vm= new MainPageViewModel();
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
+
+        vm = new MainPageViewModel();
 		BindingContext = vm;	
 	}
 
