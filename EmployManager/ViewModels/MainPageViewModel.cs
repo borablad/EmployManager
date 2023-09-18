@@ -105,11 +105,11 @@ namespace EmployManager.ViewModels
 
         public void UpdateCollectinSpan()
         {
-            if (Members.Count() >= 4)
-                CollectinSpan = 4;
+            if (Members.Count() >= 3)
+                CollectinSpan = 3;
             else
             {
-                if (Members.Count() <= 0)
+                if (Members.Count() <1)
                     CollectinSpan = 1;
                 else
                     CollectinSpan = Members.Count();
@@ -246,6 +246,7 @@ namespace EmployManager.ViewModels
            // OrganizationIdTemp = "";
 
             departanent.IsSelect = true;
+
             CurrentDepartament = departanent;
             CurrentDepartamentId = departanent.Id;
             IsDepId=departanent.Id;
@@ -275,8 +276,12 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         public async void AddMember()
         {
-            
 
+            if (IsUser)
+            {
+                await DialogService.ShowError("Данная фенкция вам не доступна");
+                return;
+            }
 
 
             await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}");
@@ -302,6 +307,11 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         private async Task ImportExcel()
         {
+            if (IsUser)
+            {
+                await DialogService.ShowError("Данная фенкция вам не доступна");
+                return;
+            }
 
             FileResult file;
             try
@@ -361,6 +371,11 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         private async Task ExportExcel()
         {
+            if (IsUser)
+            {
+                await DialogService.ShowError("Данная фенкция вам не доступна");
+                return;
+            }
 
             if (Members is null)
                 return;
