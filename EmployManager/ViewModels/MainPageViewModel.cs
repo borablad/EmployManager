@@ -397,6 +397,14 @@ namespace EmployManager.ViewModels
         /// <returns></returns>
         private async Task GetAllDepartaments()
         {
+            if (CurrentUser is null)
+                CurrentUser = realm.All<Member>().FirstOrDefault(x => x.Username == CurrentLogin);
+            if (CurrentUser.Role is not MembersRole.Admin)
+            {
+                Departanents = realm.All<Departanent>().ToList().Where(x =>  x.OrganizationId == CurrentOrganizationId&&x.Members.Any(y => y.Id == CurrentUser.Id)).AsQueryable();
+                return;
+            }
+
             Departanents = realm.All<Departanent>().Where(x => x.OrganizationId == CurrentOrganizationId);
         }
         private async Task GetAllOrganizations()
