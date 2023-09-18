@@ -182,7 +182,7 @@
             <Grid ColumnDefinitions="Auto,*,auto" VerticalOptions="Start" HorizontalOptions="FillAndExpand" >
                 <Label Text="{Binding CurrentDepartament.Title}" FontSize="Subtitle"  VerticalTextAlignment="Center" Margin="35,0" HorizontalTextAlignment="Start"  />
 
-                <Grid ColumnDefinitions="auto,auto" IsVisible="{Binding SearchVisible}"  Padding="5"  Grid.Column="2" ColumnSpacing="15" Margin="25"  HorizontalOptions="End">
+                <Grid ColumnDefinitions="auto,auto" IsVisible="{Binding SearchVisible}"  Padding="5"  Grid.Column="2" ColumnSpacing="15" Margin="25,15,25,0"  HorizontalOptions="End">
                     <Frame Grid.Column="0" Padding="0" MinimumWidthRequest="350"  HorizontalOptions="End">
                         <Grid  >
                             <Entry Text="{Binding SearchText}"  VerticalOptions="Center" Placeholder="Поиск" VerticalTextAlignment="Center" FontAttributes="Bold" FontSize="Default" />
@@ -199,8 +199,8 @@
                 
             </Grid>
 
-            <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand" BackgroundColor="Blue">
-                <StackLayout BackgroundColor="Red" Padding="0" Spacing="15" BindableLayout.ItemsSource="{Binding  Members}" BindableLayout.ItemTemplate="{StaticResource EmployTemplate}" >
+            <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand"  >
+                <StackLayout   Padding="25,15" Spacing="15" BindableLayout.ItemsSource="{Binding  Members}" BindableLayout.ItemTemplate="{StaticResource EmployTemplate}" >
                     <!--<CollectionView >
                         <Sta.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="15" VerticalItemSpacing="15"   />
