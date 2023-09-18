@@ -59,10 +59,10 @@
             </DataTemplate>
 
             <DataTemplate  x:Key="EmployTemplate" x:DataType="model:Member">
-                <Frame  Padding="0">
+                <Frame  Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
                     <HorizontalStackLayout>
                         <Frame  BackgroundColor="{StaticResource Primary}" Margin="15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                            <Frame CornerRadius="10" Padding="0" HeightRequest="80" WidthRequest="80">
+                            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" CornerRadius="10" Padding="0" HeightRequest="80" WidthRequest="80">
                                 <Grid>
                                     <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="30" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="{Binding IsPhotoURL}" />
                                     <Image Source="{Binding PhotoUrl}" Aspect="AspectFill" IsVisible="{Binding UnIsPhotoURL}" />
@@ -96,11 +96,11 @@
     </ContentPage.Resources>
 
     <Grid ColumnDefinitions="auto,*" >
-        <Frame WidthRequest="400" Padding="0" >
+        <Frame WidthRequest="400" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
             <Grid RowDefinitions="auto,auto,*,auto" Padding="15">
                 <Grid RowDefinitions="Auto,*,auto" Margin="20,0">
                     <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Frame CornerRadius="10" Padding="0" HeightRequest="60" WidthRequest="60">
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" CornerRadius="10" Padding="0" HeightRequest="60" WidthRequest="60">
                             <Grid>
                                 <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="Subtitle" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="{Binding CurrentUser.IsPhotoURL}" />
                                 <Image Source="{Binding CurrentUser.PhotoUrl}" Aspect="AspectFill" IsVisible="{Binding CurrentUser.UnIsPhotoURL}" />
@@ -116,8 +116,8 @@
                 <BoxView HeightRequest="1" Opacity="0.3" VerticalOptions="End"/>
 
                 <HorizontalStackLayout Grid.Row="1" IsVisible="{Binding IsDepsSelect}">
-                    <Frame Padding="10" Margin="0" BorderColor="Transparent" HasShadow="False">
-                        <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Subtitle"  />
+                    <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" Padding="10" Margin="0" BorderColor="Transparent" HasShadow="False">
+                        <Label  Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Subtitle"  />
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BackToOrgCommand}"/>
 
@@ -125,8 +125,8 @@
                     </Frame>
 
                     <Grid ColumnDefinitions="auto,*" HorizontalOptions="CenterAndExpand" Margin="10">
-                        <Frame  HorizontalOptions="Center" Margin="5" Padding="10">
-                            <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.Users}" FontFamily="FAS" FontSize="Subtitle" />
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" HasShadow="True"  HorizontalOptions="Center" Margin="5" Padding="10">
+                            <Label Text="{x:Static fa:FontAwesomeIcons.Users}" FontFamily="FAS" FontSize="Subtitle" />
                         </Frame>
                         <Label Grid.Column="1" Text="{Binding CurretnOrgTitle}" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" />
 
@@ -183,7 +183,7 @@
                 <Label Text="{Binding CurrentDepartament.Title}" FontSize="Subtitle"  VerticalTextAlignment="Center" Margin="35,0" HorizontalTextAlignment="Start"  />
 
                 <Grid ColumnDefinitions="auto,auto" IsVisible="{Binding SearchVisible}"  Padding="5"  Grid.Column="2" ColumnSpacing="15" Margin="25,15,25,0"  HorizontalOptions="End">
-                    <Frame Grid.Column="0" Padding="0" MinimumWidthRequest="350"  HorizontalOptions="End">
+                    <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" Grid.Column="0" Padding="0" MinimumWidthRequest="350"  HorizontalOptions="End">
                         <Grid  >
                             <Entry Text="{Binding SearchText}"  VerticalOptions="Center" Placeholder="Поиск" VerticalTextAlignment="Center" FontAttributes="Bold" FontSize="Default" />
                             <Label Text="{x:Static fa:FontAwesomeIcons.MagnifyingGlass}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalOptions="End"  />
@@ -191,7 +191,7 @@
                               </Grid>
                     </Frame>
 
-                    <Frame Grid.Column="1" HorizontalOptions="End" Padding="2,5" >
+                    <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" Grid.Column="1" HorizontalOptions="End" Padding="2,5" >
                         <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
 
                     </Frame>
@@ -213,10 +213,10 @@
 
             </ScrollView>
 
-            <StackLayout Margin="60" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
-                <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ExportExcelCommand}" IsVisible="{Binding MemberIsNotNull}"/>
-                <Button Text="{x:Static fa:FontAwesomeIcons.FileImport}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}" IsVisible="{Binding IsDepNull}"/>
-                <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding AddMemberCommand}" IsVisible="{Binding IsDepNull}" />
+            <StackLayout Margin="45" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
+                <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ExportExcelCommand}" IsVisible="{Binding MemberIsNotNull}"/>
+                <Button Text="{x:Static fa:FontAwesomeIcons.FileImport}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"  FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}" IsVisible="{Binding IsDepNull}"/>
+                <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"  FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding AddMemberCommand}" IsVisible="{Binding IsDepNull}" />
             </StackLayout>
 
         </Grid>

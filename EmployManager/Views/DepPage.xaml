@@ -16,7 +16,7 @@
     <Grid  RowDefinitions="65,*">
 
         <!-- Кастомный навбар -->
-        <Frame CornerRadius="0" Padding="20,5">
+        <Frame CornerRadius="0" Padding="20,5" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
                 <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
                     <Label.GestureRecognizers>
@@ -34,7 +34,7 @@
              <Grid Grid.Column="1">
                 <ScrollView >
                     <StackLayout  Spacing="15" Margin="0,25,0,5">
-                        <Frame Padding="15">
+                        <Frame Padding="15" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
                             <Grid ColumnDefinitions="*,Auto" >
                                 <StackLayout  Spacing="15" VerticalOptions="CenterAndExpand">
                                     <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
@@ -46,7 +46,7 @@
 
                                 </StackLayout>
                                 <Frame Grid.Column="1" HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource Primary}" Margin="15" Padding="6" CornerRadius="15" VerticalOptions="CenterAndExpand">
-                                    <Frame CornerRadius="10">
+                                    <Frame CornerRadius="10" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
                                         <Label Text="{x:Static fa:FontAwesomeIcons.Users}" FontSize="65" FontFamily="FAS" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
 
                                     </Frame>

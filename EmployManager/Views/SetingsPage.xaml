@@ -14,7 +14,7 @@
     <Grid  RowDefinitions="65,*">
 
         <!-- Кастомный навбар -->
-        <Frame CornerRadius="0" Padding="20,3">
+        <Frame CornerRadius="0" Padding="20,3" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="CenterAndExpand"  >
                 <Label Grid.Column="0" Text="{x:Static fa:FontAwesomeIcons.ChevronLeft}" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" FontFamily="FAS" FontAttributes="Bold" FontSize="22" >
                     <Label.GestureRecognizers>
@@ -39,13 +39,46 @@
             <Grid ColumnDefinitions=".5*,*,.5*" Padding="0,20">
 
                 <StackLayout Grid.Column="1" Spacing="15" >
-                    <Label Text="Имя устройства" FontSize="Micro" TranslationY="5" FontAttributes="Bold" />
-                        <Frame Padding="0" >
-                   
-                        <Entry Text="" Keyboard="Chat" Placeholder="Введите Ф.И.О."
-                       />
-                    </Frame>
-                    <Label Text="Параметры БД" FontSize="Micro" TranslationY="5" FontAttributes="Bold" />
+                    <Label Text="Тема" FontSize="Micro" TranslationY="5" FontAttributes="Bold" />
+                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}"  >
+                        <StackLayout Padding="15" Spacing="15">
+                            <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding IsLightTeme}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    </DataTrigger>
+                                </Frame.Triggers>
+                                <Label Text="Светлая" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TemeChengesCommand}" CommandParameter="0" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                            <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding IsDarckTeme}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    </DataTrigger>
+                                </Frame.Triggers>
+                                <Label Text="Тёмная" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TemeChengesCommand}" CommandParameter="1" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                            <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding IsSystemTeme}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    </DataTrigger>
+                                </Frame.Triggers>
+                                <Label Text="Системная" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TemeChengesCommand}" CommandParameter="2" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                </StackLayout>
+
+                </Frame>
+                    <!--<Label Text="Параметры БД" FontSize="Micro" TranslationY="5" FontAttributes="Bold" />
                     <Frame Padding="0" CornerRadius="8">
 
                         <StackLayout  Grid.Row="1" Spacing="15"  Padding="20">
@@ -63,7 +96,7 @@
                             </Frame>
                         </StackLayout>
 
-                    </Frame>
+                    </Frame>-->
 
                 </StackLayout>
 
