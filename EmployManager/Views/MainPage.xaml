@@ -157,7 +157,7 @@
                 </HorizontalStackLayout>
                 <BoxView Grid.Row="1" HeightRequest="1" IsVisible="{Binding IsDepsSelect}" Opacity="0.3" VerticalOptions="End"/>
 
-                <ScrollView Grid.Row="2" Margin="0,15">
+                <ScrollView Grid.Row="2" Margin="0,25">
                     <StackLayout Spacing="10">
 
                         <StackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Departanents}" IsVisible="{Binding IsDepsSelect}" BindableLayout.ItemTemplate="{StaticResource DeportTemplate}" />
@@ -170,7 +170,7 @@
 
                     </StackLayout>
                 </ScrollView>
-                <Frame Grid.Row="2" BackgroundColor="{StaticResource Primary}" Padding="0" HorizontalOptions="End" VerticalOptions="End" Margin="10,25" HeightRequest="55" WidthRequest="55" CornerRadius="27.5" IsVisible="{Binding IsManagerOrAdmin}">
+                <Frame Grid.Row="2" BackgroundColor="{StaticResource Primary}" Padding="0" HorizontalOptions="End" VerticalOptions="End" Margin="15,15" HeightRequest="40" WidthRequest="40" CornerRadius="20" IsVisible="{Binding IsManagerOrAdmin}">
                     <Label Text="{x:Static fa:FontAwesomeIcons.Plus}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Subtitle" />
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AddOrgOrDepCommand}" />
