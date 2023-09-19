@@ -98,6 +98,7 @@ namespace EmployManager.ViewModels
              await WriteToRealm(depar);
 
                 await AppShell.Current.GoToAsync($"..");
+                return;
             }
 
             var org = new Organization { Description = Description, PhotoUrl = PhotoUrl, Title = Name };
