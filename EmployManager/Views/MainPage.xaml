@@ -76,32 +76,41 @@
 
             <DataTemplate  x:Key="EmployTemplate" x:DataType="model:Member">
                 <Frame  Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
-                    <HorizontalStackLayout>
-                        <Frame  BackgroundColor="{StaticResource Primary}" Margin="15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
-                            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" CornerRadius="10" Padding="0" HeightRequest="80" WidthRequest="80">
-                                <Grid>
-                                    <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="30" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="{Binding IsPhotoURL}" />
-                                    <Image Source="{Binding PhotoUrl}" Aspect="AspectFill" IsVisible="{Binding UnIsPhotoURL}" />
-                                </Grid>
+                    <Grid>
+                        <HorizontalStackLayout>
+                            <Frame  BackgroundColor="{StaticResource Primary}" Margin="15" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" CornerRadius="10" Padding="0" HeightRequest="80" WidthRequest="80">
+                                    <Grid>
+                                        <Label Text="{x:Static fa:FontAwesomeIcons.User}" FontSize="30" FontFamily="FAR" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="{Binding IsPhotoURL}" />
+                                        <Image Source="{Binding PhotoUrl}" Aspect="AspectFill" IsVisible="{Binding UnIsPhotoURL}" />
+                                    </Grid>
+                                </Frame>
                             </Frame>
-                        </Frame>
-                        <StackLayout VerticalOptions="Center" >
-                            <Label Grid.Row="1"  FontAttributes="Bold" FontSize="Small" Margin="15,0,0,10" HorizontalTextAlignment="Start" VerticalTextAlignment="Start">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding LastName}"  />
-                                        <Span Text=" " />
-                                        <Span Text="{Binding FirstName}" />
-                                        <Span Text=" " />
-                                        <Span Text="{Binding MiddleName }" />
+                            <StackLayout VerticalOptions="Center" >
+                                <Label Grid.Row="1"  FontAttributes="Bold" FontSize="Small" Margin="15,0,0,10" HorizontalTextAlignment="Start" VerticalTextAlignment="Start">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding LastName}"  />
+                                            <Span Text=" " />
+                                            <Span Text="{Binding FirstName}" />
+                                            <Span Text=" " />
+                                            <Span Text="{Binding MiddleName }" />
 
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Label Grid.Row="1" Text="{Binding RoleName}" VerticalTextAlignment="End" FontAttributes="None" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Micro" Margin="15,0" HorizontalTextAlignment="Start" ></Label>
-                        </StackLayout>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Row="1" Text="{Binding RoleName}" VerticalTextAlignment="End" FontAttributes="None" TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" FontSize="Micro" Margin="15,0" HorizontalTextAlignment="Start" ></Label>
+                            </StackLayout>
 
-                    </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                        <Label  Text="{x:Static fa:FontAwesomeIcons.Trash}" FontFamily="FAS" VerticalTextAlignment="Start" HorizontalTextAlignment="End" FontAttributes="None" FontSize="Medium" Margin="15"  >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteMemberCommand}" CommandParameter="{Binding .}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                    </Grid>
+
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=GoToEmployDetailCommand}" CommandParameter="{Binding .}" />
 
@@ -110,8 +119,8 @@
             </DataTemplate>
 
 
-           
-          
+
+
 
 
         </ResourceDictionary>
@@ -216,7 +225,7 @@
                     <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" Grid.Column="1" HorizontalOptions="End" Padding="2,5" >
                         <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
                         <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ChengeSortVisbleCommand}" />
+                            <TapGestureRecognizer Command="{Binding ChengeSortVisbleCommand}" />
                         </Frame.GestureRecognizers>
                     </Frame>
                 </Grid>
@@ -237,7 +246,7 @@
 
             </ScrollView>
 
-            
+
 
 
             <StackLayout Margin="45" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
@@ -250,13 +259,13 @@
                 <Frame Background="{StaticResource TransperentDark}"  />
                 <Frame Padding="0"  HorizontalOptions="End" VerticalOptions="Start" Margin="25,90" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" >
                     <StackLayout Padding="15" Spacing="15">
-                            <Label Text="{x:Static fa:FontAwesomeIcons.Xmark}" FontSize="Subtitle" FontFamily="FAS" Margin="0,5,-15,-15" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" >
+                        <Label Text="{x:Static fa:FontAwesomeIcons.Xmark}" FontSize="Subtitle" FontFamily="FAS" Margin="0,5,-15,-15" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" >
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChengeSortVisbleCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
-                            <Label Text="Сортировка" Margin="100,5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-         <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                        <Label Text="Сортировка" Margin="100,5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
                             <Frame.Triggers>
                                 <DataTrigger TargetType="Frame" Binding="{Binding SortHiPrice}" Value="False">
                                     <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}"/>
@@ -281,7 +290,7 @@
                             </Frame.Triggers>
                             <Label Text="От меньшей зарплаты"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                             <Frame.GestureRecognizers>
-                                                                <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="0" />
+                                <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="0" />
 
                             </Frame.GestureRecognizers>
                         </Frame>
@@ -296,7 +305,7 @@
                             </Frame.Triggers>
                             <Label Text="В алфавитном порядке"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                             <Frame.GestureRecognizers>
-                                 <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="2" />
+                                <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="2" />
                             </Frame.GestureRecognizers>
                         </Frame>
                         <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
@@ -310,7 +319,7 @@
                             </Frame.Triggers>
                             <Label Text="В обратном алфавитном порядке"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                             <Frame.GestureRecognizers>
-                                 <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="3" />
+                                <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="3" />
                             </Frame.GestureRecognizers>
                         </Frame>
                     </StackLayout>
