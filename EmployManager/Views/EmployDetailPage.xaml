@@ -82,23 +82,44 @@
                         </Frame>
 
                         <Frame Padding="20" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
-                            <Grid RowDefinitions="auto,auto" RowSpacing="15">
-                                <Grid ColumnDefinitions="*,*"  ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                            <Grid ColumnDefinitions="*,*"  ColumnSpacing="15">
+                                <StackLayout Spacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                                     <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
                                         <Entry Text="{Binding Login}" Placeholder="Логин"  />
                                     </Frame>
-                                    <Frame Grid.Column="1" Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                    <Frame Grid.Row="1" Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
                                         <Entry Text="{Binding Password}" Placeholder="Пороль" />
                                     </Frame>
 
-                                </Grid>
+                                </StackLayout>
 
-                                <Frame Grid.Row="1" Padding="5,0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
-                                    <Grid >
-                                        <Picker  SelectedIndex="{Binding SelectedIndex}" Margin="0" MinimumWidthRequest="400" HorizontalTextAlignment="Center" x:Name="RolePicker" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemsSource="{Binding Roles}" Title="Доступ" />
-                                    </Grid>
-                                </Frame>
-                                 
+                                <StackLayout Grid.Column="1" Spacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Text="{Binding Salary}" Placeholder="Зарплата"  >
+                                            <Entry.Triggers>
+                                                <DataTrigger TargetType="Entry" Binding="{Binding Salary}" Value="0" >
+                                                    <Setter Property="Text" Value="" />
+                                                </DataTrigger>
+                                            </Entry.Triggers>
+                                        </Entry>
+                                    </Frame>
+                                    <Frame Grid.Column="1" Padding="5,0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Grid >
+                                            <Picker  SelectedIndex="{Binding SelectedIndex}" Margin="0" MinimumWidthRequest="400" HorizontalTextAlignment="Center" x:Name="RolePicker" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemsSource="{Binding Roles}" Title="Доступ" />
+                                        </Grid>
+                                    </Frame>
+
+                                </StackLayout>
+                                
+                                 <!--<StackLayout Grid.Column="1" Spacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Text="{Binding Login}" Placeholder="Логин"  />
+                                    </Frame>
+                                    <Frame Grid.Row="1" Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                                        <Entry Text="{Binding Password}" Placeholder="Пороль" />
+                                    </Frame>
+
+                                </StackLayout>-->
 
                                
                               
