@@ -15,15 +15,23 @@
         <ResourceDictionary>
             <local:StringIsNullConverter x:Key="StringIsNullConverter" />
             <DataTemplate x:Key="DeportTemplate" x:DataType="model:Departanent">
-                <Grid ColumnDefinitions="auto,*,auto">
+                <Grid ColumnDefinitions="auto,*,auto,auto">
                     <Frame BackgroundColor="{StaticResource Primary}" Grid.ColumnSpan="3" Opacity="0.25" IsVisible="{Binding IsSelect}" />
                     <Frame BackgroundColor="{AppThemeBinding Light={StaticResource BoraCastomColorLight},Dark={StaticResource BoraElementColorDark}}"  HorizontalOptions="Center" Margin="5" Padding="10">
                         <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.Users}" FontFamily="FAS" FontSize="Subtitle" />
                     </Frame>
                     <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" />
-                     <Label Grid.Column="2" Margin="10" Text="{x:Static fa:FontAwesomeIcons.Pen}" FontFamily="FAS" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" >
-                         <Label.GestureRecognizers>
-                            
+                    <Label Grid.Column="2" Margin="10" Text="{x:Static fa:FontAwesomeIcons.Trash}" FontFamily="FAS" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" >
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteDepartamentCommand}" CommandParameter="{Binding Id}" />
+
+                        </Label.GestureRecognizers>
+
+                    </Label>
+                    <Label Grid.Column="3" Margin="10" Text="{x:Static fa:FontAwesomeIcons.Pen}" FontFamily="FAS" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" >
+                        <Label.GestureRecognizers>
+
                             <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=GoToOrgDepDetailCommand}" CommandParameter="{Binding Id}" />
 
                         </Label.GestureRecognizers>
@@ -31,20 +39,28 @@
                     </Label>
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=SelectDepartamentCommand}" CommandParameter="{Binding .}" />
-                      
+
                     </Grid.GestureRecognizers>
                 </Grid>
             </DataTemplate>
 
-             <DataTemplate x:Key="OrgTemplate" x:DataType="model:Organization">
-                <Grid ColumnDefinitions="auto,*,Auto">
+            <DataTemplate x:Key="OrgTemplate" x:DataType="model:Organization">
+                <Grid ColumnDefinitions="auto,*,Auto,Auto">
                     <Frame BackgroundColor="{AppThemeBinding Light={StaticResource BoraCastomColorLight},Dark={StaticResource BoraElementColorDark}}"  HorizontalOptions="Center" Margin="5" Padding="10">
                         <Label TextColor="White" Text="{x:Static fa:FontAwesomeIcons.Users}" FontFamily="FAS" FontSize="Subtitle" />
                     </Frame>
                     <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" />
-                    <Label Grid.Column="2" Margin="10" Text="{x:Static fa:FontAwesomeIcons.Pen}" FontFamily="FAS" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" >
-                         <Label.GestureRecognizers>
-                            
+                    <Label Grid.Column="2" Margin="10" Text="{x:Static fa:FontAwesomeIcons.Trash}" FontFamily="FAS" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" >
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteOrganizationCommand}" CommandParameter="{Binding Id}" />
+
+                        </Label.GestureRecognizers>
+
+                    </Label>
+                    <Label Grid.Column="3" Margin="10" Text="{x:Static fa:FontAwesomeIcons.Pen}" FontFamily="FAS" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" >
+                        <Label.GestureRecognizers>
+
                             <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=GoToOrgDepDetailCommand}" CommandParameter="{Binding Id}" />
 
                         </Label.GestureRecognizers>
@@ -52,7 +68,7 @@
                     </Label>
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=SelectOrganizationCommand}" CommandParameter="{Binding .}" />
-        
+
 
                     </Grid.GestureRecognizers>
                 </Grid>
@@ -71,7 +87,7 @@
                         </Frame>
                         <StackLayout VerticalOptions="Center" >
                             <Label Grid.Row="1"  FontAttributes="Bold" FontSize="Small" Margin="15,0,0,10" HorizontalTextAlignment="Start" VerticalTextAlignment="Start">
-                               <Label.FormattedText>
+                                <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding LastName}"  />
                                         <Span Text=" " />
@@ -131,7 +147,7 @@
                         <Label Grid.Column="1" Text="{Binding CurretnOrgTitle}" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" />
 
                     </Grid>
-                   
+
                 </HorizontalStackLayout>
                 <BoxView Grid.Row="1" HeightRequest="1" IsVisible="{Binding IsDepsSelect}" Opacity="0.3" VerticalOptions="End"/>
 
@@ -188,15 +204,17 @@
                             <Entry Text="{Binding SearchText}"  VerticalOptions="Center" Placeholder="Поиск" VerticalTextAlignment="Center" FontAttributes="Bold" FontSize="Default" />
                             <Label Text="{x:Static fa:FontAwesomeIcons.MagnifyingGlass}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalOptions="End"  />
 
-                              </Grid>
+                        </Grid>
                     </Frame>
 
                     <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" Grid.Column="1" HorizontalOptions="End" Padding="2,5" >
                         <Label Text="{x:Static fa:FontAwesomeIcons.Bars}" FontSize="Subtitle" FontFamily="FAS" VerticalTextAlignment="Center" Margin="15,0" HorizontalTextAlignment="End"  />
-
+                        <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChengeSortVisbleCommand}" />
+                        </Frame.GestureRecognizers>
                     </Frame>
                 </Grid>
-                
+
             </Grid>
 
             <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand"  >
@@ -213,11 +231,86 @@
 
             </ScrollView>
 
+            
+
+
             <StackLayout Margin="45" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
                 <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ExportExcelCommand}" IsVisible="{Binding MemberIsNotNull}"/>
                 <Button Text="{x:Static fa:FontAwesomeIcons.FileImport}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"  FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}" IsVisible="{Binding IsDepNull}"/>
                 <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"  FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding AddMemberCommand}" IsVisible="{Binding IsDepNull}" />
             </StackLayout>
+
+            <Grid Grid.RowSpan="2" IsVisible="{Binding IsSortVisble}">
+                <Frame Background="{StaticResource TransperentDark}"  />
+                <Frame Padding="0"  HorizontalOptions="End" VerticalOptions="Start" Margin="25,90" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" >
+                    <StackLayout Padding="15" Spacing="15">
+                            <Label Text="{x:Static fa:FontAwesomeIcons.Xmark}" FontSize="Subtitle" FontFamily="FAS" Margin="0,5,-15,-15" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChengeSortVisbleCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                            <Label Text="Сортировка" Margin="110,5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                        <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding SortHiPrice}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding SortHiPrice}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Label Text="От большей зарплаты" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="{Binding SortMemb1}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding SortLowPrice}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding SortLowPrice}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Label Text="От меньшей зарплаты"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            <Frame.GestureRecognizers>
+                                                                <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="{Binding SortMemb2}" />
+
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSortMemb3}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSortMemb3}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Label Text="По алфовиту"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            <Frame.GestureRecognizers>
+                                 <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="{Binding SortMemb3}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSortMemb4}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},Light={StaticResource BackgroundColorLight}}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSortMemb4}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Label Text="По алфовиту в обратную сторону"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            <Frame.GestureRecognizers>
+                                 <TapGestureRecognizer Command="{Binding SortChangedCommand}"   CommandParameter="{Binding SortMemb4}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </StackLayout>
+                </Frame>
+            </Grid>
 
         </Grid>
 

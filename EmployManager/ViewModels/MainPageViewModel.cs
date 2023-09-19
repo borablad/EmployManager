@@ -24,6 +24,14 @@ namespace EmployManager.ViewModels
     {
         private string isDepId;
 
+        public SortMember SortMemb1 = SortMember.MemberSalaryMax;
+        public SortMember SortMemb2 = SortMember.MemberSalaryMin;
+        public SortMember SortMemb3 = SortMember.NameAbc;
+        public SortMember SortMemb4 = SortMember.NameZxy;
+
+        [ObservableProperty]
+        bool isSortMemb1, isSortMemb2, isSortMemb3, isSortMemb4, isSortVisble;
+
         private IQueryable<Member> members;
 
         private string organizationIdTemp;
@@ -439,6 +447,14 @@ namespace EmployManager.ViewModels
                     SortHiPrice = true;
                     SortLowPrice = false;
                     break;
+                case SortMember.NameAbc:
+                    IsSortMemb3 = true;
+                    IsSortMemb4 = false;
+                    break;
+                case SortMember.NameZxy:
+                    IsSortMemb3 = false;
+                    IsSortMemb4 = true;
+                    break;
 
             }
 
@@ -587,6 +603,11 @@ namespace EmployManager.ViewModels
 
         }
 
+        [RelayCommand]
+        public void ChengeSortVisble()
+        {
+            IsSortVisble = !IsSortVisble;
+        }
     }
 
 }
