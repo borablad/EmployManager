@@ -256,7 +256,8 @@ namespace EmployManager.ViewModels
             CurrentOrganizationId = IsNoEmpty(organization.Id) ? organization.Id : CurrentOrganizationId;
              OrganizationIdTemp = CurrentOrganizationId;
             CurrentDepartamentId = "";
-            IsDepId = "";
+            CurrentDepartament = null;
+             IsDepId = "";
             IsDepId = "";
             Title = "";
             CurretnOrgTitle = organization.Title;
@@ -294,7 +295,7 @@ namespace EmployManager.ViewModels
             if (member is null)
                 return;
 
-            if (!IsManager || !IsAdmin)
+            if (!IsManagerOrAdmin||(member.Role is MembersRole.Admin&& IsManager))
                 return;
 
             await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}?member_id={member.Id}");
@@ -307,7 +308,7 @@ namespace EmployManager.ViewModels
         public async void AddMember()
         {
 
-            if (!IsManager||!IsAdmin)
+            if (!IsManagerOrAdmin)
             {
                 await DialogService.ShowError("Данная функция вам не доступна");
                 return;
@@ -318,6 +319,31 @@ namespace EmployManager.ViewModels
 
 
         }
+        [RelayCommand]
+        public async void DeleteMember(Member member)
+        {
+
+            if (member is null)
+                return;
+
+            if (!IsManagerOrAdmin || (member.Role is MembersRole.Admin && IsManager))
+                return;
+
+            if (!IsNoEmpty(CurrentOrganizationId) && CurrentDepartament is null)
+                return;
+            await realm.WriteAsync(() =>
+            {
+                member.DepartamentId = string.Empty;
+                member.OrganizationId = string.Empty;
+                realm.Add(member);
+                CurrentDepartament.Members.Remove(member);
+                realm.Add(CurrentDepartament);
+            });
+         
+
+        }
+
+
 
         [RelayCommand]
         public async void LogOut()
@@ -337,7 +363,7 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         private async Task ImportExcel()
         {
-            if (!IsManager||!IsAdmin)
+            if (!IsManagerOrAdmin)
             {
                 await DialogService.ShowError("Данная функция вам не доступна");
                 return;
@@ -401,7 +427,7 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         private async Task ExportExcel()
         {
-            if (!IsManager||!IsAdmin)
+            if (!IsManagerOrAdmin)
             {
                 await DialogService.ShowError("Данная функция вам не доступна");
                 return;
