@@ -233,7 +233,7 @@
             </Grid>
 
             <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand"  >
-                <StackLayout   Padding="25,15" Spacing="15" BindableLayout.ItemsSource="{Binding  Members}" BindableLayout.ItemTemplate="{StaticResource EmployTemplate}" >
+                <StackLayout   Padding="20,15" Spacing="15" BindableLayout.ItemsSource="{Binding  Members}" BindableLayout.ItemTemplate="{StaticResource EmployTemplate}" >
                     <!--<CollectionView >
                         <Sta.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="15" VerticalItemSpacing="15"   />
