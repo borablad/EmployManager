@@ -73,7 +73,20 @@ namespace EmployManager.ViewModels
             }
         }
 
+        private SortMember sort
+        {
+            get
+            {
+                if (SortHiPrice)
+                    return SortMember.MemberSalaryMax;
 
+                else if (SortLowPrice)
+                    return SortMember.MemberSalaryMin;
+                else if (IsSortMemb4)
+                    return SortMember.NameZxy;
+                return SortMember.NameAbc;
+            }
+        }
 
         [ObservableProperty]
         IQueryable departanents;
@@ -92,8 +105,13 @@ namespace EmployManager.ViewModels
         [ObservableProperty]
         int collectinSpan = 1;
 
-        [ObservableProperty]
-        private bool isAdmin, isUser, isManager;
+
+        private bool isAdmin, isManager;
+
+        public bool IsAdmin { get => isAdmin; set { isAdmin = value; OnPropertyChanged(nameof(IsAdmin)); OnPropertyChanged(nameof(IsManagerOrAdmin)); } }
+        public bool IsManager { get => isManager; set { isManager = value; OnPropertyChanged(nameof(IsManager)); OnPropertyChanged(nameof(IsManagerOrAdmin)); } }
+
+        public bool IsManagerOrAdmin { get => IsAdmin || IsManager; }
 
         [ObservableProperty]
          string curretnOrgTitle;
@@ -128,6 +146,9 @@ namespace EmployManager.ViewModels
         {
             MemberIsNotNull = false;
             SortHiPrice = Preferences.Get($"{nameof(SortHiPrice)}{CurrentDepartamentId}", false);
+            SortLowPrice = Preferences.Get($"{nameof(SortLowPrice)}{CurrentDepartamentId}", false);
+            IsSortMemb4 = Preferences.Get($"{nameof(IsSortMemb4)}{CurrentDepartamentId}", false);
+          
             realm = RealmService.GetMainThreadRealm();
 
             /*   IsOrgSelekt = true;
@@ -137,7 +158,7 @@ namespace EmployManager.ViewModels
             CurrentUser = realm.All<Member>().Where(x => x.Username == CurrentLogin).FirstOrDefault();
             if (CurrentUser is null)
                 return;
-            IsUser = CurrentUser.Role == MembersRole.User;
+         
             IsAdmin=CurrentUser.Role == MembersRole.Admin;
             IsManager=CurrentUser.Role == MembersRole.Manager;
 
@@ -273,7 +294,8 @@ namespace EmployManager.ViewModels
             if (member is null)
                 return;
 
-
+            if (!IsManager || !IsAdmin)
+                return;
 
             await AppShell.Current.GoToAsync($"{nameof(EmployDetailPage)}?member_id={member.Id}");
 
@@ -285,9 +307,9 @@ namespace EmployManager.ViewModels
         public async void AddMember()
         {
 
-            if (IsUser)
+            if (!IsManager||!IsAdmin)
             {
-                await DialogService.ShowError("Данная фенкция вам не доступна");
+                await DialogService.ShowError("Данная функция вам не доступна");
                 return;
             }
 
@@ -315,9 +337,9 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         private async Task ImportExcel()
         {
-            if (IsUser)
+            if (!IsManager||!IsAdmin)
             {
-                await DialogService.ShowError("Данная фенкция вам не доступна");
+                await DialogService.ShowError("Данная функция вам не доступна");
                 return;
             }
 
@@ -379,9 +401,9 @@ namespace EmployManager.ViewModels
         [RelayCommand]
         private async Task ExportExcel()
         {
-            if (IsUser)
+            if (!IsManager||!IsAdmin)
             {
-                await DialogService.ShowError("Данная фенкция вам не доступна");
+                await DialogService.ShowError("Данная функция вам не доступна");
                 return;
             }
 
@@ -434,33 +456,43 @@ namespace EmployManager.ViewModels
 
 
         [RelayCommand]
-        private async Task SortChanged(SortMember sort)
+        private async Task SortChanged(string param)
         {
-            switch (sort)
+             var _sort = (SortMember)int.Parse(param);
+            switch (_sort)
             {
                 case SortMember.MemberSalaryMin:
 
                     SortHiPrice = false;
                     SortLowPrice = true;
+                    IsSortMemb4 = false;
+                    IsSortMemb3 = false;
                     break;
                 case SortMember.MemberSalaryMax:
                     SortHiPrice = true;
                     SortLowPrice = false;
+                    IsSortMemb4 = false;
+                    IsSortMemb3 = false;
                     break;
                 case SortMember.NameAbc:
+                    SortHiPrice = false;
+                    SortLowPrice = false;
                     IsSortMemb3 = true;
                     IsSortMemb4 = false;
                     break;
                 case SortMember.NameZxy:
                     IsSortMemb3 = false;
                     IsSortMemb4 = true;
+                    SortHiPrice = false;
+                    SortLowPrice = false;
                     break;
 
             }
 
 
             Preferences.Set($"{nameof(SortLowPrice)}{CurrentDepartamentId}", SortLowPrice);
-            // Preferences.Set($"{nameof(SortHiPrice)}{CurrentShopID}", SortHiPrice);
+            Preferences.Set($"{nameof(IsSortMemb4)}{CurrentDepartamentId}", IsSortMemb4);
+             Preferences.Set($"{nameof(SortHiPrice)}{CurrentDepartamentId}", SortHiPrice);
             await LoadAllMembers();
         }
 
@@ -531,17 +563,7 @@ namespace EmployManager.ViewModels
         }
 
 
-        private SortMember sort
-        {
-            get
-            {
-                if (SortHiPrice)
-                    return SortMember.MemberSalaryMax;
-
-
-                return SortMember.MemberSalaryMin;
-            }
-        }
+   
 
 
 
