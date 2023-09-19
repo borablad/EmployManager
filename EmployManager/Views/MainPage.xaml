@@ -24,7 +24,7 @@
                     <Label Grid.Column="2" Margin="10" Text="{x:Static fa:FontAwesomeIcons.Trash}" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=IsAdmin}" FontFamily="FAS" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" >
                         <Label.GestureRecognizers>
 
-                            <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteDepartamentCommand}" CommandParameter="{Binding Id}" />
+                            <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteDepartamentCommand}" CommandParameter="{Binding .}" />
 
                         </Label.GestureRecognizers>
 
@@ -53,7 +53,7 @@
                     <Label Grid.Column="2" Margin="10" Text="{x:Static fa:FontAwesomeIcons.Trash}" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=IsAdmin}" FontFamily="FAS" FontAttributes="Bold" HorizontalOptions="Start" VerticalTextAlignment="Center" FontSize="Body" >
                         <Label.GestureRecognizers>
 
-                            <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteOrganizationCommand}" CommandParameter="{Binding Id}" />
+                            <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteOrganizationCommand}" CommandParameter="{Binding .}" />
 
                         </Label.GestureRecognizers>
 
