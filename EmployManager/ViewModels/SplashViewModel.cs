@@ -7,7 +7,7 @@ namespace EmployManager.ViewModels
 	public partial class SplashViewModel : BaseViewModel
 	{
         //authorization parameters
-        public static string CurrentLogin { get => Preferences.Get(nameof(CurrentLogin), ""); set => Preferences.Set(nameof(CurrentLogin), value); }
+        public static new string CurrentLogin { get => Preferences.Get(nameof(CurrentLogin), ""); set => Preferences.Set(nameof(CurrentLogin), value); }
         public static string CurrentDivaseId { get => Preferences.Get(nameof(CurrentDivaseId), ""); set => Preferences.Set(nameof(CurrentDivaseId), value); }
 
        
