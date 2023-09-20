@@ -40,6 +40,12 @@
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 	  <LangVersion>10.0</LangVersion>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<ItemGroup>
+	  <MauiFont Remove="Resources\Fonts\FontAwesome6FreeRegular400.otf" />
+	</ItemGroup>
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -82,6 +88,7 @@
 	<ItemGroup>
 	  <BundleResource Include="Resources\Fonts\FontAwesome6BrandsRegular400.otf" />
 	  <BundleResource Include="Resources\Fonts\FontAwesome6FreeSolid900.otf" />
+	  <BundleResource Include="Resources\Fonts\FontAwesome6FreeRegular400.otf" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Update="Resources\TextResources\AppResources.Designer.cs">

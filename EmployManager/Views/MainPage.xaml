@@ -103,11 +103,14 @@
                             </StackLayout>
 
                         </HorizontalStackLayout>
-                        <Label  Text="{x:Static fa:FontAwesomeIcons.Trash}" FontFamily="FAS" VerticalTextAlignment="Start" HorizontalTextAlignment="End" FontAttributes="None" FontSize="Medium" Margin="15"  >
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteMemberCommand}" CommandParameter="{Binding .}" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                        <Frame VerticalOptions="Start" Padding="0" HorizontalOptions="End" BackgroundColor="Transparent" >
+                            <Label  Text="{x:Static fa:FontAwesomeIcons.Trash}" FontFamily="FAS"  VerticalTextAlignment="Start" HorizontalTextAlignment="End" FontAttributes="None" FontSize="Medium" Margin="15"  >
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteMemberCommand}" CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Frame>
+                        
 
                     </Grid>
 
