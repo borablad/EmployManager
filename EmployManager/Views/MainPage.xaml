@@ -104,7 +104,7 @@
 
                         </HorizontalStackLayout>
                         <Frame VerticalOptions="Start" Padding="0" HorizontalOptions="End" BackgroundColor="Transparent" >
-                            <Label  Text="{x:Static fa:FontAwesomeIcons.Trash}" FontFamily="FAS"  VerticalTextAlignment="Start" HorizontalTextAlignment="End" FontAttributes="None" FontSize="Medium" Margin="15"  >
+                            <Label  Text="{x:Static fa:FontAwesomeIcons.Trash}" FontFamily="FAS"  VerticalTextAlignment="Start" HorizontalTextAlignment="End" FontAttributes="None" FontSize="Medium" Margin="15"  IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=IsDeleteUser}" >
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteMemberCommand}" CommandParameter="{Binding .}" />
                                 </Label.GestureRecognizers>
@@ -131,7 +131,7 @@
 
     <Grid ColumnDefinitions="auto,*" >
         <Frame WidthRequest="400" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}">
-            <Grid RowDefinitions="auto,auto,*,auto" Padding="15">
+            <Grid RowDefinitions="auto,auto,auto,*,auto" Padding="15">
                 <Grid RowDefinitions="Auto,*,auto" Margin="20,0">
                     <Frame  BackgroundColor="{StaticResource Primary}" Margin="15,0" Padding="5" CornerRadius="15" HorizontalOptions="Center" VerticalOptions="Center">
                         <Frame BackgroundColor="{AppThemeBinding Light={StaticResource HeaderBarBackgroundColorLight}, Dark={StaticResource HeaderBarBackgroundColorDark}}" CornerRadius="10" Padding="0" HeightRequest="60" WidthRequest="60">
@@ -169,7 +169,7 @@
                 </HorizontalStackLayout>
                 <BoxView Grid.Row="1" HeightRequest="1" IsVisible="{Binding IsDepsSelect}" Opacity="0.3" VerticalOptions="End"/>
 
-                <ScrollView Grid.Row="2" Margin="0,25">
+                <ScrollView Grid.Row="2" Margin="0,25" >
                     <StackLayout Spacing="10">
 
                         <StackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Departanents}" IsVisible="{Binding IsDepsSelect}" BindableLayout.ItemTemplate="{StaticResource DeportTemplate}" />
@@ -182,15 +182,15 @@
 
                     </StackLayout>
                 </ScrollView>
-                <Frame Grid.Row="2" BackgroundColor="{StaticResource Primary}" Padding="0" HorizontalOptions="End" VerticalOptions="End" Margin="15,15" HeightRequest="40" WidthRequest="40" CornerRadius="20" IsVisible="{Binding IsManagerOrAdmin}">
+                <Frame Grid.Row="3" BackgroundColor="{StaticResource Primary}" Padding="0" HorizontalOptions="End" VerticalOptions="End" Margin="15,15" HeightRequest="40" WidthRequest="40" CornerRadius="20" IsVisible="{Binding IsManagerOrAdmin}">
                     <Label Text="{x:Static fa:FontAwesomeIcons.Plus}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="FAS" FontSize="Subtitle" />
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AddOrgOrDepCommand}" />
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <BoxView Grid.Row="3" HeightRequest="1" Opacity="0.3" VerticalOptions="Start"/>
-                <StackLayout Grid.Row="3" Margin="0,15" Spacing="15" Padding="15,15,0,0">
+                <BoxView Grid.Row="4" HeightRequest="1" Opacity="0.3" VerticalOptions="Start"/>
+                <StackLayout Grid.Row="4" Margin="0,15" Spacing="15" Padding="15,15,0,0">
                     <HorizontalStackLayout Spacing="15">
                         <Label TextColor="{StaticResource Primary}" Text="{x:Static fa:FontAwesomeIcons.Gear}" FontFamily="FAS" FontSize="Body" />
                         <Label  Text="Настройки" FontAttributes="Bold" FontSize="Body" />
@@ -236,7 +236,7 @@
             </Grid>
 
             <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand"  >
-                <StackLayout   Padding="20,15" Spacing="15" BindableLayout.ItemsSource="{Binding  Members}" BindableLayout.ItemTemplate="{StaticResource EmployTemplate}" >
+                <StackLayout   Padding="75,15" Spacing="15" BindableLayout.ItemsSource="{Binding  Members}" BindableLayout.ItemTemplate="{StaticResource EmployTemplate}" >
                     <!--<CollectionView >
                         <Sta.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="15" VerticalItemSpacing="15"   />
@@ -252,7 +252,7 @@
 
 
 
-            <StackLayout Margin="45" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
+            <StackLayout Margin="10,45" Spacing="15" HorizontalOptions="End" VerticalOptions="End"  Grid.Row="1" >
                 <Button Text="{x:Static fa:FontAwesomeIcons.FileExport}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}" FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ExportExcelCommand}" IsVisible="{Binding MemberIsNotNull}"/>
                 <Button Text="{x:Static fa:FontAwesomeIcons.FileImport}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"  FontSize="Title" HeightRequest="70" Padding="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding ImportExcelCommand}" IsVisible="{Binding IsDepNull}"/>
                 <Button Text="{x:Static fa:FontAwesomeIcons.Plus}" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark},Light={StaticResource TextColorLight}}"  FontSize="Title" HeightRequest="70" CornerRadius="15" BorderColor="{StaticResource Primary}" BorderWidth="3" BackgroundColor="Transparent" WidthRequest="70" FontFamily="FAS" Command="{Binding AddMemberCommand}" IsVisible="{Binding IsDepNull}" />

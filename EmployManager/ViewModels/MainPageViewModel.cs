@@ -51,6 +51,7 @@ namespace EmployManager.ViewModels
                 OnPropertyChanged(nameof(OrganizationIdTemp));
                 OnPropertyChanged(nameof(IsOrgSelect));
                 OnPropertyChanged(nameof(IsDepsSelect));
+                OnPropertyChanged(nameof(IsDeleteUser));
             }
         }
 
@@ -108,10 +109,12 @@ namespace EmployManager.ViewModels
 
         private bool isAdmin, isManager;
 
-        public bool IsAdmin { get => isAdmin; set { isAdmin = value; OnPropertyChanged(nameof(IsAdmin)); OnPropertyChanged(nameof(IsManagerOrAdmin)); } }
-        public bool IsManager { get => isManager; set { isManager = value; OnPropertyChanged(nameof(IsManager)); OnPropertyChanged(nameof(IsManagerOrAdmin)); } }
+        public bool IsAdmin { get => isAdmin; set { isAdmin = value; OnPropertyChanged(nameof(IsAdmin)); OnPropertyChanged(nameof(IsManagerOrAdmin)); OnPropertyChanged(nameof(IsDeleteUser)); } }
+        public bool IsManager { get => isManager; set { isManager = value; OnPropertyChanged(nameof(IsManager)); OnPropertyChanged(nameof(IsManagerOrAdmin)); OnPropertyChanged(nameof(IsDeleteUser)); } }
 
         public bool IsManagerOrAdmin { get => IsAdmin || IsManager; }
+
+        public bool IsDeleteUser { get => IsManagerOrAdmin && IsDepNull; }
 
         [ObservableProperty]
          string curretnOrgTitle;
